@@ -4,7 +4,7 @@ chapter: Summary
 big: true
 ---
 
-# 今天學到的五個東西
+# 課程重點整理
 
 <Tile variant="hero" label="一句話" value="把環境一起打包帶走">程式、套件、設定都在 Image 裡，到哪台電腦都一樣跑</Tile>
 <Tile label="食材" value="Image">一層層疊起來，建好不能改</Tile>
@@ -18,9 +18,9 @@ layout: statement
 chapter: Summary
 ---
 
-# 現在，你真的可以把你的電腦出貨了。
+# 環境可以跟著程式一起交付
 
-把環境寫進 `Dockerfile` 和 `compose.yaml`，別人 `git clone` 下來，一行 `docker compose up` 就能跑。
+開場那句「把你的電腦出貨」現在做得到了：把環境寫進 `Dockerfile` 和 `compose.yaml`，別人 `git clone` 下來，一行 `docker compose up` 就能跑。
 
 ---
 layout: reference
@@ -28,7 +28,7 @@ chapter: Summary
 cols: 2
 ---
 
-# 今天用到的指令
+# 指令總表
 
 | 指令 | 用途 |
 | --- | --- |
@@ -53,7 +53,7 @@ next: Slido Q&A 與回饋表單
 nextNumber: Q&A
 ---
 
-# 有問題嗎？
+# Q&A
 
 - `Dockerfile`
 - `docker build`

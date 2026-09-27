@@ -8,7 +8,7 @@ chapter: Ch 1 · Intro to Docker
 
 - **1.1** 為什麼需要 Docker
 - **1.2** Image、Container、Registry
-- **1.3** Docker 和 VM 差在哪
+- **1.3** Docker 與 VM 的差異
 
 ---
 layout: figure
@@ -16,7 +16,7 @@ chapter: Ch 1 · Intro to Docker
 clicks: 2
 ---
 
-# 「在我電腦上可以跑啊」
+# 環境差異問題
 
 <ChatBubbles :lines="[
   { who: 'left', name: '開發者', text: '在我電腦上可以跑啊。' },
@@ -56,7 +56,7 @@ layout: statement
 chapter: Ch 1 · Intro to Docker
 ---
 
-# git 存的是程式碼，不存環境。
+# git 管理程式碼，不管理執行環境
 
 組員 `git clone` 下來，還是缺 Python 的版本、缺資料庫、缺環境變數。Docker 補上的就是這一塊。
 
@@ -71,7 +71,7 @@ chapter: Ch 1 · Intro to Docker
 clicks: 3
 ---
 
-# Docker 的三個角色
+# Docker 的核心元件
 
 <div class="deflist">
   <div v-click="1"><b>Image</b><span>打包好的環境：檔案、執行檔、函式庫和設定。像做甜點的食材。</span></div>
@@ -130,7 +130,7 @@ clicks: 4
 takeaway: 今天會把這條線從頭走到尾：pull 下來、run 起來、stop、rm。
 ---
 
-# 一個 Container 的一生
+# Container 的生命週期
 
 <Lifecycle />
 
@@ -156,7 +156,7 @@ rows:
   - [大小, 動輒數 GB, 常見幾十到幾百 MB]
 ---
 
-# VM 和 Container 差在哪
+# VM 與 Container 的差異
 
 <!--
 VM 也能解決環境問題，只是比較重。

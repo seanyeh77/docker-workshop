@@ -6,16 +6,16 @@ chapter: Ch 5 · Docker Compose
 
 # Docker Compose
 
-- **5.1** 指令太長記不住
-- **5.2** 把參數寫成 compose.yaml
-- **5.3** 一行 compose up
+- **5.1** docker run 指令的問題
+- **5.2** 將參數寫成 compose.yaml
+- **5.3** 以 docker compose up 啟動
 
 ---
 layout: textbook
 chapter: Ch 5 · Docker Compose
 ---
 
-# 每次都要打這個？
+# 從 docker run 到 compose.yaml
 
 ````md magic-move {lines: false}
 ```bash
@@ -27,11 +27,14 @@ docker run --name=my-image my-username/my-image
 ```
 
 ```bash
-docker run -d -p 3000:3000 --name=my-image my-username/my-image
+docker run -d -p 3000:3000 \
+  --name=my-image my-username/my-image
 ```
 
 ```bash
-docker run -d -p 3000:3000 -v todo-data:/etc/todos --name=my-image my-username/my-image
+docker run -d -p 3000:3000 \
+  -v todo-data:/etc/todos \
+  --name=my-image my-username/my-image
 ```
 
 ```yaml
@@ -75,7 +78,7 @@ rows:
   - [掛載, '<code>-v todo-data:/etc/todos</code>', '<code>volumes: ["todo-data:/etc/todos"]</code>']
 ---
 
-# 點一號餐：參數變成欄位
+# docker run 參數與 Compose 欄位
 
 <!--
 Compose 就像點套餐：不用每次一樣一樣點，寫好一份菜單，說「一號餐」就好。
@@ -88,7 +91,7 @@ chapter: Ch 5 · Docker Compose
 ltag: compose.yaml
 ---
 
-# 逐段讀懂 compose.yaml
+# compose.yaml 逐段說明
 
 ```yaml {all|1-2|3-4|5-6|7-8|10-12}
 services:
@@ -127,7 +130,7 @@ ltag: compose.yaml
 clicks: 2
 ---
 
-# 加上 Volume
+# 在 compose.yaml 加入 Volume
 
 <ConfigDiff file="compose.yaml" :rows="[
   ['', 'services:'],
@@ -159,9 +162,9 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 實作：一行開起來
+# 實作：docker compose up
 
-<TerminalTyping style="width:1300px" :keep="2" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker rm -f my-image', o: 'my-image' },
   { c: 'docker compose up -d', o: '[+] Running 1/1\n ✔ Container my-image  Started' },
 ]" />
@@ -180,7 +183,7 @@ chapter: Ch 5 · Docker Compose
 takeaway: Ch4 加的 3 筆還在，因為 Compose 掛的是同一個 todo-data Volume。
 ---
 
-# 看到這個就成功
+# 檢查點：Compose 啟動完成
 
 <BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
 

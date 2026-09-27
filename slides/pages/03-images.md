@@ -6,9 +6,9 @@ chapter: Ch 3 · Building Images
 
 # Building Images
 
-- **3.1** 手做：進 Container 裝東西再存檔
+- **3.1** 以 commit 建立 Image
 - **3.2** 驗證 Slido Q1
-- **3.3** 照食譜做：Dockerfile
+- **3.3** 以 Dockerfile 建立 Image
 - **3.4** build 與 tag
 
 ---
@@ -25,7 +25,7 @@ cards:
     text: 把步驟寫進 <code>Dockerfile</code>，交給 <code>docker build</code> 照著做。
 ---
 
-# 做 Image 的兩種方式
+# 建立 Image 的兩種方式
 
 <!--
 先用手做，體會 Image 是怎麼一層層長出來的；再換成 Dockerfile，看為什麼大家都用食譜。
@@ -50,7 +50,7 @@ steps:
     text: 把這個 Container 存成新的 Image。
 ---
 
-# 手做一個 node-base Image
+# 以 commit 建立 Image 的流程
 
 <!--
 這是等一下實作的四個步驟，先看全貌。
@@ -74,7 +74,7 @@ const cmds = [
 ]
 </script>
 
-# 實作：進去、安裝、存檔
+# 實作：建立 node-base
 
 <TerminalTyping :cmds="cmds" :keep="3" />
 
@@ -107,7 +107,7 @@ rows:
   - [存了什麼, 整個 Container 的檔案狀態, 只有 add 過的檔案]
 ---
 
-# 這不就是 git 嗎？
+# Docker 與 git 的對應
 
 <!--
 一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
@@ -128,7 +128,7 @@ const git = [
 ]
 </script>
 
-# Image 的歷史，長得像 git log
+# Image 歷史與 git log
 
 <div class="pair">
   <TerminalTyping all :cmds="docker" />
@@ -159,7 +159,7 @@ const cmds = [
 ]
 </script>
 
-# 實作：在 node-base 上加一個程式
+# 實作：建立 sample-app
 
 <TerminalTyping :cmds="cmds" :keep="3" />
 
@@ -181,7 +181,7 @@ chapter: Ch 3 · Building Images
 clicks: 4
 ---
 
-# 拆解這行 commit
+# commit 指令的參數
 
 <AnnotatedCommand :size="32" :parts="[
   { t: 'docker' },
@@ -202,7 +202,7 @@ ltag: Terminal
 clicks: 1
 ---
 
-# 驗證 Q1：新的 Container 裡有 app.js 嗎？
+# 驗證 Q1：Container 之間的隔離
 
 <TerminalTyping :cmds="[
   { c: 'docker run node-base ls', o: 'bin   boot  dev  etc  home  lib  media  mnt  opt\nproc  root  run  sbin  srv  sys  tmp  usr  var' },
@@ -239,7 +239,7 @@ chapter: Ch 3 · Building Images
 clicks: 2
 ---
 
-# 同一個 Image，各自獨立的 Container
+# 同一 Image 的獨立 Container
 
 <ContainerStory :from="0" :to="2" :captions="[
   '一個 Image，還沒開任何 Container。',
@@ -256,9 +256,9 @@ layout: statement
 chapter: Ch 3 · Building Images
 ---
 
-# commit 就像煮到一半拍照，沒人知道中間加了什麼。
+# commit 無法記錄建立過程
 
-所以要把步驟寫下來。這份寫給 Docker 看的食譜，就是 `Dockerfile`。
+就像煮到一半拍照存檔，看不出中間加了什麼。把步驟寫下來交給 Docker 照著做，這份食譜就是 `Dockerfile`。
 
 ---
 layout: textbook
@@ -267,9 +267,9 @@ ltag: Terminal
 clicks: 3
 ---
 
-# 實作：拿到範例專案
+# 實作：下載範例專案
 
-<TerminalTyping style="width:1560px" :keep="3" :cmds="[
+<TerminalTyping :keep="3" :cmds="[
   { c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
   { c: 'cd getting-started-todo-app/app', o: '' },
   { c: 'rm Dockerfile', o: '' },
@@ -287,7 +287,7 @@ chapter: Ch 3 · Building Images
 ltag: Dockerfile
 ---
 
-# 從一行寫到完整的 Dockerfile
+# 撰寫 Dockerfile
 
 ````md magic-move {lines: false}
 ```dockerfile
@@ -337,7 +337,7 @@ chapter: Ch 3 · Building Images
 ltag: Dockerfile
 ---
 
-# 逐行讀懂 Dockerfile
+# Dockerfile 逐行說明
 
 ```dockerfile {all|1|2|3|4|5}
 FROM node:22-alpine
@@ -364,7 +364,7 @@ chapter: Ch 3 · Building Images
 clicks: 5
 ---
 
-# 每一行都會疊上一層
+# Dockerfile 與 Image Layer
 
 <LayerDiagram
   code="FROM node:22-alpine
@@ -404,7 +404,7 @@ const cmds = [
 ]
 </script>
 
-# 故意失敗：在錯的資料夾 build
+# 常見錯誤：找不到 Dockerfile
 
 <TerminalTyping :cmds="cmds" :keep="3" prompt="" />
 
@@ -424,9 +424,9 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 你會背自己的身分證字號嗎？
+# 以 Tag 命名 Image
 
-<TerminalTyping style="width:1500px" :keep="2" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
   { c: 'docker image ls', o: 'REPOSITORY             TAG      IMAGE ID       CREATED          SIZE\nmy-username/my-image   latest   746c7e06537f   24 seconds ago   354MB' },
 ]" />
@@ -445,9 +445,9 @@ chapter: Ch 3 · Building Images
 takeaway: 看到 my-username/my-image 就成功；做得快的人，改一下 app.js 再 build，看哪幾層顯示 CACHED。
 ---
 
-# 看到這個就成功
+# 檢查點：Image 建立完成
 
-<TerminalTyping all style="width:1500px" :cmds="[
+<TerminalTyping all :cmds="[
   { c: 'docker image ls', o: 'REPOSITORY             TAG      IMAGE ID       CREATED          SIZE\nmy-username/my-image   latest   746c7e06537f   24 seconds ago   354MB' },
 ]" />
 
@@ -456,7 +456,7 @@ layout: bento
 chapter: Ch 3 · Building Images
 ---
 
-# Image 怎麼做出來
+# Building Images 重點整理
 
 <Tile variant="hero" label="這一章" value="Image 是一層層疊起來的">每一個步驟都會多一層，舊的層不會被改掉</Tile>
 <Tile label="手做" value="commit" mono>進 Container 裝好再存檔</Tile>

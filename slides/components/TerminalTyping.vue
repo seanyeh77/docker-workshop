@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useIsSlideActive, useSlideContext } from '@slidev/client'
 import { esc, hlShell } from '../utils/hl.js'
 
@@ -49,13 +49,36 @@ async function show(step, animate) {
   if (id === run) html.value = before + line(cur, i) + pr(pAfter(i)) + caret
 }
 
-onMounted(() => show($clicks.value, false))
+// Fit the longest line of any step into the box: shrink the font instead of
+// letting text run past the frame. IBM Plex Mono advances 0.6em per character.
+const root = ref(null)
+const size = ref(props.big ? 40 : 24)
+const plain = (s) => s.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, 'x')
+const longest = () => Math.max(
+  ...props.cmds.map((x, i) => pOf(i).length + x.c.length + 2),
+  ...props.cmds.flatMap((x) => (x.o ? plain(x.o).split('\n').map((l) => l.length) : [0])),
+)
+function fit() {
+  const el = root.value
+  if (!el) return
+  const pad = props.big ? 72 : 56
+  const base = props.big ? 40 : 24
+  size.value = Math.min(base, Math.floor(((el.clientWidth - pad) / (longest() * 0.6)) * 10) / 10)
+}
+let ro = null
+onMounted(() => {
+  show($clicks.value, false)
+  fit()
+  ro = new ResizeObserver(fit)
+  ro.observe(root.value)
+})
+onUnmounted(() => ro?.disconnect())
 watch($clicks, (n, o) => show(n, active.value && n === o + 1))
 </script>
 
 <template>
-  <div class="term" :class="{ big }">
+  <div ref="root" class="term" :class="{ big }">
     <div class="term-bar"><i /><i /><i /></div>
-    <pre class="term-body" v-html="html" />
+    <pre class="term-body" :style="{ fontSize: size + 'px' }" v-html="html" />
   </div>
 </template>

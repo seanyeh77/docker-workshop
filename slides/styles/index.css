@@ -52,7 +52,7 @@
 .step-text { font-size: 24px; line-height: 1.5; color: var(--tb-mut); }
 
 /* ---------- Terminal: larger variant for break screens ---------- */
-.term { width: 1200px; max-width: 100%; }
+.term { width: 1400px; max-width: 100%; box-sizing: border-box; }
 .term-body { min-height: 0; }
 .term.big .term-body { font-size: 40px; padding: 30px 36px; }
 

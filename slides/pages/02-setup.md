@@ -6,8 +6,8 @@ chapter: Ch 2 · Set up Docker
 
 # Set up Docker
 
-- **2.1** 確認 Docker Desktop 已經在跑
-- **2.2** 跑第一個 Container
+- **2.1** 確認 Docker Desktop 運作中
+- **2.2** 執行第一個 Container
 
 ---
 layout: textbook
@@ -16,7 +16,7 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 跑你的第一個 Container
+# 執行第一個 Container
 
 <TerminalTyping :keep="2" :cmds="[
   { c: 'docker -v', o: 'Docker version 28.x.x, build xxxxxxx' },
@@ -42,7 +42,7 @@ chapter: Ch 2 · Set up Docker
 takeaway: 看到 Hello from Docker! 就代表成功；沒看到的舉手，TA 會過去。
 ---
 
-# 看到這個就成功
+# 檢查點：Docker 安裝完成
 
 <TerminalTyping all :cmds="[
   { c: 'docker run hello-world', o: '\nHello from Docker!\nThis message shows that your installation appears to be working correctly.' },

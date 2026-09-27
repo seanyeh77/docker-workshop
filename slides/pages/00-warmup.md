@@ -3,7 +3,7 @@ layout: objectives
 chapter: Warm-up
 ---
 
-# 3 小時後，你會自己做到
+# 學習目標
 
 1. 說出 Image、Container、Registry 各是什麼
 2. 寫一份 `Dockerfile`，把程式和環境打包成 Image
@@ -17,7 +17,7 @@ chapter: Warm-up
 ---
 layout: quiz
 chapter: Warm-up
-question: 你之前寫程式都在哪裡寫？
+question: 你過去在哪裡寫程式？
 slido: '#docker-ws'
 options:
   - 線上解題平台（Online Judge）

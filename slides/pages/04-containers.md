@@ -28,10 +28,10 @@ chapter: Ch 4 · Running Containers
 
 # Running Containers
 
-- **4.1** 背景執行、停止、刪除
+- **4.1** 背景執行、停止與刪除
 - **4.2** 環境變數
-- **4.3** 把 Port 開出來
-- **4.4** 資料要放哪：Volume
+- **4.3** Port Mapping
+- **4.4** 以 Volume 保存資料
 
 ---
 layout: textbook
@@ -40,9 +40,9 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 關掉 Terminal，服務就停了？
+# 背景執行 Container
 
-<TerminalTyping style="width:1500px" :keep="2" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker run -d --name=my-image my-username/my-image', o: '7c604fab2e45...' },
   { c: 'docker ps', o: 'CONTAINER ID   IMAGE                  STATUS         PORTS   NAMES\n7c604fab2e45   my-username/my-image   Up 2 seconds           my-image' },
 ]" />
@@ -74,7 +74,7 @@ steps:
     text: 停下來的 Container 才能刪；刪了就沒了。
 ---
 
-# 停下、重開、刪掉
+# 停止、重啟與刪除 Container
 
 <!--
 「離開」不等於「關掉」。背景執行的 Container 要用 docker stop 停。
@@ -88,9 +88,9 @@ ltag: Terminal
 clicks: 3
 ---
 
-# 故意失敗：名字已經被用過了
+# 常見錯誤：Container 名稱衝突
 
-<TerminalTyping style="width:1560px" :keep="3" :cmds="[
+<TerminalTyping :keep="3" :cmds="[
   { c: 'docker run -d --name=my-image my-username/my-image', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/my-image&quot; is already in use by container &quot;7c604fab2e45...&quot;.' },
   { c: 'docker rm -f my-image', o: 'my-image' },
   { c: 'docker run -d --name=my-image my-username/my-image', o: '0b8d1e5f93a2...' },
@@ -120,9 +120,9 @@ const cmds = [
 ]
 </script>
 
-# 同一個 Image，不同的設定
+# 環境變數
 
-<TerminalTyping style="width:1560px" :cmds="cmds" :keep="2" />
+<TerminalTyping :cmds="cmds" :keep="2" />
 
 ::note::
 
@@ -139,7 +139,7 @@ chapter: Ch 4 · Running Containers
 clicks: 2
 ---
 
-# Container 活著，但你連不到
+# Container 無法從外部連線
 
 <ChatBubbles :lines="[
   { who: 'left', name: '瀏覽器', text: 'localhost:3000，在嗎？' },
@@ -157,7 +157,7 @@ chapter: Ch 4 · Running Containers
 clicks: 1
 ---
 
-# -p 就是總機轉接
+# Port Mapping
 
 <PortMap />
 
@@ -185,9 +185,9 @@ const cmds = [
 ]
 </script>
 
-# 實作：把 Port 開出來
+# 實作：Port Mapping
 
-<TerminalTyping style="width:1500px" :cmds="cmds" :keep="3" />
+<TerminalTyping :cmds="cmds" :keep="3" />
 
 ::note::
 
@@ -205,7 +205,7 @@ chapter: Ch 4 · Running Containers
 takeaway: 瀏覽器打開 localhost:3000，看到 todo app 就成功。
 ---
 
-# 看到這個就成功
+# 檢查點：todo app 可以連線
 
 <BrowserMock />
 
@@ -216,9 +216,9 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 故意失敗：Port 已經有人用了
+# 常見錯誤：Port 已被占用
 
-<TerminalTyping style="width:1560px" :keep="2" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker run -d -p 3000:3000 --name=my-image-2 my-username/my-image', o: 'docker: Error response from daemon: ... Bind for 0.0.0.0:3000 failed:\nport is already allocated.' },
   { c: 'docker rm -f my-image-2', o: 'my-image-2' },
 ]" />
@@ -237,7 +237,7 @@ chapter: Ch 4 · Running Containers
 near: true
 ---
 
-# 在 todo app 加 3 筆待辦事項
+# 實作：新增 3 筆待辦事項
 
 <BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
 
@@ -272,9 +272,9 @@ ltag: Terminal
 clicks: 2
 ---
 
-# 那剛剛的 3 筆待辦事項呢？
+# 刪除 Container 後的資料
 
-<TerminalTyping style="width:1500px" :keep="2" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker rm -f my-image', o: 'my-image' },
   { c: 'docker run -d -p 3000:3000 --name=my-image my-username/my-image', o: '5d1c7a0e2b44...' },
 ]" />
@@ -293,7 +293,7 @@ chapter: Ch 4 · Running Containers
 clicks: 3
 ---
 
-# 資料要放在 Container 外面
+# 以 Volume 保存資料
 
 <ContainerStory :from="2" :to="5" :captions="[
   '',
@@ -323,7 +323,7 @@ chapter: Ch 4 · Running Containers
 clicks: 5
 ---
 
-# 拆解完整的 docker run
+# docker run 參數總覽
 
 <AnnotatedCommand :size="28" :parts="[
   { t: 'docker' },
@@ -342,9 +342,9 @@ ltag: Terminal
 clicks: 3
 ---
 
-# 實作：掛上 Volume 再做一次
+# 實作：掛載 Volume
 
-<TerminalTyping style="width:1560px" :keep="3" :cmds="[
+<TerminalTyping :keep="3" :cmds="[
   { c: 'docker volume create todo-data', o: 'todo-data' },
   { c: 'docker rm -f my-image', o: 'my-image' },
   { c: 'docker run -d -p 3000:3000 -v todo-data:/etc/todos --name=my-image my-username/my-image', o: '9a3f6c1d8e20...' },
@@ -365,7 +365,7 @@ chapter: Ch 4 · Running Containers
 takeaway: 加幾筆待辦事項，rm -f 之後用同一條 -v 指令重開，資料還在就成功。
 ---
 
-# 看到這個就成功
+# 檢查點：資料在重建後保留
 
 <BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
 
