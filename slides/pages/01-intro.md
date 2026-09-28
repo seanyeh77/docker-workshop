@@ -13,19 +13,26 @@ chapter: Ch 1 · Intro to Docker
 ---
 layout: figure
 chapter: Ch 1 · Intro to Docker
-clicks: 2
+clicks: 4
+takeaway: Docker 的做法：把「能跑的那台電腦」上的環境一起打包，讓程式到哪裡都能跑。
 ---
 
-# 環境差異問題
+# 同一份程式，換台電腦就跑不起來
 
 <ChatBubbles :lines="[
-  { who: 'left', name: '開發者', text: '在我電腦上可以跑啊。' },
-  { who: 'right', name: '主管', text: '那我們就把你的電腦出貨吧。' },
-  { who: 'left', name: 'Docker', text: '好，我把你的電腦打包好了。' },
+  { who: 'left', name: '你', text: '作業寫好了，推上 GitHub，你 clone 下來跑跑看。' },
+  { who: 'right', name: '組員', text: '<code>ModuleNotFoundError: No module named \'flask\'</code>' },
+  { who: 'left', name: '你', text: '可是在我電腦上可以跑啊。' },
+  { who: 'right', name: '組員', text: '那我把你的電腦搬回家？' },
 ]" />
 
 <!--
-全世界工程師都講過第一句。第二句是玩笑，但 Docker 做的真的就是這件事：把「能跑的那台電腦的環境」一起打包帶走。
+分組作業情境，一句一句點出來。
+1. 程式碼一模一樣，組員也有 clone 到。
+2. 但組員電腦沒裝 flask，版本也可能不同，所以跑不起來。
+3.「在我電腦上可以跑」是全世界工程師都講過的一句話。
+4. 搬電腦是玩笑，但 Docker 做的真的就是這件事：把能跑的那台電腦的環境一起打包帶走。
+最後帶到下方的重點句，接下一張的三個痛點。
 -->
 
 ---

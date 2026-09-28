@@ -25,4 +25,5 @@ const { $clicks } = useSlideContext()
 .chat-name { font-size: 20px; font-weight: 600; letter-spacing: 0.08em; color: var(--tb-mut); text-transform: uppercase; }
 .chat-bubble { border: 1.5px solid var(--tb-rule); background: #f6f8f7; padding: 22px 30px; font-size: 36px; line-height: 1.45; }
 .right .chat-bubble { background: var(--tb-svc); border-color: #1a1a1a; }
+.chat-bubble :deep(code) { font-family: var(--tb-mono); font-size: 0.8em; color: #9b2c20; background: none; padding: 0; }
 </style>
