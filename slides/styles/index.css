@@ -48,8 +48,6 @@
 
 /* ---------- Cards and compare rows that reveal on click ---------- */
 .col-card.off, .cmp-k.off, .cmp-v.off, .step.off { opacity: 0.18; }
-.col-text { font-size: 26px; line-height: 1.55; color: var(--tb-ink); }
-.step-text { font-size: 24px; line-height: 1.5; color: var(--tb-mut); }
 
 /* ---------- Terminal: larger variant for break screens ---------- */
 .term { width: 1400px; max-width: 100%; box-sizing: border-box; }
@@ -98,8 +96,6 @@
 .tb-note p, .tb-note-text { line-height: 1.65; }
 
 /* Steps: slightly larger code and text */
-.step-code { font-size: 24px; }
-.step-text { font-size: 26px; }
 
 /* Syntax colors for Terminal, diff, annotated command and layer diagram */
 .t-sheb, .t-eq, .t-cmt { color: #8a939c; }
@@ -108,3 +104,43 @@
 .t-val { color: #1f5fa8; }
 .t-cmd { color: #20262e; font-weight: 500; }
 .t-arg { color: #20262e; }
+
+/* ---------- Larger body text ---------- */
+.tb-main > p, .tb-main > ul, .tb-main > ol,
+.tb-group > p, .tb-group > ul, .fig-body > p { font-size: 40px; }
+.tb-note { font-size: 30px; }
+.tb-note-label { font-size: 20px; }
+.deflist > div { grid-template-columns: 270px 1fr; font-size: 38px; }
+.deflist b { font-size: 35px; }
+.slidev-layout pre.slidev-code, .slidev-layout .slidev-code { font-size: 31px !important; }
+.diff, .cd-code { font-size: 30px; }
+.tb-obj ol li { font-size: 40px; }
+.tb-obj ol li code, .sec-body ul { font-size: 35px; }
+.cmp > div { font-size: 34px; }
+.cmp-k { font-size: 26px !important; }
+.cmp-v code { font-size: 30px; }
+.col-text { font-size: 33px; line-height: 1.55; color: var(--tb-ink); }
+.col-text code { font-size: 29px; }
+.tb-cols .col-card { max-width: 520px; }
+.fig-take { font-size: 35px; }
+.step-title { font-size: 38px; }
+.step-code { font-size: 26px; }
+.step-text { font-size: 30px; color: var(--tb-mut); }
+.def-body p { font-size: 40px; }
+.def-body code { font-size: 35px; }
+.qz-opt, .qz-why p { font-size: 35px; }
+.qz-opt code, .qz-why code { font-size: 31px; }
+.tb-ref table { font-size: 29px; }
+.tb-ref td code { font-size: 27px; }
+.tile-desc { font-size: 26px; }
+.tile-desc code { font-size: 24px; }
+.end-body li { font-size: 32px; }
+.end-body li code { font-size: 30px; }
+.ann-lab span { font-size: 28px; }
+.slidev-layout .st-body p { font-size: 36px; }
+.break-note { font-size: 32px; }
+.tb-group .step-code { font-size: 24px; padding: 6px 12px; white-space: nowrap; }
+.def-ex p { font-size: 33px !important; }
+.def-ex p code { font-size: 29px; }
+.def-ex-label { font-size: 18px; }
+.tb-steps .steps-row { width: 1700px; max-width: 1760px; }

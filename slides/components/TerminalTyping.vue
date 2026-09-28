@@ -52,7 +52,7 @@ async function show(step, animate) {
 // Fit the longest line of any step into the box: shrink the font instead of
 // letting text run past the frame. IBM Plex Mono advances 0.6em per character.
 const root = ref(null)
-const size = ref(props.big ? 40 : 24)
+const size = ref(props.big ? 44 : 29)
 const plain = (s) => s.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, 'x')
 const longest = () => Math.max(
   ...props.cmds.map((x, i) => pOf(i).length + x.c.length + 2),
@@ -61,9 +61,9 @@ const longest = () => Math.max(
 function fit() {
   const el = root.value
   if (!el) return
-  const pad = props.big ? 72 : 56
-  const base = props.big ? 40 : 24
-  size.value = Math.min(base, Math.floor(((el.clientWidth - pad) / (longest() * 0.6)) * 10) / 10)
+  const pad = props.big ? 84 : 68
+  const base = props.big ? 44 : 29
+  size.value = Math.min(base, Math.floor(((el.clientWidth - pad) / (longest() * 0.62)) * 10) / 10)
 }
 let ro = null
 onMounted(() => {

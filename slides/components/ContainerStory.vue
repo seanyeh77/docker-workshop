@@ -86,5 +86,5 @@ const h = 190
 .fade.off { opacity: 0; }
 .pop { animation: story-pop 0.6s ease; }
 @keyframes story-pop { from { opacity: 0; } }
-.caption { margin: 18px 0 0; font-size: 28px; color: var(--tb-mut); min-height: 1.6em; }
+.caption { margin: 18px 0 0; font-size: 34px; color: var(--tb-mut); min-height: 1.6em; }
 </style>
