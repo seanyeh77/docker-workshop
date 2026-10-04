@@ -18,7 +18,7 @@ chapter: Warm-up
 layout: quiz
 chapter: Warm-up
 question: 你過去在哪裡寫程式？
-slido: '#docker-ws'
+slido: true
 options:
   - 線上解題平台（Online Judge）
   - Colab 或 Jupyter

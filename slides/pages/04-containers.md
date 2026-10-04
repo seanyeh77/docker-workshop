@@ -249,7 +249,7 @@ near: true
 layout: quiz
 chapter: Ch 4 · Running Containers
 question: 接續 Q1。把 Container A 用 docker rm 刪掉，再用同一個 Image 開一個新的 A，hello.txt 還在嗎？
-slido: '#docker-ws'
+slido: true
 clicks: 1
 answer: 1
 options:

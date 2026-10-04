@@ -1,9 +1,10 @@
 <script setup>
 import { useSlideContext } from '@slidev/client'
+import SlidoJoin from '../components/SlidoJoin.vue'
 
 // answer: index of the right option. Leave it out for a poll with no answer.
-// slido: event code shown beside the question so people can join.
-defineProps({ chapter: String, near: Boolean, question: String, options: Array, answer: Number, slido: String })
+// slido: show the Slido join panel (QR code and event code from utils/slido.js).
+defineProps({ chapter: String, near: Boolean, question: String, options: Array, answer: Number, slido: Boolean })
 const { $clicks } = useSlideContext()
 </script>
 
@@ -26,7 +27,7 @@ const { $clicks } = useSlideContext()
           </div>
         </div>
         <div v-if="$slots.default" class="qz-why" :class="{ on: answer === undefined || $clicks >= 1 }"><slot /></div>
-        <div v-if="slido" class="qz-slido"><span>slido.com</span><b>{{ slido }}</b></div>
+        <SlidoJoin v-if="slido" />
       </div>
     </div>
   </div>

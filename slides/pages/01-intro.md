@@ -174,7 +174,7 @@ VM 也能解決環境問題，只是比較重。
 layout: quiz
 chapter: Ch 1 · Intro to Docker
 question: 用同一個 Image 開了兩個 Container A 和 B。在 A 裡面建立 hello.txt，B 裡面看得到嗎？
-slido: '#docker-ws'
+slido: true
 options:
   - 看得到，因為它們來自同一個 Image
   - 看不到

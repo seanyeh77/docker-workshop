@@ -24,4 +24,4 @@ npm run build    # 輸出靜態網頁到 slides/dist
 
 push 到 main 且 `slides/` 有變動時，GitHub Actions 會自動建置並部署到 GitHub Pages。
 
-上課前記得把投影片裡的 Slido 代碼 `#docker-ws` 換成實際的活動代碼。
+Slido 活動代碼與 QR code 連結設定在 `slides/utils/slido.js`。
