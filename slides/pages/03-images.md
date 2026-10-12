@@ -12,17 +12,16 @@ chapter: Ch 3 · Building Images
 - **3.4** build 與 tag
 
 ---
-layout: cols
+layout: focus
 chapter: Ch 3 · Building Images
-reveal: true
-clicks: 2
-cards:
+clicks: 1
+items:
   - label: 做法 1
-    title: 手做後拍照存檔
-    text: 進到 Container 裡把東西裝好，再用 <code>commit</code> 存成 Image。
+    title: 以 commit 存檔
+    text: 進到 Container 裡把需要的東西裝好，再用 <code>docker container commit</code> 把當下的狀態存成 Image。
   - label: 做法 2
-    title: 照食譜做
-    text: 把步驟寫進 <code>Dockerfile</code>，交給 <code>docker build</code> 照著做。
+    title: 以 Dockerfile 建立
+    text: 把建立步驟寫成一份 <code>Dockerfile</code>，交給 <code>docker build</code> 照著執行，每次都能做出一樣的 Image。
 ---
 
 # 建立 Image 的兩種方式
@@ -32,22 +31,23 @@ cards:
 -->
 
 ---
-layout: steps
+layout: focus
 chapter: Ch 3 · Building Images
+numbered: true
 clicks: 3
-steps:
-  - title: 進去
+items:
+  - title: 進入 Container
     code: docker run -it ubuntu
-    text: 開一個 Container，直接進到它的 Terminal。
-  - title: 安裝
+    text: 用 ubuntu Image 開一個 Container，並直接進到它的 Terminal。
+  - title: 安裝 Node
     code: apt install -y nodejs
-    text: 在 Container 裡裝 Node。
-  - title: 離開
+    text: 在 Container 裡安裝 Node，這台 Container 原本是乾淨的 Ubuntu。
+  - title: 離開 Container
     code: exit
-    text: 回到自己的電腦。
-  - title: 存檔
+    text: 回到自己的電腦，提示字元會從 <code>root@...#</code> 變回原本的樣子。
+  - title: 存成 Image
     code: docker container commit
-    text: 把這個 Container 存成新的 Image。
+    text: 把剛剛裝好 Node 的 Container 存成新的 Image，命名為 <code>node-base</code>。
 ---
 
 # 以 commit 建立 Image 的流程

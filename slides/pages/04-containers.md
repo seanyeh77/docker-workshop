@@ -56,22 +56,23 @@ clicks: 2
 ]" />
 
 ---
-layout: steps
+layout: focus
 chapter: Ch 4 · Running Containers
+numbered: true
 clicks: 3
-steps:
+items:
   - title: 背景執行
     code: docker run -d
-    text: 開一個 Container 放著跑。
+    text: 開一個 Container 在背景執行，Terminal 可以馬上繼續使用。
   - title: 停止
     code: docker stop my-image
-    text: 停下來，但 Container 還在。
+    text: 讓 Container 停下來，但它還在，裡面的檔案也還在。
   - title: 重新啟動
     code: docker restart my-image
-    text: 停下來的 Container 可以再開。
+    text: 停下來的 Container 可以再啟動，接著上次的狀態繼續跑。
   - title: 刪除
     code: docker rm my-image
-    text: 停下來的 Container 才能刪；刪了就沒了。
+    text: 停下來的 Container 才能刪除；刪除之後，Container 裡的檔案也跟著消失。
 ---
 
 # 停止、重啟與刪除 Container

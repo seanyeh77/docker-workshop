@@ -144,3 +144,24 @@
 .def-ex p code { font-size: 29px; }
 .def-ex-label { font-size: 18px; }
 .tb-steps .steps-row { width: 1700px; max-width: 1760px; }
+
+/* ---------- Focus: one item at a time, list on the left ---------- */
+.slidev-layout.tb-focus { display: flex; flex-direction: column; gap: 22px; padding: 104px 80px 96px !important; }
+.slidev-layout.tb-focus > h1 { font-family: var(--tb-serif); font-size: 54px !important; font-weight: 600; line-height: 1.25; margin: 0; }
+.fc { flex: 1; min-height: 0; display: grid; grid-template-columns: 440px minmax(0, 1fr); column-gap: 80px; align-items: center; }
+.fc-index { list-style: none; margin: 0; padding: 0; display: grid; }
+.fc-index li { display: flex; align-items: baseline; gap: 20px; padding: 20px 0 20px 22px; border-top: 1.5px solid var(--tb-rule); border-left: 5px solid transparent; color: #9aa3ab; font-size: 30px; line-height: 1.35; transition: color 0.3s, border-color 0.3s; }
+.fc-index li:last-child { border-bottom: 1.5px solid var(--tb-rule); }
+.fc-index li.done { color: var(--tb-mut); }
+.fc-index li.on { color: var(--tb-ink); font-weight: 600; border-left-color: var(--tb-teal); }
+.fc-n { font-family: var(--tb-serif); font-weight: 600; font-size: 30px; color: inherit; min-width: 44px; }
+.fc-index li.on .fc-n { color: var(--tb-teal); }
+.fc-main { display: flex; flex-direction: column; gap: 26px; border-left: 3px solid var(--tb-ink); padding: 12px 0 12px 64px; }
+.fc-label { font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tb-teal); }
+.fc-title { font-family: var(--tb-serif); font-size: 76px; font-weight: 600; line-height: 1.15; color: var(--tb-ink); }
+.slidev-layout.tb-focus .fc-code { align-self: flex-start; font-family: var(--tb-mono); font-size: 36px; background: var(--tb-code); border: 1.5px solid var(--tb-rule); padding: 10px 20px; }
+.fc-text { font-size: 40px; line-height: 1.6; color: var(--tb-ink); max-width: 1080px; }
+.fc-text code { font-family: var(--tb-mono); background: var(--tb-code); padding: 0 8px; font-size: 0.86em; }
+.fc-swap-enter-active, .fc-swap-leave-active { transition: opacity 0.25s, transform 0.25s; }
+.fc-swap-enter-from { opacity: 0; transform: translateY(12px); }
+.fc-swap-leave-to { opacity: 0; }

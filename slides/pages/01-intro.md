@@ -36,20 +36,19 @@ takeaway: Docker 的做法：把「能跑的那台電腦」上的環境一起打
 -->
 
 ---
-layout: cols
+layout: focus
 chapter: Ch 1 · Intro to Docker
-reveal: true
-clicks: 3
-cards:
+clicks: 2
+items:
   - label: 痛點 1
     title: 環境不一致
-    text: 分組作業你傳 Python 檔給組員，他的版本不同，跑不起來。
+    text: 分組作業你傳 Python 檔給組員，他電腦上的 Python 版本和套件跟你不同，程式就跑不起來。
   - label: 痛點 2
     title: 安裝很繁瑣
-    text: 接手學長的專案，要先裝資料庫、裝語言環境，裝一整天。
+    text: 接手學長的專案，要先裝資料庫、裝語言環境、設環境變數，光是讓它跑起來就要花上一整天。
   - label: 痛點 3
     title: 版本會打架
-    text: A 課要 PostgreSQL 12，B 課要 PostgreSQL 16，同一台電腦很難共存。
+    text: A 課要 PostgreSQL 12，B 課要 PostgreSQL 16，兩個版本很難裝在同一台電腦上共存。
 ---
 
 # Docker 要解決的三個問題
