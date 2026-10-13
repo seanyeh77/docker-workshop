@@ -10,7 +10,7 @@ routerMode: hash
 drawings:
   enabled: false
 layout: cover
-subtitle: 把環境一起打包帶走
+subtitle: 將執行環境與程式一併封裝
 ---
 
 # Docker Workshop

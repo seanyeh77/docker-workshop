@@ -5,10 +5,10 @@ chapter: Warm-up
 
 # 學習目標
 
-1. 說出 Image、Container、Registry 各是什麼
-2. 寫一份 `Dockerfile`，把程式和環境打包成 Image
-3. 用 `-d`、`-p`、`-v` 把 todo app 跑成一個網站
-4. 用一行 `docker compose up` 取代一長串指令
+1. 說明 Image、Container、Registry 的定義
+2. 撰寫 `Dockerfile`，將程式與環境封裝為 Image
+3. 以 `-d`、`-p`、`-v` 將 todo app 部署為網站
+4. 以 `docker compose up` 取代冗長的 `docker run` 指令
 
 <!--
 最後一項就是今天的終點：一個真的能在瀏覽器打開的 todo app，而且資料刪掉 Container 也不會不見。

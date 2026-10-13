@@ -14,10 +14,10 @@ chapter: Ch 1 · Intro to Docker
 layout: figure
 chapter: Ch 1 · Intro to Docker
 clicks: 4
-takeaway: Docker 的做法：把「能跑的那台電腦」上的環境一起打包，讓程式到哪裡都能跑。
+takeaway: Docker 將程式所需的執行環境一併封裝，使程式在任何電腦上都能執行。
 ---
 
-# 同一份程式，換台電腦就跑不起來
+# 同一份程式在不同電腦上的執行結果
 
 <ChatBubbles :lines="[
   { who: 'left', name: '你', text: '作業寫好了，推上 GitHub，你 clone 下來跑跑看。' },
@@ -42,13 +42,13 @@ clicks: 2
 items:
   - label: 痛點 1
     title: 環境不一致
-    text: 分組作業你傳 Python 檔給組員，他電腦上的 Python 版本和套件跟你不同，程式就跑不起來。
+    text: 分組作業將 Python 檔交給組員後，若對方電腦上的 Python 版本與套件不同，程式便無法執行。
   - label: 痛點 2
-    title: 安裝很繁瑣
-    text: 接手學長的專案，要先裝資料庫、裝語言環境、設環境變數，光是讓它跑起來就要花上一整天。
+    title: 安裝步驟繁瑣
+    text: 接手既有專案時，需要先安裝資料庫與語言環境，並設定環境變數，才能讓程式正常執行。
   - label: 痛點 3
-    title: 版本會打架
-    text: A 課要 PostgreSQL 12，B 課要 PostgreSQL 16，兩個版本很難裝在同一台電腦上共存。
+    title: 版本衝突
+    text: 甲課程需要 PostgreSQL 12，乙課程需要 PostgreSQL 16，兩個版本難以在同一台電腦上共存。
 ---
 
 # Docker 要解決的三個問題
@@ -64,7 +64,7 @@ chapter: Ch 1 · Intro to Docker
 
 # git 管理程式碼，不管理執行環境
 
-組員 `git clone` 下來，還是缺 Python 的版本、缺資料庫、缺環境變數。Docker 補上的就是這一塊。
+組員以 `git clone` 取得程式碼後，仍缺少對應的 Python 版本、資料庫與環境變數。Docker 負責的正是這個部分。
 
 <!--
 你們上次學過 git，會想說「我不是已經用 git 分享程式了嗎？」
@@ -80,18 +80,18 @@ clicks: 3
 # Docker 的核心元件
 
 <div class="deflist">
-  <div v-click="1"><b>Image</b><span>打包好的環境：檔案、執行檔、函式庫和設定。像做甜點的食材。</span></div>
-  <div v-click="2"><b>Container</b><span>用 Image 跑起來的程式，彼此獨立。像裝盤上桌的料理。</span></div>
-  <div v-click="3"><b>Registry</b><span>放 Image 的雲端倉庫，最常用的是 Docker Hub。像食材的全聯。</span></div>
+  <div v-click="1"><b>Image</b><span>封裝好的環境，包含檔案、執行檔、函式庫與設定。類比為烹飪所需的食材。</span></div>
+  <div v-click="2"><b>Container</b><span>由 Image 啟動的執行實體，彼此獨立。類比為完成的料理。</span></div>
+  <div v-click="3"><b>Registry</b><span>存放 Image 的雲端儲存庫，最常用的是 Docker Hub。類比為供應食材的超市。</span></div>
 </div>
 
 ::note::
 
 <Note :notes="[
-  '三個名詞今天會一直出現，先記住比喻就好。',
-  'Image 是材料，本身不會動。',
-  '同一份 Image 可以開很多個 Container，每個都獨立。',
-  'Docker Hub 之於 Image，就像 GitHub 之於程式碼。',
+  '這三個名詞會貫穿整堂課，先以類比理解即可。',
+  'Image 是靜態的材料，本身不會執行。',
+  '同一個 Image 可以啟動多個 Container，彼此獨立。',
+  'Docker Hub 與 Image 的關係，相當於 GitHub 與程式碼的關係。',
 ]" />
 
 ---
@@ -101,11 +101,11 @@ term: Image
 kind: 名詞
 ---
 
-一個標準化的套件，裝著程式執行需要的檔案、執行檔、函式庫和設定。它由一層層疊起來，而且建好之後不能改，要改就建一個新版本。
+一個標準化的套件，包含程式執行所需的檔案、執行檔、函式庫與設定。Image 由多個 Layer 堆疊而成，建立後即不可修改；若需變更，必須建立新的版本。
 
 ::example::
 
-最底層是 Ubuntu，中間疊上 Node，最上層是你的程式。就像 git 的 commit：一個疊一個，舊的不會被改掉，只會多一個新的。
+最底層為 Ubuntu，中間為 Node，最上層為應用程式。此結構與 git commit 相同：新的版本疊加在舊的版本之上，既有版本不會被修改。
 
 <!--
 Immutable 用 git commit 解釋：commit 之後不能改，只能再開一個新的 commit。
@@ -118,11 +118,11 @@ term: Container
 kind: 名詞
 ---
 
-用 Image 跑起來的程式。它自己帶著需要的一切，不依賴你電腦上裝了什麼，也不會影響你的電腦或其他 Container。
+由 Image 啟動的執行實體。它包含執行所需的一切，不依賴主機上已安裝的軟體，也不會影響主機或其他 Container。
 
 ::example::
 
-同一份 `node-base` Image 可以同時開 3 個 Container，在其中一個裝東西，另外 2 個不會多出任何東西。
+以同一個 `node-base` Image 同時啟動 3 個 Container，在其中一個安裝套件，其餘 2 個不受影響。
 
 <!--
 四個特性：Self-contained、Isolated、Independent、Portable。
@@ -133,7 +133,7 @@ kind: 名詞
 layout: figure
 chapter: Ch 1 · Intro to Docker
 clicks: 4
-takeaway: 今天會把這條線從頭走到尾：pull 下來、run 起來、stop、rm。
+takeaway: 本課程將依序實作 pull、run、stop、rm 四個階段。
 ---
 
 # Container 的生命週期
@@ -156,10 +156,10 @@ right: Container
 reveal: true
 clicks: 4
 rows:
-  - [比喻, 整棟透天厝，自己的水電和廚房, 雅房，房間各自上鎖，共用大樓水電]
-  - [裝了什麼, 程式、套件，再加一整套作業系統, 程式和套件，共用電腦的 OS 核心]
-  - [啟動, 像開一台新電腦，要等開機, 像開一個程式，幾乎立刻好]
-  - [大小, 動輒數 GB, 常見幾十到幾百 MB]
+  - [類比, 獨棟住宅，擁有獨立的水電與廚房, 公寓套房，各自上鎖並共用大樓水電]
+  - [包含內容, 程式、套件與完整的作業系統, 程式與套件，共用主機的 OS 核心]
+  - [啟動, 如同啟動一台新電腦，需要等待開機, 如同啟動一個程式，幾乎立即完成]
+  - [大小, 通常為數 GB, 通常為數十至數百 MB]
 ---
 
 # VM 與 Container 的差異

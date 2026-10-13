@@ -26,9 +26,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '先開 Docker Desktop，等左下角顯示它在跑。',
-  'docker -v 只檢查指令有沒有裝好，Docker Desktop 沒開也會顯示版本。',
-  'hello-world 真的會 pull 一個 Image 再跑起來，這才算裝好。',
+  '先開啟 Docker Desktop，確認左下角顯示正在執行。',
+  'docker -v 僅確認指令已安裝，即使 Docker Desktop 未開啟也會顯示版本。',
+  'hello-world 會實際 pull 一個 Image 並執行，成功即代表安裝完成。',
 ]" />
 
 <!--
@@ -39,7 +39,7 @@ clicks: 2
 ---
 layout: figure
 chapter: Ch 2 · Set up Docker
-takeaway: 看到 Hello from Docker! 就代表成功；沒看到的舉手，TA 會過去。
+takeaway: 出現 Hello from Docker! 即代表安裝成功；若未出現，請舉手由 TA 協助。
 ---
 
 # 檢查點：Docker 安裝完成

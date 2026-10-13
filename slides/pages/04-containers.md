@@ -14,7 +14,7 @@ clicks: 1
 
 <Countdown :minutes="10" />
 
-<p class="break-note">stop 之後要 restart 才會回來，請準時。</p>
+<p class="break-note">請於倒數結束前回到座位。</p>
 
 <!--
 回來時按一下，打出 docker restart audience。等一下講到 stop 和 restart，可以說「你們剛剛就被 restart 過了」。
@@ -50,9 +50,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '之前跑 Container 都要讓 Terminal 開著，一關服務就停了。',
-  '-d 讓 Container 在背景執行，Terminal 馬上就能繼續用。',
-  'docker ps 列出正在跑的 Container，STATUS 是 Up 代表活著。',
+  '先前執行 Container 時必須保持 Terminal 開啟，關閉後服務即停止。',
+  '-d 使 Container 在背景執行，Terminal 可立即繼續使用。',
+  'docker ps 列出執行中的 Container，STATUS 為 Up 代表正在執行。',
 ]" />
 
 ---
@@ -63,16 +63,16 @@ clicks: 3
 items:
   - title: 背景執行
     code: docker run -d
-    text: 開一個 Container 在背景執行，Terminal 可以馬上繼續使用。
+    text: 啟動一個在背景執行的 Container，Terminal 可立即繼續使用。
   - title: 停止
     code: docker stop my-image
-    text: 讓 Container 停下來，但它還在，裡面的檔案也還在。
+    text: 停止 Container 的執行；Container 與其中的檔案仍會保留。
   - title: 重新啟動
     code: docker restart my-image
-    text: 停下來的 Container 可以再啟動，接著上次的狀態繼續跑。
+    text: 重新啟動已停止的 Container，並從先前的狀態繼續執行。
   - title: 刪除
     code: docker rm my-image
-    text: 停下來的 Container 才能刪除；刪除之後，Container 裡的檔案也跟著消失。
+    text: 僅能刪除已停止的 Container；刪除後，其中的檔案也會一併移除。
 ---
 
 # 停止、重啟與刪除 Container
@@ -100,10 +100,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '同一個名字不能有兩個 Container。',
-  '剛剛那個 my-image 還在，所以名稱衝突。',
-  'rm -f 會先停再刪，一步到位。',
-  '之後每次要重開同名的 Container，都先 rm -f。',
+  '同一名稱不能同時指定給兩個 Container。',
+  '先前的 my-image 仍存在，因此發生名稱衝突。',
+  'rm -f 會先停止再刪除 Container。',
+  '之後重新啟動同名 Container 前，請先執行 rm -f。',
 ]" />
 
 ---
@@ -128,10 +128,10 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  'Dockerfile 裡的 ENV 是預設值，實際用時常要改，例如資料庫的密碼和名稱。',
-  '-e 設一個環境變數，會蓋掉 Image 裡的預設值。最後的 env 會把所有變數印出來。',
-  '變數一多，就寫進 .env 檔。',
-  '--env-file 一次讀進整個檔案。--rm 讓 Container 跑完就自動刪掉。',
+  'Dockerfile 中的 ENV 為預設值，實際使用時常需調整，例如資料庫的密碼與名稱。',
+  '-e 設定一個環境變數，並覆蓋 Image 中的預設值。最後的 env 會輸出所有變數。',
+  '變數較多時，可寫入 .env 檔。',
+  '--env-file 一次讀取整個檔案；--rm 使 Container 結束後自動刪除。',
 ]" />
 
 ---
@@ -165,8 +165,8 @@ clicks: 1
 ::note::
 
 <Note :notes="[
-  'Container 像大樓裡的房間，外面打不進去。',
-  '-p 3000:3000：外面打到電腦的 3000，轉接到房間裡的 3000。左邊是電腦，右邊是 Container。',
+  'Container 類似大樓中的房間，外部無法直接連入。',
+  '-p 3000:3000：連到主機 3000 的請求會轉送到 Container 的 3000。左側為主機，右側為 Container。',
 ]" />
 
 ---
@@ -193,17 +193,17 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '先把沒開 Port 的那個刪掉。',
-  '只寫 -p 3000：Container 的 3000 會接到電腦上一個隨機的 Port。',
-  '這次是 50683，每次都不一樣，開發時很不方便。',
-  '再刪掉，這次把兩邊都寫清楚。',
-  '電腦的 3000 固定接到 Container 的 3000。',
+  '先刪除未設定 Port 的 Container。',
+  '僅指定 -p 3000 時，Container 的 3000 會對應到主機上隨機的 Port。',
+  '此次為 50683，每次皆不同，不利於開發。',
+  '再次刪除，並明確指定兩側的 Port。',
+  '主機的 3000 固定對應到 Container 的 3000。',
 ]" />
 
 ---
 layout: figure
 chapter: Ch 4 · Running Containers
-takeaway: 瀏覽器打開 localhost:3000，看到 todo app 就成功。
+takeaway: 以瀏覽器開啟 localhost:3000，出現 todo app 即代表成功。
 ---
 
 # 檢查點：todo app 可以連線
@@ -227,9 +227,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '同一個 Port 只能接一個 Container。',
-  '3000 已經接到 my-image 了，第二個接不上。',
-  '失敗的 Container 還留著，先刪掉。想同時開兩個，就把第二個改成 -p 3001:3000。',
+  '同一個 Port 僅能對應一個 Container。',
+  '3000 已對應到 my-image，第二個 Container 無法使用。',
+  '啟動失敗的 Container 仍會保留，需先刪除。若要同時執行兩個，可將第二個改為 -p 3001:3000。',
 ]" />
 
 ---
@@ -259,7 +259,7 @@ options:
   - 要先 commit 才會在
 ---
 
-不見了。Image 建好就不會改，檔案只存在被刪掉的那個 Container 裡。commit 確實會存成新的 Image，但你是用原本的 Image 重開，所以一樣看不到。
+不見了。Image 建立後不會被修改，檔案僅存在於已刪除的 Container 中。commit 雖會產生新的 Image，但此處是以原本的 Image 重新啟動，因此看不到該檔案。
 
 <!--
 先投票，再按一下揭曉。
@@ -283,9 +283,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '待辦事項存在 Container 裡的 /etc/todos。',
-  '把 Container 刪掉。',
-  '用同一個 Image 重開，重新整理瀏覽器：3 筆全部不見了。',
+  '待辦事項儲存於 Container 中的 /etc/todos。',
+  '刪除 Container。',
+  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失。',
 ]" />
 
 ---
@@ -299,10 +299,10 @@ clicks: 3
 <ContainerStory :from="2" :to="5" :captions="[
   '',
   '',
-  'A 裡有 hello.txt，B 是空的。',
-  'A 刪掉重開，hello.txt 跟著不見：這就是 Q2 的答案。',
-  '加一個 Volume 掛進 A，hello.txt 改存在 Volume 裡。',
-  'A 再刪掉重開，接回同一個 Volume，hello.txt 還在。',
+  'A 中有 hello.txt，B 為空。',
+  '刪除並重新啟動 A 後，hello.txt 隨之消失，此即 Q2 的答案。',
+  '將 Volume 掛載至 A，hello.txt 改為儲存於 Volume 中。',
+  '再次刪除並重新啟動 A，掛載同一個 Volume 後，hello.txt 仍然存在。',
 ]" />
 
 ---
@@ -312,11 +312,11 @@ term: Volume
 kind: 名詞
 ---
 
-Docker 管理的一塊儲存空間，放在 Container 外面。把它掛到 Container 裡的某個資料夾，寫進那個資料夾的檔案就會存在 Volume 裡，Container 刪掉也不會消失。
+由 Docker 管理、位於 Container 之外的儲存空間。將其掛載至 Container 中的目錄後，寫入該目錄的檔案會儲存於 Volume，即使刪除 Container 也不會消失。
 
 ::example::
 
-Container 像飯店房間，退房（rm）時房裡的東西會被清掉；Volume 是寄放在櫃檯的行李，下次入住（run）再領回來。
+Container 類似飯店房間，退房（rm）時房內物品會被清除；Volume 類似寄放於櫃檯的行李，再次入住（run）時可取回。
 
 ---
 layout: textbook
@@ -330,10 +330,10 @@ clicks: 5
   { t: 'docker' },
   { t: 'run' },
   { t: '-d', label: '背景執行', h: 40 },
-  { t: '-p 3000:3000', label: '電腦的 Port : Container 的 Port', h: 120 },
-  { t: '-v todo-data:/etc/todos', label: 'Volume : Container 裡的資料夾', h: 40 },
-  { t: '--name=my-image', label: 'Container 的名字', h: 120 },
-  { t: 'my-username/my-image', label: '用哪個 Image', h: 40 },
+  { t: '-p 3000:3000', label: '主機 Port : Container Port', h: 120 },
+  { t: '-v todo-data:/etc/todos', label: 'Volume : Container 內的目錄', h: 40 },
+  { t: '--name=my-image', label: 'Container 名稱', h: 120 },
+  { t: 'my-username/my-image', label: '使用的 Image', h: 40 },
 ]" />
 
 ---
@@ -354,16 +354,16 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '先建一個 Volume，專門放 todo app 的資料。',
-  '建好 Volume。',
-  '刪掉舊的 Container。',
-  '用 -v 把 todo-data 掛到 /etc/todos，todo app 的資料就寫在這裡。',
+  '先建立一個 Volume，用於存放 todo app 的資料。',
+  'Volume 建立完成。',
+  '刪除舊的 Container。',
+  '以 -v 將 todo-data 掛載至 /etc/todos，todo app 的資料會寫入此處。',
 ]" />
 
 ---
 layout: figure
 chapter: Ch 4 · Running Containers
-takeaway: 加幾筆待辦事項，rm -f 之後用同一條 -v 指令重開，資料還在就成功。
+takeaway: 新增數筆待辦事項，執行 rm -f 後以相同的 -v 指令重新啟動，資料仍存在即代表成功。
 ---
 
 # 檢查點：資料在重建後保留

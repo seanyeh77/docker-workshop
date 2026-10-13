@@ -6,12 +6,12 @@ big: true
 
 # 課程重點整理
 
-<Tile variant="hero" label="一句話" value="把環境一起打包帶走">程式、套件、設定都在 Image 裡，到哪台電腦都一樣跑</Tile>
-<Tile label="食材" value="Image">一層層疊起來，建好不能改</Tile>
-<Tile label="上桌的料理" value="Container">用 Image 跑起來，彼此獨立</Tile>
-<Tile variant="accent" label="食譜" value="Dockerfile" mono>把做 Image 的步驟寫下來</Tile>
-<Tile label="寄放的行李" value="Volume">Container 刪掉，資料還在</Tile>
-<Tile label="套餐" value="compose.yaml" mono wide>一長串 docker run 變成一行 docker compose up</Tile>
+<Tile variant="hero" label="核心概念" value="將環境與程式一併封裝">程式、套件與設定皆包含於 Image，在任何電腦上的執行結果一致</Tile>
+<Tile label="食材" value="Image">由多個 Layer 堆疊而成，建立後不可修改</Tile>
+<Tile label="料理" value="Container">由 Image 啟動，彼此獨立</Tile>
+<Tile variant="accent" label="食譜" value="Dockerfile" mono>記錄建立 Image 的步驟</Tile>
+<Tile label="寄放的行李" value="Volume">刪除 Container 後資料仍保留</Tile>
+<Tile label="套餐" value="compose.yaml" mono wide>以 docker compose up 取代冗長的 docker run 指令</Tile>
 
 ---
 layout: statement
@@ -20,7 +20,7 @@ chapter: Summary
 
 # 環境可以跟著程式一起交付
 
-開場那句「把你的電腦出貨」現在做得到了：把環境寫進 `Dockerfile` 和 `compose.yaml`，別人 `git clone` 下來，一行 `docker compose up` 就能跑。
+將環境寫入 `Dockerfile` 與 `compose.yaml` 後，他人以 `git clone` 取得專案，執行 `docker compose up` 即可啟動。
 
 ---
 layout: reference
@@ -32,19 +32,19 @@ cols: 2
 
 | 指令 | 用途 |
 | --- | --- |
-| `docker run -it ubuntu` | 開一個 Container 並進去 |
-| `docker container commit` | 把 Container 存成 Image |
-| `docker build -t name .` | 照 Dockerfile 建 Image |
+| `docker run -it ubuntu` | 啟動 Container 並進入 |
+| `docker container commit` | 將 Container 儲存為 Image |
+| `docker build -t name .` | 依 Dockerfile 建立 Image |
 | `docker image ls` | 列出所有 Image |
-| `docker image history` | 看 Image 的每一層 |
+| `docker image history` | 列出 Image 的每個 Layer |
 
 | 指令 | 用途 |
 | --- | --- |
-| `docker run -d -p -v` | 背景執行、開 Port、掛 Volume |
-| `docker ps` | 看正在跑的 Container |
+| `docker run -d -p -v` | 背景執行、對應 Port、掛載 Volume |
+| `docker ps` | 列出執行中的 Container |
 | `docker rm -f name` | 停止並刪除 Container |
 | `docker volume create` | 建立 Volume |
-| `docker compose up -d` | 照 compose.yaml 開起來 |
+| `docker compose up -d` | 依 compose.yaml 啟動服務 |
 
 ---
 layout: end

@@ -17,11 +17,11 @@ chapter: Ch 3 · Building Images
 clicks: 1
 items:
   - label: 做法 1
-    title: 以 commit 存檔
-    text: 進到 Container 裡把需要的東西裝好，再用 <code>docker container commit</code> 把當下的狀態存成 Image。
+    title: 以 commit 建立
+    text: 在 Container 中安裝所需套件，再以 <code>docker container commit</code> 將當下狀態儲存為 Image。
   - label: 做法 2
     title: 以 Dockerfile 建立
-    text: 把建立步驟寫成一份 <code>Dockerfile</code>，交給 <code>docker build</code> 照著執行，每次都能做出一樣的 Image。
+    text: 將建立步驟寫成 <code>Dockerfile</code>，由 <code>docker build</code> 依序執行，每次都能產生相同的 Image。
 ---
 
 # 建立 Image 的兩種方式
@@ -38,16 +38,16 @@ clicks: 3
 items:
   - title: 進入 Container
     code: docker run -it ubuntu
-    text: 用 ubuntu Image 開一個 Container，並直接進到它的 Terminal。
+    text: 以 ubuntu Image 啟動一個 Container，並進入其 Terminal。
   - title: 安裝 Node
     code: apt install -y nodejs
-    text: 在 Container 裡安裝 Node，這台 Container 原本是乾淨的 Ubuntu。
+    text: 在 Container 中安裝 Node；此 Container 原本僅包含基本的 Ubuntu。
   - title: 離開 Container
     code: exit
-    text: 回到自己的電腦，提示字元會從 <code>root@...#</code> 變回原本的樣子。
-  - title: 存成 Image
+    text: 返回主機，提示字元由 <code>root@...#</code> 恢復為原本的格式。
+  - title: 儲存為 Image
     code: docker container commit
-    text: 把剛剛裝好 Node 的 Container 存成新的 Image，命名為 <code>node-base</code>。
+    text: 將已安裝 Node 的 Container 儲存為新的 Image，命名為 <code>node-base</code>。
 ---
 
 # 以 commit 建立 Image 的流程
@@ -81,12 +81,12 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '指令都在共用連結，直接複製貼上。',
-  '-it 讓你進到 Container 裡操作。提示字元變成 root@ 開頭，代表你已經在裡面了。',
-  '這台 Container 是乾淨的 Ubuntu，沒有 Node，要自己裝。',
-  '印出 Hello world! 就代表 Node 裝好了。',
-  'exit 回到自己的電腦，提示字元變回來。',
-  'commit 把這個 Container 的狀態存成新的 Image，名字叫 node-base。',
+  '指令皆已放在共用連結，可直接複製使用。',
+  '-it 用於進入 Container 操作。提示字元變為 root@ 開頭，代表已位於 Container 內。',
+  '此 Container 僅包含基本的 Ubuntu，需自行安裝 Node。',
+  '輸出 Hello world! 代表 Node 安裝完成。',
+  'exit 返回主機，提示字元恢復原狀。',
+  'commit 將此 Container 的狀態儲存為新的 Image，名稱為 node-base。',
 ]" />
 
 <!--
@@ -102,9 +102,9 @@ reveal: true
 clicks: 4
 rows:
   - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
-  - [看歷史, '<code>docker image history</code>', '<code>git log</code>']
-  - [取名字, '<code>docker image tag</code>', '<code>git tag</code>']
-  - [存了什麼, 整個 Container 的檔案狀態, 只有 add 過的檔案]
+  - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
+  - [命名, '<code>docker image tag</code>', '<code>git tag</code>']
+  - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
 ---
 
 # Docker 與 git 的對應
@@ -166,13 +166,13 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '這次用剛剛做好的 node-base 開 Container，裡面已經有 Node。',
-  '進到 Container 裡。',
-  '把一行程式寫進 app.js。',
-  '先在裡面跑一次確認。',
+  '以剛建立的 node-base 啟動 Container，其中已包含 Node。',
+  '進入 Container。',
+  '將一行程式寫入 app.js。',
+  '先在 Container 內執行一次確認結果。',
   '離開 Container。',
-  '存成 sample-app，並用 -c 指定啟動時要跑的指令。',
-  '不用再進去，run 起來就直接印出結果。',
+  '儲存為 sample-app，並以 -c 指定啟動時執行的指令。',
+  '無須進入 Container，執行後即直接輸出結果。',
 ]" />
 
 ---
@@ -188,11 +188,11 @@ clicks: 4
   { t: 'container' },
   { t: 'commit' },
   { t: '-c' },
-  { t: '&quot;CMD node app.js&quot;', label: '啟動時要跑的指令', h: 40 },
+  { t: '&quot;CMD node app.js&quot;', label: '啟動時執行的指令', h: 40 },
   { t: '-m' },
-  { t: '&quot;Add app&quot;', label: '這一版的說明', h: 110 },
-  { t: 'app-container', label: '從哪個 Container', h: 40 },
-  { t: 'sample-app', label: '新 Image 的名字', h: 110 },
+  { t: '&quot;Add app&quot;', label: '此版本的說明', h: 110 },
+  { t: 'app-container', label: '來源 Container', h: 40 },
+  { t: 'sample-app', label: '新 Image 的名稱', h: 110 },
 ]" />
 
 ---
@@ -211,8 +211,8 @@ clicks: 1
 ::note::
 
 <Note :notes="[
-  'app-container 就是用 node-base 開的，裡面有 app.js。',
-  '同一個 node-base 開一個新的 Container，列出檔案：沒有 app.js。',
+  'app-container 由 node-base 啟動，其中包含 app.js。',
+  '以同一個 node-base 啟動新的 Container 並列出檔案，其中沒有 app.js。',
 ]" />
 
 ---
@@ -227,7 +227,7 @@ options:
   - 要看 B 是在 A 建檔之前還是之後開的
 ---
 
-看不到。每個 Container 各自獨立，在 A 裡做的事不會影響 B，你們剛剛用 `docker run node-base ls` 自己證明了。
+看不到。每個 Container 各自獨立，在 A 中的操作不會影響 B，剛才的 `docker run node-base ls` 已驗證此結果。
 
 <!--
 回頭公布 Ch1 那題的票數，再按一下揭曉。
@@ -242,9 +242,9 @@ clicks: 2
 # 同一 Image 的獨立 Container
 
 <ContainerStory :from="0" :to="2" :captions="[
-  '一個 Image，還沒開任何 Container。',
-  '用同一個 Image，開出 A 和 B 兩個 Container。',
-  'A 裡建立 hello.txt，B 還是空的：每個 Container 各自獨立。',
+  '一個 Image，尚未啟動任何 Container。',
+  '以同一個 Image 啟動 A 與 B 兩個 Container。',
+  '在 A 中建立 hello.txt，B 仍為空：每個 Container 各自獨立。',
 ]" />
 
 <!--
@@ -258,7 +258,7 @@ chapter: Ch 3 · Building Images
 
 # commit 無法記錄建立過程
 
-就像煮到一半拍照存檔，看不出中間加了什麼。把步驟寫下來交給 Docker 照著做，這份食譜就是 `Dockerfile`。
+commit 只保存最終狀態，無法得知過程中執行了哪些步驟。將建立步驟寫成文件交由 Docker 執行，這份文件即為 `Dockerfile`。
 
 ---
 layout: textbook
@@ -324,11 +324,11 @@ CMD ["node", "./src/index.js"]
 ::note::
 
 <Note :notes="[
-  '剛剛手做的 node-base，在這裡只要一行 FROM。',
-  '設定之後指令在哪個資料夾執行。',
-  '把電腦上的專案檔案複製進 Image。',
+  '先前手動建立的 node-base，在此只需一行 FROM。',
+  '設定後續指令的執行目錄。',
+  '將主機上的專案檔案複製到 Image 中。',
   '建立 Image 時安裝套件。',
-  'Container 啟動時要跑的指令。',
+  'Container 啟動時執行的指令。',
 ]" />
 
 ---
@@ -350,12 +350,12 @@ CMD ["node", "./src/index.js"]
 ::note::
 
 <Note :notes="[
-  '五行，每一行都是一個指令加上它的參數。',
-  'FROM：基底 Image。node:22-alpine 是官方做好的 Node 22，底層是很小的 Alpine Linux。',
-  'WORKDIR：之後的指令都在 /app 裡執行，相當於 cd 進去。',
-  'COPY . .：第一個點是電腦上的目前資料夾，第二個點是 Image 裡的 /app。',
-  'RUN：只在 build 的時候跑一次，這裡用 yarn 安裝套件。',
-  'CMD：每次 Container 啟動時跑。用中括號把指令和參數分開寫。',
+  '共五行，每一行由一個指令與其參數組成。',
+  'FROM：基底 Image。node:22-alpine 為官方提供的 Node 22，底層為輕量的 Alpine Linux。',
+  'WORKDIR：後續指令皆在 /app 中執行，相當於 cd 至該目錄。',
+  'COPY . .：第一個點為主機上的目前目錄，第二個點為 Image 中的 /app。',
+  'RUN：僅在 build 時執行一次，此處以 yarn 安裝套件。',
+  'CMD：每次 Container 啟動時執行，以中括號分隔指令與參數。',
 ]" />
 
 ---
@@ -411,10 +411,10 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '新手最常卡在這裡，先看一次錯誤長什麼樣子。',
-  'docker build . 的點代表目前資料夾，這裡沒有 Dockerfile。',
-  '看提示字元確認自己在哪，cd 到 app。',
-  '在正確的資料夾就 build 成功了。',
+  '這是初學者最常遇到的錯誤，先認識錯誤訊息的格式。',
+  'docker build . 的點代表目前目錄，此目錄中沒有 Dockerfile。',
+  '從提示字元確認目前位置，再 cd 至 app。',
+  '於正確的目錄中執行即可 build 成功。',
 ]" />
 
 ---
@@ -434,15 +434,15 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'build 完只給一串 sha256，沒人記得住。',
-  '-t 在 build 時順便取名字，就像 git tag。',
-  'docker image ls 列出所有 Image，沒寫版本時 TAG 預設是 latest。',
+  'build 完成後僅產生一串 sha256，難以辨識。',
+  '-t 在 build 時同時指定名稱，作用如同 git tag。',
+  'docker image ls 列出所有 Image；未指定版本時，TAG 預設為 latest。',
 ]" />
 
 ---
 layout: figure
 chapter: Ch 3 · Building Images
-takeaway: 看到 my-username/my-image 就成功；做得快的人，改一下 app.js 再 build，看哪幾層顯示 CACHED。
+takeaway: 列表中出現 my-username/my-image 即代表成功；提前完成者可修改 app.js 後重新 build，觀察哪些 Layer 顯示 CACHED。
 ---
 
 # 檢查點：Image 建立完成
@@ -458,8 +458,8 @@ chapter: Ch 3 · Building Images
 
 # Building Images 重點整理
 
-<Tile variant="hero" label="這一章" value="Image 是一層層疊起來的">每一個步驟都會多一層，舊的層不會被改掉</Tile>
-<Tile label="手做" value="commit" mono>進 Container 裝好再存檔</Tile>
-<Tile variant="accent" label="食譜" value="Dockerfile" mono>把步驟寫下來，照著 build</Tile>
-<Tile label="取名字" value="build -t" mono>像 git tag，不用記 sha256</Tile>
-<Tile label="看歷史" value="image history" mono>像 git log，看每一層</Tile>
+<Tile variant="hero" label="本章重點" value="Image 由多個 Layer 堆疊而成">每個步驟新增一個 Layer，既有 Layer 不會被修改</Tile>
+<Tile label="手動建立" value="commit" mono>在 Container 中安裝後儲存</Tile>
+<Tile variant="accent" label="建立步驟" value="Dockerfile" mono>將步驟寫成文件後 build</Tile>
+<Tile label="命名" value="build -t" mono>作用如同 git tag，無須記憶 sha256</Tile>
+<Tile label="查看歷史" value="image history" mono>作用如同 git log，列出每個 Layer</Tile>

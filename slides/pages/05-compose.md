@@ -6,7 +6,7 @@ chapter: Ch 5 · Docker Compose
 
 # Docker Compose
 
-- **5.1** docker run 指令的問題
+- **5.1** docker run 指令的限制
 - **5.2** 將參數寫成 compose.yaml
 - **5.3** 以 docker compose up 啟動
 
@@ -56,11 +56,11 @@ volumes:
 ::note::
 
 <Note :notes="[
-  '一開始只有一個 Image 名稱。',
-  '加上名字。',
-  '加上背景執行和 Port。',
-  '再加上 Volume，已經長到記不住了。',
-  '同樣的內容寫成一份 compose.yaml，以後只要 docker compose up。',
+  '最初僅指定 Image 名稱。',
+  '加入 Container 名稱。',
+  '加入背景執行與 Port。',
+  '再加入 Volume，指令已過於冗長。',
+  '將相同內容寫成 compose.yaml，之後僅需執行 docker compose up。',
 ]" />
 
 ---
@@ -111,12 +111,12 @@ volumes:
 ::note::
 
 <Note :notes="[
-  '一份 compose.yaml 可以描述好幾個 Container。',
-  'services 底下每一項是一個 Container，my-image 是自己取的名字。',
-  '用哪個 Image，以及 Container 叫什麼名字。',
-  'ports 是一個清單，可以開好幾個 Port。',
-  'volumes 也是清單，寫法和 -v 一樣。',
-  '最下面宣告用到的 Volume。external: true 代表用剛剛自己建好的 todo-data。',
+  '一份 compose.yaml 可以描述多個 Container。',
+  'services 下的每一項代表一個 Container，my-image 為自訂名稱。',
+  '指定使用的 Image 與 Container 名稱。',
+  'ports 為清單，可指定多個 Port。',
+  'volumes 亦為清單，格式與 -v 相同。',
+  '最下方宣告使用的 Volume；external: true 代表使用先前建立的 todo-data。',
 ]" />
 
 <!--
@@ -150,9 +150,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '先寫出只有 Port 的版本，app 跑得起來，但資料一樣會不見。',
-  '綠色是新增的：在 service 裡掛上 Volume，並在最下面宣告它。',
-  '這就是完整的 compose.yaml，存在 app 資料夾裡。',
+  '僅設定 Port 的版本可以啟動 app，但資料仍會消失。',
+  '綠色為新增內容：在 service 中掛載 Volume，並於最下方宣告。',
+  '此為完整的 compose.yaml，存放於 app 目錄中。',
 ]" />
 
 ---
@@ -172,15 +172,15 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'Compose 會用同一個名字和 Port，先把 Ch4 的 Container 刪掉。',
-  '先刪掉舊的 my-image。',
-  '在 compose.yaml 所在的資料夾執行。-d 一樣是背景執行。',
+  'Compose 會使用相同的名稱與 Port，因此需先刪除 Ch4 的 Container。',
+  '刪除舊的 my-image。',
+  '於 compose.yaml 所在目錄執行；-d 同樣代表背景執行。',
 ]" />
 
 ---
 layout: figure
 chapter: Ch 5 · Docker Compose
-takeaway: Ch4 加的 3 筆還在，因為 Compose 掛的是同一個 todo-data Volume。
+takeaway: Ch4 新增的 3 筆資料仍存在，因為 Compose 掛載的是同一個 todo-data Volume。
 ---
 
 # 檢查點：Compose 啟動完成
