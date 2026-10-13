@@ -1,6 +1,7 @@
 ---
 theme: none
 title: Docker Workshop
+titleTemplate: '%s'
 colorSchema: light
 canvasWidth: 1920
 aspectRatio: 16/9
