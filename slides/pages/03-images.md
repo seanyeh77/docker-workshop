@@ -40,8 +40,8 @@ items:
     code: docker run -it ubuntu
     text: 以 ubuntu Image 啟動一個 Container，並進入其 Terminal。
   - title: 安裝 Node
-    code: apt install -y nodejs
-    text: 在 Container 中安裝 Node；此 Container 原本僅包含基本的 Ubuntu。
+    code: apt update && apt install -y nodejs
+    text: 先以 <code>apt update</code> 取得套件清單，再安裝 Node；ubuntu Image 預設不含套件清單，直接安裝會出現 Unable to locate package。
   - title: 離開 Container
     code: exit
     text: 返回主機，提示字元由 <code>root@...#</code> 恢復為原本的格式。
