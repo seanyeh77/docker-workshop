@@ -69,9 +69,8 @@ clicks: 1
   { c: 'docker unpause audience', o: 'audience' },
 ]" />
 
-<Countdown :minutes="10" />
 
 <!--
-休息開始時停在這張，倒數自己會跑。回來時按一下，打出 docker unpause audience。
+休息開始時停在這張。回來時按一下，打出 docker unpause audience。
 休息時看一眼 Slido Q&A。
 -->

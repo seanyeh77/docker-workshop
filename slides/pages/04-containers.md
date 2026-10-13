@@ -12,9 +12,8 @@ clicks: 1
   { c: 'docker restart audience', o: 'audience' },
 ]" />
 
-<Countdown :minutes="10" />
 
-<p class="break-note">請於倒數結束前回到座位。</p>
+<p class="break-note">請於 10 分鐘後回到座位。</p>
 
 <!--
 回來時按一下，打出 docker restart audience。等一下講到 stop 和 restart，可以說「你們剛剛就被 restart 過了」。
