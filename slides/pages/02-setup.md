@@ -19,7 +19,7 @@ clicks: 2
 # 執行第一個 Container
 
 <TerminalTyping :keep="2" :cmds="[
-  { c: 'docker -v', o: 'Docker version 28.x.x, build xxxxxxx' },
+  { c: 'docker -v', o: 'Docker version 29.x.x, build xxxxxxx' },
   { c: 'docker run hello-world', o: 'Unable to find image \'hello-world:latest\' locally\nlatest: Pulling from library/hello-world\n\nHello from Docker!\nThis message shows that your installation appears to be working correctly.' },
 ]" />
 

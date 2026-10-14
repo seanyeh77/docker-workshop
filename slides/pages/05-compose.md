@@ -166,7 +166,7 @@ clicks: 2
 
 <TerminalTyping :keep="2" :cmds="[
   { c: 'docker rm -f my-image', o: 'my-image' },
-  { c: 'docker compose up -d', o: '[+] Running 1/1\n ✔ Container my-image  Started' },
+  { c: 'docker compose up -d', o: '[+] Running 2/2\n ✔ Network app_default  Created\n ✔ Container my-image   Started' },
 ]" />
 
 ::note::

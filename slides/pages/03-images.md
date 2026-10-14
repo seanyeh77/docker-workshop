@@ -205,7 +205,7 @@ clicks: 1
 # 驗證 Q1：Container 之間的隔離
 
 <TerminalTyping :cmds="[
-  { c: 'docker run node-base ls', o: 'bin   boot  dev  etc  home  lib  media  mnt  opt\nproc  root  run  sbin  srv  sys  tmp  usr  var' },
+  { c: 'docker run node-base ls', o: 'bin   boot  dev  etc  home  lib  lib64  media  mnt  opt\nproc  root  run  sbin  srv  sys  tmp  usr  var' },
 ]" />
 
 ::note::
@@ -428,7 +428,7 @@ clicks: 2
 
 <TerminalTyping :keep="2" :cmds="[
   { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
-  { c: 'docker image ls', o: 'REPOSITORY             TAG      IMAGE ID       CREATED          SIZE\nmy-username/my-image   latest   746c7e06537f   24 seconds ago   354MB' },
+  { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE   CONTENT SIZE\nmy-username/my-image:latest   746c7e06537f        354MB         93MB' },
 ]" />
 
 ::note::
@@ -442,13 +442,13 @@ clicks: 2
 ---
 layout: figure
 chapter: Ch 3 · Building Images
-takeaway: 列表中出現 my-username/my-image 即代表成功；提前完成者可修改 app.js 後重新 build，觀察哪些 Layer 顯示 CACHED。
+takeaway: 列表中出現 my-username/my-image 即代表成功；提前完成者可修改 src/index.js 後重新 build，觀察哪些 Layer 顯示 CACHED。
 ---
 
 # 檢查點：Image 建立完成
 
 <TerminalTyping all :cmds="[
-  { c: 'docker image ls', o: 'REPOSITORY             TAG      IMAGE ID       CREATED          SIZE\nmy-username/my-image   latest   746c7e06537f   24 seconds ago   354MB' },
+  { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE   CONTENT SIZE\nmy-username/my-image:latest   746c7e06537f        354MB         93MB' },
 ]" />
 
 ---

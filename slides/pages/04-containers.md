@@ -70,8 +70,8 @@ items:
     code: docker restart my-image
     text: 重新啟動已停止的 Container，並從先前的狀態繼續執行。
   - title: 刪除
-    code: docker rm my-image
-    text: 僅能刪除已停止的 Container；刪除後，其中的檔案也會一併移除。
+    code: docker rm -f my-image
+    text: 刪除 Container，其中的檔案會一併移除；-f 會先停止執行中的 Container 再刪除。
 ---
 
 # 停止、重啟與刪除 Container
@@ -114,9 +114,9 @@ clicks: 3
 
 <script setup>
 const cmds = [
-  { c: 'docker run --rm -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=default postgres env', o: 'POSTGRES_PASSWORD=secret\nPOSTGRES_DB=default\nPG_MAJOR=18\n...' },
+  { c: 'docker run --rm -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=default postgres env', o: '...\nPOSTGRES_PASSWORD=secret\nPOSTGRES_DB=default\n...\nPG_MAJOR=18\n...' },
   { c: 'cat .env', o: 'POSTGRES_DB=default\nPOSTGRES_PASSWORD=secret' },
-  { c: 'docker run --rm --env-file .env postgres env', o: 'POSTGRES_DB=default\nPOSTGRES_PASSWORD=secret\n...' },
+  { c: 'docker run --rm --env-file .env postgres env', o: '...\nPOSTGRES_DB=default\nPOSTGRES_PASSWORD=secret\n...' },
 ]
 </script>
 
@@ -129,7 +129,7 @@ const cmds = [
 <Note :notes="[
   'Dockerfile 中的 ENV 為預設值，實際使用時常需調整，例如資料庫的密碼與名稱。',
   '-e 設定一個環境變數，並覆蓋 Image 中的預設值。最後的 env 會輸出所有變數。',
-  '變數較多時，可寫入 .env 檔。',
+  '變數較多時，以編輯器建立 .env 檔，每行一個變數，再以 cat 確認內容。',
   '--env-file 一次讀取整個檔案；--rm 使 Container 結束後自動刪除。',
 ]" />
 
