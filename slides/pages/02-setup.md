@@ -8,7 +8,7 @@ chapter: Ch 2 · Set up Docker
 
 - **2.1** 確認 Docker Desktop 運作中
 - **2.2** 執行第一個 Container
-- **2.3** 驗證 Container 共用 kernel
+- **2.3** 驗證 Ch1：Container 共用 kernel
 
 ---
 layout: textbook
@@ -72,14 +72,14 @@ const cmds = [
 ]
 </script>
 
-# 驗證 Container 共用 kernel
+# 驗證 Ch1：Container 共用 kernel
 
 <TerminalTyping :cmds="cmds" :keep="4" />
 
 ::note::
 
 <Note :notes="[
-  '以 ubuntu 與 alpine 兩個 Image 各啟動 Container，比較作業系統與 kernel。',
+  '回到 Ch1 的分層圖：Container 沒有 Guest OS，共用主機的 kernel。以下實際驗證。',
   '/etc/os-release 記錄作業系統名稱，此 Container 為 Ubuntu。',
   '換成 alpine，作業系統名稱變為 Alpine Linux。',
   'uname -r 顯示 kernel 版本。',
@@ -87,7 +87,8 @@ const cmds = [
 ]" />
 
 <!--
-回扣 Ch1 的分層圖：Container 沒有 Guest OS，共用主機的 kernel。
+回收 Ch1 埋的那句話。先問大家：如果每個 Container 都有自己的作業系統，兩個 Container 印出的 kernel 版本應該一樣嗎？
+開場說明：以 ubuntu 與 alpine 兩個 Image 各啟動 Container，比較作業系統與 kernel。
 --rm 讓 Container 執行完就自動刪除，之後 Ch4 會再講。
 Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Docker Desktop 在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。

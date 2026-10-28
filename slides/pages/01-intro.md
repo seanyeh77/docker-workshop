@@ -152,6 +152,7 @@ takeaway: 本課程將依序實作 pull、run、stop、rm 四個階段。
 layout: figure
 chapter: Ch 1 · Intro to Docker
 clicks: 3
+takeaway: 「Container 共用主機的 kernel」將於 Ch2 安裝完成後實際驗證。
 ---
 
 # VM 與 Container 的差異
@@ -170,7 +171,7 @@ clicks: 3
 3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
 4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
 類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-Ch2 會用 uname -r 實際驗證「共用 kernel」。
+下方重點句先埋著，不解釋怎麼驗證；Ch2 裝好 Docker 後用 uname -r 回收。
 -->
 
 ---
