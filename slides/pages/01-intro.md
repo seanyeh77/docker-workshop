@@ -149,24 +149,28 @@ takeaway: 本課程將依序實作 pull、run、stop、rm 四個階段。
 -->
 
 ---
-layout: compare
+layout: figure
 chapter: Ch 1 · Intro to Docker
-left: VM
-right: Container
-reveal: true
-clicks: 4
-rows:
-  - [類比, 獨棟住宅，擁有獨立的水電與廚房, 公寓套房，各自上鎖並共用大樓水電]
-  - [包含內容, 程式、套件與完整的作業系統, 程式與套件，共用主機的 OS 核心]
-  - [啟動, 如同啟動一台新電腦，需要等待開機, 如同啟動一個程式，幾乎立即完成]
-  - [大小, 通常為數 GB, 通常為數十至數百 MB]
+clicks: 3
 ---
 
 # VM 與 Container 的差異
 
+<StackCompare :captions="[
+  '兩者的底層相同：一台電腦的硬體與作業系統。',
+  'VM 透過 Hypervisor 模擬整台電腦，每個 VM 都需安裝並啟動自己的 Guest OS。',
+  'Container 由 Docker Engine 啟動，App 直接執行於主機的作業系統之上。',
+  '差異在於 Guest OS：Container 共用主機的 kernel，因此啟動較快、體積較小。',
+]" />
+
 <!--
-VM 也能解決環境問題，只是比較重。
-雅房搬進去比蓋一棟房子快很多，這就是 Container 啟動快、吃資源少的原因。
+由下往上一層一層疊，每按一下講一層。
+1. 底下兩層一樣：硬體和電腦本身的作業系統。
+2. VM 先裝 Hypervisor（例如 VirtualBox、VMware），在上面模擬出好幾台電腦。每台都要裝一套完整的作業系統，開機要等，一台動輒數 GB。
+3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
+4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
+類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
+Ch2 會用 uname -r 實際驗證「共用 kernel」。
 -->
 
 ---
