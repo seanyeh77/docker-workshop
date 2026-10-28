@@ -203,7 +203,7 @@ options:
 ---
 
 <!--
-Q2，先舉手表決，不公布答案。
+Q2，先舉手表決，答案在 Ch2 公布。
 剛看完分層圖，多數人會選 B「主機的 kernel」；但 macOS 和 Windows 的 kernel 跑不了 Linux 程式。
 答案在 Ch2 用 uname -r 驗證。
 -->

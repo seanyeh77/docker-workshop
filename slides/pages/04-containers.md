@@ -255,7 +255,7 @@ options:
 ---
 
 <!--
-Q4，先舉手表決，不公布答案，直接下一張實際操作。
+Q4，先舉手表決，下一張實際操作後公布答案。
 A 是把 Image 當成存檔的人會選的；C 是以為「正常關機」就會存檔。
 -->
 
@@ -278,8 +278,26 @@ clicks: 2
 <Note :notes="[
   '待辦事項儲存於 Container 中的 /etc/todos。',
   '刪除 Container。',
-  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失，此即 Q4 的答案。',
+  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失。',
 ]" />
+
+---
+layout: quiz
+chapter: Ch 4 · Running Containers
+question: Q4．todo app 中已新增 3 筆待辦事項。以 docker rm -f 刪除 Container，再以同一個 Image 重新啟動，資料還在嗎？
+clicks: 1
+answer: 1
+options:
+  - 還在，資料存在 Image 中
+  - 不見了
+  - 只要先 docker stop 再刪除就會保留
+---
+
+資料寫在 Container 中，刪除 Container 時一併移除；Image 建立後不會被修改，也不會保存執行時產生的資料。無論先 stop 與否，rm 都會刪除 Container 內的檔案。
+
+<!--
+回收 Q4，按一下揭曉。接著問：「那資料要放在哪裡，才不會跟著 Container 消失？」→ Volume。
+-->
 
 ---
 layout: figure

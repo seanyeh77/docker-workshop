@@ -125,6 +125,6 @@ options:
 ---
 
 <!--
-Q3，先舉手表決，不公布答案。這題預告 Ch3 的 commit。
+Q3，先舉手表決，答案在 Ch3 公布。這題預告 Ch3 的 commit。
 答案在 Ch3 做完 node-base 後用 which node 驗證。
 -->
