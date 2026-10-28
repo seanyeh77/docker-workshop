@@ -24,7 +24,7 @@ Sep 28, 2026 · @seanyeh
 ### 核心手法
 
 - 借 git 講 Docker：學員已有 git 的心智模型，commit、log、tag、clone 都能直接對應。
-- 四題提問都是鋪陳：先問、不公布，等後面的內容或實作親手驗證後才揭曉。
+- 四題提問都是鋪陳：舉手表決後下一個動畫立即公布答案，後面的內容或實作再親手驗證一次。
 - 故意示範失敗：新手第一次看到錯誤訊息是在講師的螢幕上，而不是自己的。
 
 ## 時間表
@@ -35,7 +35,7 @@ Sep 28, 2026 · @seanyeh
 | --- | --- | --- | --- | --- |
 | 0:00 | 10 | 暖場 | 破冰、點出「環境是別人幫你裝的」 | Q1 舉手表決 |
 | 0:10 | 30 | Ch1 Intro to Docker | 三個痛點、git 不存環境、Image / Container / Registry、VM vs Docker | 梗圖 |
-| 0:40 | 5 | Q2 | Mac 或 Windows 上的 Container 使用誰的 kernel | 只表決，不公布答案 |
+| 0:40 | 5 | Q2 | Mac 或 Windows 上的 Container 使用誰的 kernel | 表決後立即公布答案 |
 | 0:45 | 10 | Ch2 Set up Docker | `docker run hello-world` 驗證、TA 救援 | TA 巡場 |
 | 0:55 | 45 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
 | 1:40 | 10 | 休息 |  | `docker stop audience` |
@@ -51,7 +51,7 @@ Sep 28, 2026 · @seanyeh
 
 1. 封面
 2. 自我介紹與今天會做出什麼：最後一張放 todo app 的截圖，說「3 小時後你會自己把它跑起來」
-3. Q1：git clone 會一起取得什麼（題目見「課堂提問設計」），只表決不公布
+3. Q1：git clone 會一起取得什麼（題目見「課堂提問設計」），表決後立即公布答案
 
 ### Ch1 Intro to Docker（30 分，9 張）
 
@@ -67,7 +67,7 @@ Sep 28, 2026 · @seanyeh
 
 ### Q2（5 分，1 張）
 
-只舉手表決，不公布答案，說「Ch2 裝好 Docker 後自己驗證」。
+舉手表決後立即公布答案，說「Ch2 裝好 Docker 後自己驗證」。
 
 ### Ch2 Set up Docker（10 分，2 張）
 
@@ -81,7 +81,7 @@ Sep 28, 2026 · @seanyeh
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
 5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`
-6. 驗證 Q3：`docker run ubuntu which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node` → 回頭公布 Q3 答案
+6. 驗證 Q3：`docker run ubuntu which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node`
 7. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
 8. Dockerfile 常見指令表（講義的 8 個指令，今天只用 FROM、WORKDIR、COPY、RUN、CMD 五個，其他標灰）
 9. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的
@@ -232,9 +232,9 @@ Sep 28, 2026 · @seanyeh
 
 ## 課堂提問設計
 
-不使用 Slido，題目直接放在投影片上，學員舉手表決。四題都先問，等後面的內容或實作驗證後，再以同一題的揭曉頁公布答案，每題都替下一段內容鋪陳。
+不使用 Slido，題目直接放在投影片上，學員舉手表決。每題舉手表決後，按一下即公布答案與解說；後面的內容或實作再實際驗證一次，每題都替下一段內容鋪陳。
 
-### Q1：git clone 會一起取得什麼（暖場提問，Ch1 揭曉）
+### Q1：git clone 會一起取得什麼（暖場提問）
 
 題目：將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
 
@@ -243,9 +243,9 @@ Sep 28, 2026 · @seanyeh
 - 資料庫與其中的資料
 - 僅有已 commit 的程式碼與檔案
 
-答案：僅有已 commit 的程式碼與檔案。揭曉時機：Ch1 的對話情境與三個痛點之後，接到「git 管理程式碼，不管理執行環境」。
+答案：僅有已 commit 的程式碼與檔案。表決後立即公布；Ch1 的對話情境與「git 管理程式碼，不管理執行環境」再呼應一次。
 
-### Q2：Container 使用誰的 kernel（Ch1 結尾，Ch2 揭曉）
+### Q2：Container 使用誰的 kernel（Ch1 結尾，Ch2 驗證）
 
 題目：在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 
@@ -253,9 +253,9 @@ Sep 28, 2026 · @seanyeh
 - 主機的 macOS 或 Windows kernel
 - Docker Desktop 在背景啟動的 Linux VM
 
-答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。揭曉時機：Ch2 用 ubuntu 與 alpine 各執行 `uname -r`，兩者版本相同且結尾為 linuxkit。
+答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。表決後立即公布；Ch2 用 ubuntu 與 alpine 各執行 `uname -r`，兩者版本相同且結尾為 linuxkit。
 
-### Q3：commit 會不會修改原本的 Image（Ch2 結尾，Ch3 揭曉）
+### Q3：commit 會不會修改原本的 Image（Ch2 結尾，Ch3 驗證）
 
 題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
 
@@ -263,7 +263,7 @@ Sep 28, 2026 · @seanyeh
 - 沒有，Node 只存在於 node-base
 - 只在原本的 Container 執行時才有
 
-答案：沒有。揭曉時機：Ch3 做完 node-base 後執行 `docker run ubuntu which node`（無輸出）與 `docker run node-base which node`（`/usr/bin/node`）。
+答案：沒有。表決後立即公布；Ch3 做完 node-base 後執行 `docker run ubuntu which node`（無輸出）與 `docker run node-base which node`（`/usr/bin/node`）。
 
 ### Q4：刪除 Container 後資料還在嗎（Ch4，引出 Volume）
 
@@ -273,7 +273,7 @@ Sep 28, 2026 · @seanyeh
 - 不見了
 - 只要先 docker stop 再刪除就會保留
 
-答案：不見了。表決後現場操作：`docker rm -f my-image` 後重開，3 筆全部消失，接著公布答案 →「那資料要放哪？」→ Volume。
+答案：不見了。表決後立即公布，接著現場操作：`docker rm -f my-image` 後重開，3 筆全部消失 →「那資料要放哪？」→ Volume。
 
 ## 梗與類比清單
 

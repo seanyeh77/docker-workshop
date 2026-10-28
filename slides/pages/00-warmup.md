@@ -18,6 +18,8 @@ chapter: Warm-up
 layout: quiz
 chapter: Warm-up
 question: Q1．將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
+clicks: 1
+answer: 3
 options:
   - 已安裝的套件，例如 flask
   - 開發者電腦上的 Python 版本
@@ -25,8 +27,11 @@ options:
   - 僅有已 commit 的程式碼與檔案
 ---
 
+
+git 只記錄 commit 過的檔案。套件、語言版本與資料庫屬於執行環境，不在 repository 中，這正是今天 Docker 要處理的問題。
+
 <!--
-Q1，先舉手表決，答案在 Ch1 公布。
+先舉手表決，再按一下公布答案。
 問大家：「你上次交分組作業，組員 clone 下來就能跑嗎？」
-答案在 Ch1 的對話情境之後揭曉，接到「git 管理程式碼，不管理執行環境」。
+Ch1 的對話情境與「git 管理程式碼，不管理執行環境」會再呼應這題。
 -->

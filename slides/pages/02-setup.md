@@ -87,7 +87,7 @@ const cmds = [
 ]" />
 
 <!--
-回收 Q2。先問大家：如果 Image 內附 kernel，ubuntu 與 alpine 印出的 kernel 版本應該一樣嗎？
+驗證 Q2 的答案。先問大家：如果 Image 內附 kernel，ubuntu 與 alpine 印出的 kernel 版本應該一樣嗎？
 開場說明：以 ubuntu 與 alpine 兩個 Image 各啟動 Container，比較作業系統與 kernel。
 --rm 讓 Container 執行完就自動刪除，之後 Ch4 會再講。
 Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Docker Desktop 在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
@@ -98,33 +98,19 @@ Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
 ---
 layout: quiz
 chapter: Ch 2 · Set up Docker
-question: Q2．在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
-clicks: 1
-answer: 2
-options:
-  - Image 內附的 Ubuntu kernel
-  - 主機的 macOS 或 Windows kernel
-  - Docker Desktop 在背景啟動的 Linux VM
----
-
-Image 不含 kernel，ubuntu 與 alpine 印出相同的版本。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 在背景啟動一台 Linux VM，所有 Container 共用其 kernel。
-
-<!--
-按一下揭曉。版本結尾的 linuxkit 就是 Docker Desktop 那台 VM。
-用 Linux 電腦的同學，答案是 B 的 Linux 版：直接共用主機的 kernel。
--->
-
----
-layout: quiz
-chapter: Ch 2 · Set up Docker
 question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
+clicks: 1
+answer: 1
 options:
   - 有，commit 會一併更新 ubuntu Image
   - 沒有，Node 只存在於 node-base
   - 只在原本的 Container 執行時才有
 ---
 
+
+commit 產生一個新的 Image，原本的 ubuntu Image 不會被修改。Ch3 將實際建立 node-base 並驗證。
+
 <!--
-Q3，先舉手表決，答案在 Ch3 公布。這題預告 Ch3 的 commit。
-答案在 Ch3 做完 node-base 後用 which node 驗證。
+先舉手表決，再按一下公布答案。這題預告 Ch3 的 commit。
+Ch3 做完 node-base 後用 which node 驗證。
 -->

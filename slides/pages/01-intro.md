@@ -58,25 +58,6 @@ items:
 -->
 
 ---
-layout: quiz
-chapter: Ch 1 · Intro to Docker
-question: Q1．將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
-clicks: 1
-answer: 3
-options:
-  - 已安裝的套件，例如 flask
-  - 開發者電腦上的 Python 版本
-  - 資料庫與其中的資料
-  - 僅有已 commit 的程式碼與檔案
----
-
-git 只記錄 commit 過的檔案。套件、語言版本與資料庫都屬於執行環境，不在 repository 中，這正是剛才組員出現 ModuleNotFoundError 的原因。
-
-<!--
-回收暖場的 Q1，按一下揭曉。
--->
-
----
 layout: statement
 chapter: Ch 1 · Intro to Docker
 ---
@@ -189,21 +170,27 @@ clicks: 3
 3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
 4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
 類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-講完接 Q2：Mac 和 Windows 的情況留給大家猜，Ch2 裝好 Docker 後用 uname -r 回收。
+講完接 Q2：Mac 和 Windows 的情況先讓大家猜，再公布答案；Ch2 裝好 Docker 後用 uname -r 驗證。
 -->
 
 ---
 layout: quiz
 chapter: Ch 1 · Intro to Docker
 question: Q2．在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+clicks: 1
+answer: 2
 options:
   - Image 內附的 Ubuntu kernel
   - 主機的 macOS 或 Windows kernel
   - Docker Desktop 在背景啟動的 Linux VM
 ---
 
+
+Image 不含 kernel。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 在背景啟動一台 Linux VM，所有 Container 共用其 kernel。Ch2 將實際驗證。
+
 <!--
-Q2，先舉手表決，答案在 Ch2 公布。
-剛看完分層圖，多數人會選 B「主機的 kernel」；但 macOS 和 Windows 的 kernel 跑不了 Linux 程式。
-答案在 Ch2 用 uname -r 驗證。
+先舉手表決，再按一下公布答案。
+剛看完分層圖，多數人會選 B；但 macOS 和 Windows 的 kernel 跑不了 Linux 程式。
+用 Linux 電腦的同學，答案是直接共用主機的 kernel。
+Ch2 用 uname -r 驗證。
 -->
