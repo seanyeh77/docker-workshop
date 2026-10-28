@@ -94,23 +94,3 @@ Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Do
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
 版本號每台電腦不同，重點是兩行相同。
 -->
-
----
-layout: figure
-chapter: Break
-near: true
-clicks: 1
----
-
-# 休息 10 分鐘
-
-<TerminalTyping big :start="1" :keep="2" :cmds="[
-  { c: 'docker pause audience', o: 'audience' },
-  { c: 'docker unpause audience', o: 'audience' },
-]" />
-
-
-<!--
-休息開始時停在這張。回來時按一下，打出 docker unpause audience。
-休息時看一眼 Slido Q&A。
--->

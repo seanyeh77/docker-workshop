@@ -4,7 +4,7 @@ Sep 28, 2026 · @seanyeh
 
 ## Overview
 
-這份 SPEC 定義 Docker Workshop 的簡報流程：180 分、5 個章節、2 次休息、2 題有連續性的 Slido 技術題，內容以 Notion 講義「Docker Workshop」為準。
+這份 SPEC 定義 Docker Workshop 的簡報流程：180 分、5 個章節、1 次休息、2 題有連續性的 Slido 技術題，內容以 Notion 講義「Docker Workshop」為準。
 
 - 對象：學過寫程式、上過 Terminal 與 git；沒有軟體開發經驗、沒自己裝過程式環境、不知道 Docker 是什麼。
 - 課後目標：能說出 Image、Container、Registry 的差別；能寫出一份 Dockerfile 並 build 成 Image；能用 `-d`、`-p`、`-v` 跑起 todo app；能用 `docker compose up` 取代一長串 `docker run`。
@@ -29,7 +29,7 @@ Sep 28, 2026 · @seanyeh
 
 ## 時間表
 
-章節內容 130 分、休息 20 分、暖場與 Slido Q1 與總結 30 分，共 180 分。
+章節內容 140 分、休息 10 分、暖場與 Slido Q1 與總結 30 分，共 180 分。
 
 | 開始 | 長度（分） | 段落 | 重點 | 互動 |
 | --- | --- | --- | --- | --- |
@@ -37,16 +37,15 @@ Sep 28, 2026 · @seanyeh
 | 0:10 | 30 | Ch1 Intro to Docker | 三個痛點、git 不存環境、Image / Container / Registry、VM vs Docker | 梗圖 |
 | 0:40 | 5 | Slido Q1 | 同一個 Image 開兩個 Container，檔案互通嗎 | 只投票，不公布答案 |
 | 0:45 | 10 | Ch2 Set up Docker | `docker run hello-world` 驗證、TA 救援 | TA 巡場 |
-| 0:55 | 10 | 休息 1 |  | `docker pause audience` |
-| 1:05 | 35 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
-| 1:40 | 10 | 休息 2 |  | `docker stop audience` |
+| 0:55 | 45 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
+| 1:40 | 10 | 休息 |  | `docker stop audience` |
 | 1:50 | 35 | Ch4 Running Containers | `-d`、stop / rm → env → port → Q2 → Volume | Slido Q2、實作 |
 | 2:25 | 20 | Ch5 Docker Compose | 長指令 → compose.yaml → `compose up` | 實作 |
 | 2:45 | 15 | 總結 | Bento 總結、Q&A、回饋表單 | Slido Q&A |
 
 ## 逐段內容與投影片大綱
 
-全份約 50 張投影片（含 2 張休息畫面）。每個實作段落結尾都放一張「看到這個就代表成功」的檢查點投影片，讓學員自己判斷要不要舉手求救。
+全份約 50 張投影片（含 1 張休息畫面）。每個實作段落結尾都放一張「看到這個就代表成功」的檢查點投影片，讓學員自己判斷要不要舉手求救。
 
 ### 暖場（10 分，3 張）
 
@@ -137,7 +136,7 @@ Sep 28, 2026 · @seanyeh
 | 流程動畫（Motion Canvas） | 一個流程分步推進，每個 click 一步 | Ch1：Registry → pull → Image → run → Container → stop → rm |
 | Magic Move | 程式碼逐步變形成下一版 | Ch3：Dockerfile 從 FROM 一行長到 5 行；Ch5：`docker run` 越變越長再縮成 compose.yaml |
 | Line highlight | 其他行變淡，逐段點亮 | Ch3：逐行讀懂 Dockerfile；Ch5：逐段讀懂 compose.yaml |
-| Terminal typing | 逐字打出指令再顯示輸出，保留前一條 | Ch3：`docker run -it ubuntu` 進去再 `exit` 出來的提示字元變化；Ch4：`docker ps` 的 STATUS 與 PORTS；兩張休息畫面 |
+| Terminal typing | 逐字打出指令再顯示輸出，保留前一條 | Ch3：`docker run -it ubuntu` 進去再 `exit` 出來的提示字元變化；Ch4：`docker ps` 的 STATUS 與 PORTS；休息畫面 |
 | Code-to-diagram | 左邊點亮一行 code，右邊圖上對應的部分同步亮起 | Ch3：Dockerfile 每一行點亮右邊 Image 疊上去的那一層 |
 | Annotated command | 指令下方逐一拉出標籤，說明每個參數 | Ch3：`docker container commit -c -m`；Ch4：最長的 `docker run -d -p -v --name` |
 | SVG 步驟動畫 | 圖表配色的 SVG，右下角 Step x of y，下方一行 caption | Ch3 與 Ch4：Q1、Q2 的揭曉動畫 |
@@ -275,7 +274,7 @@ Slido 開 3 個投票與 1 個整堂開著的匿名 Q&A。兩題技術題 Q1、Q
 
 ### 匿名 Q&A（整堂開著）
 
-開場就告訴學員卡住或聽不懂可以匿名丟上來。講師在兩次休息時各看一次，總結時統一回答剩下的。
+開場就告訴學員卡住或聽不懂可以匿名丟上來。講師在休息時看一次，總結時統一回答剩下的。
 
 ## 梗與類比清單
 
@@ -314,16 +313,15 @@ Slido 開 3 個投票與 1 個整堂開著的匿名 Q&A。兩題技術題 Q1、Q
 
 ## 休息、TA 與加分題
 
-兩次休息各 10 分，休息畫面同時預習 Ch4 的指令；TA 負責巡場救援；做得快的人有加分題可做，不會閒著。
+休息一次 10 分，排在 Ch3 與 Ch4 之間，休息畫面同時預習 Ch4 的指令，不放倒數計時；TA 負責巡場救援；做得快的人有加分題可做，不會閒著。
 
 ### 休息畫面
 
 | 時機 | 畫面上的指令 | 下方文字 | 回來時的畫面 |
 | --- | --- | --- | --- |
-| 休息 1（0:55） | `docker pause audience` | 倒數 10 分 | `docker unpause audience` |
-| 休息 2（1:40） | `docker stop audience` | 倒數 10 分；小字「stop 之後要 restart 才會回來，請準時」 | `docker restart audience` |
+| 休息（1:40） | `docker stop audience` | 「請於 10 分鐘後回到座位」 | `docker restart audience` |
 
-休息 2 的 stop / restart 剛好是 Ch4 第 2 張投影片的內容，回來講到時可以說「你們剛剛就被 restart 過了」。
+休息畫面的 stop / restart 剛好是 Ch4 第 2 張投影片的內容，回來講到時可以說「你們剛剛就被 restart 過了」。
 
 ### TA 安排
 
