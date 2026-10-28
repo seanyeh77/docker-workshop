@@ -58,6 +58,25 @@ items:
 -->
 
 ---
+layout: quiz
+chapter: Ch 1 · Intro to Docker
+question: Q1．將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
+clicks: 1
+answer: 3
+options:
+  - 已安裝的套件，例如 flask
+  - 開發者電腦上的 Python 版本
+  - 資料庫與其中的資料
+  - 僅有已 commit 的程式碼與檔案
+---
+
+git 只記錄 commit 過的檔案。套件、語言版本與資料庫都屬於執行環境，不在 repository 中，這正是剛才組員出現 ModuleNotFoundError 的原因。
+
+<!--
+回收暖場的 Q1，按一下揭曉。
+-->
+
+---
 layout: statement
 chapter: Ch 1 · Intro to Docker
 ---
@@ -126,7 +145,7 @@ kind: 名詞
 
 <!--
 四個特性：Self-contained、Isolated、Independent、Portable。
-「不會影響另外兩個」這句先埋著，等一下 Slido 會考。
+「不會影響另外兩個」這句先埋著，Ch3 會實際看到。
 -->
 
 ---
@@ -152,7 +171,6 @@ takeaway: 本課程將依序實作 pull、run、stop、rm 四個階段。
 layout: figure
 chapter: Ch 1 · Intro to Docker
 clicks: 3
-takeaway: 「Container 共用主機的 kernel」將於 Ch2 安裝完成後實際驗證。
 ---
 
 # VM 與 Container 的差異
@@ -171,22 +189,21 @@ takeaway: 「Container 共用主機的 kernel」將於 Ch2 安裝完成後實際
 3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
 4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
 類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-下方重點句先埋著，不解釋怎麼驗證；Ch2 裝好 Docker 後用 uname -r 回收。
+講完接 Q2：Mac 和 Windows 的情況留給大家猜，Ch2 裝好 Docker 後用 uname -r 回收。
 -->
 
 ---
 layout: quiz
 chapter: Ch 1 · Intro to Docker
-question: 用同一個 Image 開了兩個 Container A 和 B。在 A 裡面建立 hello.txt，B 裡面看得到嗎？
-slido: true
+question: Q2．在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 options:
-  - 看得到，因為它們來自同一個 Image
-  - 看不到
-  - 要看 B 是在 A 建檔之前還是之後開的
+  - Image 內附的 Ubuntu kernel
+  - 主機的 macOS 或 Windows kernel
+  - Docker Desktop 在背景啟動的 Linux VM
 ---
 
 <!--
-Slido Q1。只投票，只看票數分布，不公布答案。
-說：「等一下實作，你們會自己證明答案。」
-答案在 Ch3 用 docker run node-base ls 驗證。
+Q2，先舉手表決，不公布答案。
+剛看完分層圖，多數人會選 B「主機的 kernel」；但 macOS 和 Windows 的 kernel 跑不了 Linux 程式。
+答案在 Ch2 用 uname -r 驗證。
 -->

@@ -17,18 +17,16 @@ chapter: Warm-up
 ---
 layout: quiz
 chapter: Warm-up
-question: 你過去在哪裡寫程式？
-slido: true
+question: Q1．將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
 options:
-  - 線上解題平台（Online Judge）
-  - Colab 或 Jupyter
-  - 學校電腦教室
-  - 自己電腦裝 VS Code
-  - 我都複製 ChatGPT 的
+  - 已安裝的套件，例如 flask
+  - 開發者電腦上的 Python 版本
+  - 資料庫與其中的資料
+  - 僅有已 commit 的程式碼與檔案
 ---
 
 <!--
-暖場投票，不是技術題。Slido 代碼記得換成實際的。
-公布結果時：多數人選的前幾個，環境都是別人幫你裝好的。你們能直接寫程式，是因為有人幫你把環境裝好了；今天換你學會當那個人。
-最後一個選項是讓大家笑一下的。
+Q1，先舉手表決，不公布答案。
+問大家：「你上次交分組作業，組員 clone 下來就能跑嗎？」
+答案在 Ch1 的對話情境之後揭曉，接到「git 管理程式碼，不管理執行環境」。
 -->

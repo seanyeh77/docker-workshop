@@ -16,7 +16,6 @@ clicks: 1
 
 <!--
 回來時按一下，打出 docker restart audience。等一下講到 stop 和 restart，可以說「你們剛剛就被 restart 過了」。
-休息時看一眼 Slido Q&A。
 -->
 
 ---
@@ -248,21 +247,16 @@ near: true
 ---
 layout: quiz
 chapter: Ch 4 · Running Containers
-question: 接續 Q1。把 Container A 用 docker rm 刪掉，再用同一個 Image 開一個新的 A，hello.txt 還在嗎？
-slido: true
-clicks: 1
-answer: 1
+question: Q4．todo app 中已新增 3 筆待辦事項。以 docker rm -f 刪除 Container，再以同一個 Image 重新啟動，資料還在嗎？
 options:
-  - 還在
+  - 還在，資料存在 Image 中
   - 不見了
-  - 要先 commit 才會在
+  - 只要先 docker stop 再刪除就會保留
 ---
 
-不見了。Image 建立後不會被修改，檔案僅存在於已刪除的 Container 中。commit 雖會產生新的 Image，但此處是以原本的 Image 重新啟動，因此看不到該檔案。
-
 <!--
-先投票，再按一下揭曉。
-第三個選項是給學過 git 的人的陷阱：「有 commit 就會在」。
+Q4，先舉手表決，不公布答案，直接下一張實際操作。
+A 是把 Image 當成存檔的人會選的；C 是以為「正常關機」就會存檔。
 -->
 
 ---
@@ -284,7 +278,7 @@ clicks: 2
 <Note :notes="[
   '待辦事項儲存於 Container 中的 /etc/todos。',
   '刪除 Container。',
-  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失。',
+  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失，此即 Q4 的答案。',
 ]" />
 
 ---
@@ -299,7 +293,7 @@ clicks: 3
   '',
   '',
   'A 中有 hello.txt，B 為空。',
-  '刪除並重新啟動 A 後，hello.txt 隨之消失，此即 Q2 的答案。',
+  '刪除並重新啟動 A 後，hello.txt 隨之消失。',
   '將 Volume 掛載至 A，hello.txt 改為儲存於 Volume 中。',
   '再次刪除並重新啟動 A，掛載同一個 Volume 後，hello.txt 仍然存在。',
 ]" />

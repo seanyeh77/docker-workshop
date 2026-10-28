@@ -7,7 +7,7 @@ chapter: Ch 3 · Building Images
 # Building Images
 
 - **3.1** 以 commit 建立 Image
-- **3.2** 驗證 Slido Q1
+- **3.2** 驗證 Q3
 - **3.3** 以 Dockerfile 建立 Image
 - **3.4** build 與 tag
 
@@ -94,26 +94,6 @@ const cmds = [
 -->
 
 ---
-layout: compare
-chapter: Ch 3 · Building Images
-left: Docker
-right: git
-reveal: true
-clicks: 4
-rows:
-  - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
-  - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
-  - [命名, '<code>docker image tag</code>', '<code>git tag</code>']
-  - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
----
-
-# Docker 與 git 的對應
-
-<!--
-一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
--->
-
----
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
@@ -136,8 +116,30 @@ const git = [
 </div>
 
 <!--
+剛剛 commit 完，先看 node-base 存了什麼。git 有 git log 看歷史，Docker 也有對應的指令。
 最上面那一層就是剛剛 commit 的 Add node，大小 155MB，是裝 Node 多出來的。
 下面幾層是 ubuntu 原本就有的。Image 就是這樣一層層疊起來的。
+兩邊排版很像，下一張把 Docker 和 git 的指令整理成對照表。
+-->
+
+---
+layout: compare
+chapter: Ch 3 · Building Images
+left: Docker
+right: git
+reveal: true
+clicks: 4
+rows:
+  - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
+  - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
+  - [命名, '<code>docker image tag</code>', '<code>git tag</code>']
+  - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
+---
+
+# Docker 與 git 的對應
+
+<!--
+一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
 -->
 
 ---
@@ -199,38 +201,40 @@ clicks: 4
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
-clicks: 1
+clicks: 2
 ---
 
-# 驗證 Q1：Container 之間的隔離
+# 驗證 Q3：commit 不會修改原本的 Image
 
-<TerminalTyping :cmds="[
-  { c: 'docker run node-base ls', o: 'bin   boot  dev  etc  home  lib  lib64  media  mnt  opt\nproc  root  run  sbin  srv  sys  tmp  usr  var' },
+<TerminalTyping :keep="2" :cmds="[
+  { c: 'docker run ubuntu which node', o: '' },
+  { c: 'docker run node-base which node', o: '/usr/bin/node' },
 ]" />
 
 ::note::
 
 <Note :notes="[
-  'app-container 由 node-base 啟動，其中包含 app.js。',
-  '以同一個 node-base 啟動新的 Container 並列出檔案，其中沒有 app.js。',
+  'which node 會輸出 node 的位置；找不到時不輸出任何內容。',
+  '以原本的 ubuntu 啟動：找不到 node。',
+  '以 node-base 啟動：Node 位於 /usr/bin/node。',
 ]" />
 
 ---
 layout: quiz
 chapter: Ch 3 · Building Images
-question: 用同一個 Image 開了兩個 Container A 和 B。在 A 裡面建立 hello.txt，B 裡面看得到嗎？
+question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
 clicks: 1
 answer: 1
 options:
-  - 看得到，因為它們來自同一個 Image
-  - 看不到
-  - 要看 B 是在 A 建檔之前還是之後開的
+  - 有，commit 會一併更新 ubuntu Image
+  - 沒有，Node 只存在於 node-base
+  - 只在原本的 Container 執行時才有
 ---
 
-看不到。每個 Container 各自獨立，在 A 中的操作不會影響 B，剛才的 `docker run node-base ls` 已驗證此結果。
+commit 產生一個新的 Image，原本的 ubuntu Image 不會被修改。在 Container 中做的變更，只會留在該 Container 與由它 commit 出的 Image。
 
 <!--
-回頭公布 Ch1 那題的票數，再按一下揭曉。
+回收 Ch2 的 Q3，按一下揭曉。接下一張：Container 之間也一樣互不影響。
 -->
 
 ---
@@ -324,34 +328,7 @@ CMD ["node", "./src/index.js"]
 ::note::
 
 <Note :notes="[
-  '先前手動建立的 node-base，在此只需一行 FROM。',
-  '設定後續指令的執行目錄。',
-  '將主機上的專案檔案複製到 Image 中。',
-  '建立 Image 時安裝套件。',
-  'Container 啟動時執行的指令。',
-]" />
-
----
-layout: textbook
-chapter: Ch 3 · Building Images
-ltag: Dockerfile
----
-
-# Dockerfile 逐行說明
-
-```dockerfile {all|1|2|3|4|5}
-FROM node:22-alpine
-WORKDIR /app
-COPY . .
-RUN yarn install --production
-CMD ["node", "./src/index.js"]
-```
-
-::note::
-
-<Note :notes="[
-  '共五行，每一行由一個指令與其參數組成。',
-  'FROM：基底 Image。node:22-alpine 為官方提供的 Node 22，底層為輕量的 Alpine Linux。',
+  'FROM：基底 Image。node:22-alpine 為官方提供的 Node 22，取代先前手動建立的 node-base。',
   'WORKDIR：後續指令皆在 /app 中執行，相當於 cd 至該目錄。',
   'COPY . .：第一個點為主機上的目前目錄，第二個點為 Image 中的 /app。',
   'RUN：僅在 build 時執行一次，此處以 yarn 安裝套件。',
@@ -361,12 +338,12 @@ CMD ["node", "./src/index.js"]
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
-clicks: 5
 ---
 
 # Dockerfile 與 Image Layer
 
 <LayerDiagram
+  all
   code="FROM node:22-alpine
 WORKDIR /app
 COPY . .

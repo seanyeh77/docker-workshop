@@ -8,7 +8,7 @@ chapter: Ch 2 · Set up Docker
 
 - **2.1** 確認 Docker Desktop 運作中
 - **2.2** 執行第一個 Container
-- **2.3** 驗證 Ch1：Container 共用 kernel
+- **2.3** 驗證 Q2：Container 使用的 kernel
 
 ---
 layout: textbook
@@ -72,14 +72,14 @@ const cmds = [
 ]
 </script>
 
-# 驗證 Ch1：Container 共用 kernel
+# 驗證 Q2：Container 使用的 kernel
 
 <TerminalTyping :cmds="cmds" :keep="4" />
 
 ::note::
 
 <Note :notes="[
-  '回到 Ch1 的分層圖：Container 沒有 Guest OS，共用主機的 kernel。以下實際驗證。',
+  '回到 Q2：Container 使用的 kernel 來自何處。以下實際驗證。',
   '/etc/os-release 記錄作業系統名稱，此 Container 為 Ubuntu。',
   '換成 alpine，作業系統名稱變為 Alpine Linux。',
   'uname -r 顯示 kernel 版本。',
@@ -87,10 +87,44 @@ const cmds = [
 ]" />
 
 <!--
-回收 Ch1 埋的那句話。先問大家：如果每個 Container 都有自己的作業系統，兩個 Container 印出的 kernel 版本應該一樣嗎？
+回收 Q2。先問大家：如果 Image 內附 kernel，ubuntu 與 alpine 印出的 kernel 版本應該一樣嗎？
 開場說明：以 ubuntu 與 alpine 兩個 Image 各啟動 Container，比較作業系統與 kernel。
 --rm 讓 Container 執行完就自動刪除，之後 Ch4 會再講。
 Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Docker Desktop 在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
 版本號每台電腦不同，重點是兩行相同。
+-->
+
+---
+layout: quiz
+chapter: Ch 2 · Set up Docker
+question: Q2．在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+clicks: 1
+answer: 2
+options:
+  - Image 內附的 Ubuntu kernel
+  - 主機的 macOS 或 Windows kernel
+  - Docker Desktop 在背景啟動的 Linux VM
+---
+
+Image 不含 kernel，ubuntu 與 alpine 印出相同的版本。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 在背景啟動一台 Linux VM，所有 Container 共用其 kernel。
+
+<!--
+按一下揭曉。版本結尾的 linuxkit 就是 Docker Desktop 那台 VM。
+用 Linux 電腦的同學，答案是 B 的 Linux 版：直接共用主機的 kernel。
+-->
+
+---
+layout: quiz
+chapter: Ch 2 · Set up Docker
+question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
+options:
+  - 有，commit 會一併更新 ubuntu Image
+  - 沒有，Node 只存在於 node-base
+  - 只在原本的 Container 執行時才有
+---
+
+<!--
+Q3，先舉手表決，不公布答案。這題預告 Ch3 的 commit。
+答案在 Ch3 做完 node-base 後用 which node 驗證。
 -->

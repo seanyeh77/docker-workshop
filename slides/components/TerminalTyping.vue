@@ -40,12 +40,15 @@ async function show(step, animate) {
   const i = Math.min(n, props.cmds.length) - 1
   const cur = props.cmds[i]
   if (!animate) { html.value = before + line(cur, i) + pr(pAfter(i)) + caret; return }
-  for (let k = 0; k <= cur.c.length; k++) {
+  // 15 ms per character, but long commands finish within about 0.8 s.
+  const len = cur.c.length
+  const stepChars = Math.max(1, Math.ceil(len / 55))
+  for (let k = 0; k <= len + stepChars - 1; k += stepChars) {
     if (id !== run) return
-    html.value = before + pr(pOf(i)) + (hlShell(cur.c.slice(0, k))[0] || '') + caret
-    await wait(40)
+    html.value = before + pr(pOf(i)) + (hlShell(cur.c.slice(0, Math.min(k, len)))[0] || '') + caret
+    await wait(15)
   }
-  await wait(300)
+  await wait(150)
   if (id === run) html.value = before + line(cur, i) + pr(pAfter(i)) + caret
 }
 

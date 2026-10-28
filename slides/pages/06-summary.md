@@ -49,7 +49,7 @@ cols: 2
 ---
 layout: end
 chapter: Summary
-next: Slido Q&A 與回饋表單
+next: Q&A 與回饋表單
 nextNumber: Q&A
 ---
 
@@ -62,6 +62,6 @@ nextNumber: Q&A
 - `compose.yaml`
 
 <!--
-統一回答 Slido 上的匿名問題，最後放回饋表單的 QR code。
+開放提問，最後放回饋表單的 QR code。
 延伸學習：Docker 官方文件的 Get started 教學。
 -->

@@ -4,7 +4,7 @@ Sep 28, 2026 · @seanyeh
 
 ## Overview
 
-這份 SPEC 定義 Docker Workshop 的簡報流程：180 分、5 個章節、1 次休息、2 題有連續性的 Slido 技術題，內容以 Notion 講義「Docker Workshop」為準。
+這份 SPEC 定義 Docker Workshop 的簡報流程：180 分、5 個章節、1 次休息、4 題串起後續內容的課堂提問，內容以 Notion 講義「Docker Workshop」為準。
 
 - 對象：學過寫程式、上過 Terminal 與 git；沒有軟體開發經驗、沒自己裝過程式環境、不知道 Docker 是什麼。
 - 課後目標：能說出 Image、Container、Registry 的差別；能寫出一份 Dockerfile 並 build 成 Image；能用 `-d`、`-p`、`-v` 跑起 todo app；能用 `docker compose up` 取代一長串 `docker run`。
@@ -24,24 +24,24 @@ Sep 28, 2026 · @seanyeh
 ### 核心手法
 
 - 借 git 講 Docker：學員已有 git 的心智模型，commit、log、tag、clone 都能直接對應。
-- 兩題 Slido 是上下集：Q1 先猜、在實作中親手驗證；Q2 接著 Q1 問，答案直接引出 Volume。
+- 四題提問都是鋪陳：先問、不公布，等後面的內容或實作親手驗證後才揭曉。
 - 故意示範失敗：新手第一次看到錯誤訊息是在講師的螢幕上，而不是自己的。
 
 ## 時間表
 
-章節內容 140 分、休息 10 分、暖場與 Slido Q1 與總結 30 分，共 180 分。
+章節內容 140 分、休息 10 分、暖場、Q1 與總結 30 分，共 180 分。
 
 | 開始 | 長度（分） | 段落 | 重點 | 互動 |
 | --- | --- | --- | --- | --- |
-| 0:00 | 10 | 暖場 | 破冰、點出「環境是別人幫你裝的」 | Slido 暖場投票 |
+| 0:00 | 10 | 暖場 | 破冰、點出「環境是別人幫你裝的」 | Q1 舉手表決 |
 | 0:10 | 30 | Ch1 Intro to Docker | 三個痛點、git 不存環境、Image / Container / Registry、VM vs Docker | 梗圖 |
-| 0:40 | 5 | Slido Q1 | 同一個 Image 開兩個 Container，檔案互通嗎 | 只投票，不公布答案 |
+| 0:40 | 5 | Q2 | Mac 或 Windows 上的 Container 使用誰的 kernel | 只表決，不公布答案 |
 | 0:45 | 10 | Ch2 Set up Docker | `docker run hello-world` 驗證、TA 救援 | TA 巡場 |
 | 0:55 | 45 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
 | 1:40 | 10 | 休息 |  | `docker stop audience` |
-| 1:50 | 35 | Ch4 Running Containers | `-d`、stop / rm → env → port → Q2 → Volume | Slido Q2、實作 |
+| 1:50 | 35 | Ch4 Running Containers | `-d`、stop / rm → env → port → Q2 → Volume | Q4、實作 |
 | 2:25 | 20 | Ch5 Docker Compose | 長指令 → compose.yaml → `compose up` | 實作 |
-| 2:45 | 15 | 總結 | Bento 總結、Q&A、回饋表單 | Slido Q&A |
+| 2:45 | 15 | 總結 | Bento 總結、Q&A、回饋表單 | 開放提問 |
 
 ## 逐段內容與投影片大綱
 
@@ -51,7 +51,7 @@ Sep 28, 2026 · @seanyeh
 
 1. 封面
 2. 自我介紹與今天會做出什麼：最後一張放 todo app 的截圖，說「3 小時後你會自己把它跑起來」
-3. Slido 暖場投票（題目見 Slido 章節）→ 公布結果時點出「你們能直接寫程式，是因為有人幫你把環境裝好了，今天換你學會當那個人」
+3. Q1：git clone 會一起取得什麼（題目見「課堂提問設計」），只表決不公布
 
 ### Ch1 Intro to Docker（30 分，9 張）
 
@@ -65,9 +65,9 @@ Sep 28, 2026 · @seanyeh
 8. VM vs Docker：租屋比喻，VM 是整棟透天厝（自己的水電廚房），Container 是雅房（房間各自上鎖，共用大樓水電，也就是共用 OS 核心）
 9. 講義的 VM / Docker 對照表 → 結論：更輕、更快、吃更少資源
 
-### Slido Q1（5 分，1 張）
+### Q2（5 分，1 張）
 
-只投票、只顯示票數分布，不公布答案，說「等一下實作你們自己證明」。
+只舉手表決，不公布答案，說「Ch2 裝好 Docker 後自己驗證」。
 
 ### Ch2 Set up Docker（10 分，2 張）
 
@@ -81,7 +81,7 @@ Sep 28, 2026 · @seanyeh
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
 5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`
-6. 驗證 Q1：執行 `docker run node-base ls`，同一個 Image 開的新 Container 裡沒有 `app.js` → 回頭公布 Q1 答案
+6. 驗證 Q3：`docker run ubuntu which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node` → 回頭公布 Q3 答案
 7. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
 8. Dockerfile 常見指令表（講義的 8 個指令，今天只用 FROM、WORKDIR、COPY、RUN、CMD 五個，其他標灰）
 9. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的
@@ -99,8 +99,8 @@ Sep 28, 2026 · @seanyeh
 6. 實作：先 `-p 3000` 看隨機 port，再 `-p 3000:3000`，瀏覽器打開 `localhost:3000` 看到 todo app
 7. 故意失敗：講師再開一個不同名稱、同樣綁 3000 的 Container → port 已被占用的錯誤
 8. 請學員在 todo app 加 3 筆待辦事項
-9. Slido Q2（題目見 Slido 章節）
-10. 公布答案並現場驗證：`docker rm -f my-image` → 重開 → 3 筆全部消失
+9. Q4（題目見「課堂提問設計」）
+10. 現場驗證 Q4：`docker rm -f my-image` → 重開 → 3 筆全部消失
 11. Volume 梗：Container 像飯店房間，退房（rm）東西會被清掉，Volume 是寄放在櫃檯的行李 → `docker volume create todo-data` 加 `-v`
 12. 檢查點：加待辦事項 → `rm -f` → 用同一條 `-v` 指令重開 → 資料還在
 
@@ -116,7 +116,7 @@ Sep 28, 2026 · @seanyeh
 
 1. Bento grid 五格：Image（食材）、Container（上桌的料理）、Dockerfile（食譜）、Volume（寄放的行李）、Compose（套餐）
 2. 回收開場梗：「現在你真的可以把你的電腦出貨了」+ 延伸學習連結
-3. Slido Q&A 統一回答、回饋表單 QR code
+3. 開放提問、回饋表單 QR code
 
 ## 投影片做法
 
@@ -146,9 +146,9 @@ Sep 28, 2026 · @seanyeh
 
 ### 需要新做的投影片
 
-Slido 與檢查點直接套既有 layout，只有梗圖對話框要新做：
+提問與檢查點直接套既有 layout，只有梗圖對話框要新做：
 
-- Slido 投影片：用 tb-quiz layout，選項用 A、B、C 方框，揭曉時正確選項轉成 teal 並淡入解說；右側放 Slido QR code。
+- 提問投影片：用 tb-quiz layout，選項用 A、B、C、D 方框；揭曉時正確選項轉成 teal 並淡入解說。
 - 檢查點投影片：用 tb-figure layout，上方放 Terminal 輸出或瀏覽器截圖，下方 teal 左框的一行 takeaway「看到這個就成功」。
 - 梗圖對話框：左右兩個直角對話框依 click 出現，框線 1.5px、無圓角，配色用 Textbook 色票；用在「在我電腦上可以跑啊」與 Port 的「已讀不回」。
 
@@ -224,57 +224,56 @@ Slido 與檢查點直接套既有 layout，只有梗圖對話框要新做：
 | Image、Container、Volume 定義 | tb-def |
 | VM vs Docker、docker run vs compose | tb-compare |
 | commit 做法的 4 個步驟 | tb-steps |
-| Slido Q1、Q2 | tb-quiz |
+| Q1 到 Q4 | tb-quiz |
 | 檢查點、架構圖 | tb-figure |
 | 指令總表（課後帶走） | tb-ref |
 | 中段與總結 | bento（總結用 big 四欄版） |
 | 最後一張 | tb-end（下一步學什麼） |
 
-## Slido 題目設計
+## 課堂提問設計
 
-Slido 開 3 個投票與 1 個整堂開著的匿名 Q&A。兩題技術題 Q1、Q2 是同一個情境的上下集：Q1 問「兩個 Container 之間」，Q2 問「同一個 Container 刪掉重開之後」，兩題答案都是「看不到 / 不見了」，最後由 Volume 翻轉結局。
+不使用 Slido，題目直接放在投影片上，學員舉手表決。四題都先問、不公布，等後面的內容或實作驗證後再揭曉，每題都替下一段內容鋪陳。
 
-### 暖場投票（0:03，非技術題）
+### Q1：git clone 會一起取得什麼（暖場提問，Ch1 揭曉）
 
-題目：你之前寫程式都在哪裡寫？
+題目：將專案推上 GitHub 後，組員以 git clone 取得。下列哪一項會隨 clone 一起取得？
 
-- 線上解題平台（Online Judge）
-- Colab 或 Jupyter
-- 學校電腦教室
-- 自己電腦裝 VS Code
-- 我都複製 ChatGPT 的
+- 已安裝的套件，例如 flask
+- 開發者電腦上的 Python 版本
+- 資料庫與其中的資料
+- 僅有已 commit 的程式碼與檔案
 
-用途：公布結果時點出多數人的環境是別人裝好的，接到今天的主題。最後一個選項是給全場笑一下的。
+答案：僅有已 commit 的程式碼與檔案。揭曉時機：Ch1 的對話情境與三個痛點之後，接到「git 管理程式碼，不管理執行環境」。
 
-### Q1：兩個 Container 看得到彼此的檔案嗎（0:40）
+### Q2：Container 使用誰的 kernel（Ch1 結尾，Ch2 揭曉）
 
-題目：用同一個 Image 開了兩個 Container A 和 B。在 A 裡面建立 `hello.txt`，B 裡面看得到嗎？
+題目：在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 
-- 看得到，因為它們來自同一個 Image
-- 看不到
-- 要看 B 是在 A 建檔之前還是之後開的
+- Image 內附的 Ubuntu kernel
+- 主機的 macOS 或 Windows kernel
+- Docker Desktop 在背景啟動的 Linux VM
 
-答案：看不到。對應講義 Container 的 Independency 特性。
+答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。揭曉時機：Ch2 用 ubuntu 與 alpine 各執行 `uname -r`，兩者版本相同且結尾為 linuxkit。
 
-公布時機：當下不公布。在 Ch3 學員於 `app-container` 裡寫完 `app.js` 之後，請他們執行 `docker run node-base ls`，親眼看到同一個 `node-base` 開出的新 Container 裡沒有 `app.js`，再回頭公布票數與答案。
+### Q3：commit 會不會修改原本的 Image（Ch2 結尾，Ch3 揭曉）
 
-### Q2：刪掉重開之後檔案還在嗎（Ch4，約 2:10）
+題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
 
-題目：接續 Q1。把 Container A 用 `docker rm` 刪掉，再用同一個 Image 開一個新的 A，`hello.txt` 還在嗎？
+- 有，commit 會一併更新 ubuntu Image
+- 沒有，Node 只存在於 node-base
+- 只在原本的 Container 執行時才有
 
-- 還在
+答案：沒有。揭曉時機：Ch3 做完 node-base 後執行 `docker run ubuntu which node`（無輸出）與 `docker run node-base which node`（`/usr/bin/node`）。
+
+### Q4：刪除 Container 後資料還在嗎（Ch4，引出 Volume）
+
+題目：todo app 中已新增 3 筆待辦事項。以 `docker rm -f` 刪除 Container，再以同一個 Image 重新啟動，資料還在嗎？
+
+- 還在，資料存在 Image 中
 - 不見了
-- 要先 commit 才會在
+- 只要先 docker stop 再刪除就會保留
 
-答案：不見了。Image 是 Immutable 的，檔案只存在被刪掉的那個 Container 裡。
-
-第三個選項是故意設計給有 git 經驗的人的陷阱，他們會直覺覺得「有 commit 就會在」。公布時補一句：commit 確實會存成一個新的 Image，但你是用原本的 Image 重開，所以一樣看不到；要用 commit 出來的新 Image 開才看得到。這句能把 Image 與 Container 的差別再講清楚一次。
-
-公布後現場驗證：學員剛在 todo app 加的 3 筆待辦事項，`docker rm -f my-image` 後重開全部消失 →「那資料要放哪？」→ Volume。
-
-### 匿名 Q&A（整堂開著）
-
-開場就告訴學員卡住或聽不懂可以匿名丟上來。講師在休息時看一次，總結時統一回答剩下的。
+答案：不見了。表決後直接現場操作：`docker rm -f my-image` 後重開，3 筆全部消失 →「那資料要放哪？」→ Volume。
 
 ## 梗與類比清單
 
@@ -326,7 +325,7 @@ Slido 開 3 個投票與 1 個整堂開著的匿名 Q&A。兩題技術題 Q1、Q
 ### TA 安排
 
 - 實作段落（Ch2、Ch3、Ch4、Ch5）TA 在走道巡場，講師不下台。
-- 學員卡住先舉手，TA 處理不了的丟 Slido Q&A，講師在休息時看。
+- 學員卡住先舉手，TA 處理不了的記下來，講師在休息時處理。
 - 講師每個實作段落開始前，把該段指令貼到共用連結，讓學員複製貼上，減少打錯字。
 - TA 課前要知道本文件「現場會踩的坑」那一段，最常見的是名稱衝突與 port 衝突。
 
@@ -359,7 +358,6 @@ Slido 開 3 個投票與 1 個整堂開著的匿名 Q&A。兩題技術題 Q1、Q
 - [ ] 修完講義裡的錯誤（見下一章節）
 - [ ] 準備指令共用連結，每個實作段落一區，學員直接複製
 - [ ] 準備 Wi-Fi 斷線備案：用 `docker save` 把 3 個 Image 存成檔案放 USB，現場用 `docker load` 匯入
-- [ ] Slido 建好暖場投票、Q1、Q2，Q&A 設為匿名
 - [ ] 回饋表單與 QR code
 
 ## 講義修正與現場會踩的坑

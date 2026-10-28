@@ -40,11 +40,9 @@
 .fig-body > p { font-size: 35px; line-height: 1.6; }
 .fig-take { width: 100%; box-sizing: border-box; }
 
-/* ---------- Quiz: five options, Slido code ---------- */
+/* ---------- Quiz: five options ---------- */
 .qz-opts.five .qz-opt:last-child { grid-column: 1 / -1; }
 .qz-opt { min-width: 620px; }
-.qz-slido { display: flex; align-items: baseline; gap: 16px; font-size: 24px; color: var(--tb-mut); }
-.qz-slido b { font-family: var(--tb-mono); font-weight: 500; font-size: 30px; color: var(--tb-teal); }
 
 /* ---------- Cards and compare rows that reveal on click ---------- */
 .col-card.off, .cmp-k.off, .cmp-v.off, .step.off { opacity: 0.18; }
