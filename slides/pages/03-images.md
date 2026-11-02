@@ -37,8 +37,8 @@ numbered: true
 clicks: 3
 items:
   - title: 進入 Container
-    code: docker run -it alpine
-    text: 以 alpine Image 啟動一個 Container，並進入其 Terminal。
+    code: docker run --name=base-container -it alpine
+    text: 以 alpine Image 啟動一個名為 <code>base-container</code> 的 Container，並進入其 Terminal。
   - title: 安裝 Node
     code: apk add nodejs
     text: 以 Alpine 的套件管理工具 <code>apk</code> 安裝 Node；它會自動取得套件清單。
@@ -46,8 +46,8 @@ items:
     code: exit
     text: 返回主機，提示字元由 <code>/ #</code> 恢復為原本的格式。
   - title: 儲存為 Image
-    code: docker container commit
-    text: 將已安裝 Node 的 Container 儲存為新的 Image，命名為 <code>node-base</code>。
+    code: docker container commit base-container node-base
+    text: 將已安裝 Node 的 <code>base-container</code> 儲存為新的 Image，命名為 <code>node-base</code>。
 ---
 
 # 以 commit 建立 Image 的流程
