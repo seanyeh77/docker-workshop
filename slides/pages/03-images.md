@@ -460,10 +460,10 @@ COPY . .
 RUN yarn install --production
 CMD [&quot;node&quot;, &quot;./src/index.js&quot;]"
   :layers="[
-    { name: 'node:22-alpine', size: 'base' },
-    { name: 'WORKDIR /app', size: '8.19 kB' },
+    { name: 'node:22-alpine', size: '164 MB' },
+    { name: 'WORKDIR /app', size: '0 B' },
     { name: 'COPY . .', size: '4.59 MB' },
-    { name: 'RUN yarn install', size: '88.5 MB' },
+    { name: 'RUN yarn install', size: '89.8 MB' },
     { name: 'CMD node ...', size: '0 B' },
   ]"
 />
@@ -473,7 +473,8 @@ CMD [&quot;node&quot;, &quot;./src/index.js&quot;]"
 RUN yarn install 那層最大，因為套件都裝在這層。
 每一行都會在 history 留下一筆紀錄，但只有改到檔案的 RUN、COPY、ADD 會產生有內容的 Layer。
 CMD、ENV、EXPOSE 只改設定，所以是 0 B。
-WORKDIR 比較特別：/app 不存在時它會建立這個目錄，所以有一點點大小（實測 8.19 kB）。
+WORKDIR 會建立 /app 目錄，但目錄本身幾乎不佔空間，所以通常顯示 0B；某些環境會顯示幾 kB。
+數字來自實際 build：node:22-alpine 本身 164MB，加上 COPY 4.59MB、yarn install 89.8MB，整個 Image 約 258MB，和 docker image ls 看到的一致。
 -->
 
 ---
