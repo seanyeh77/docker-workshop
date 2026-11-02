@@ -254,7 +254,7 @@ Sep 28, 2026 · @seanyeh
 - 主機的 macOS 或 Windows kernel
 - Docker Desktop 在背景啟動的 Linux VM
 
-答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。表決後立即公布；Ch2 用 ubuntu 與 alpine 各執行 `uname -r`，兩者版本相同且結尾為 linuxkit。
+答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。表決後立即公布；Ch2 以 ubuntu 與 alpine 各執行一次 `uname -r`，兩者版本相同且結尾為 linuxkit。
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 

@@ -46,35 +46,31 @@ clicks: 2
 layout: textbook
 chapter: Ch 2 · Set up Docker
 ltag: Terminal
-clicks: 4
+clicks: 2
 ---
 
 <script setup>
 const cmds = [
-  { c: 'docker run --rm ubuntu grep -w NAME /etc/os-release', o: "Unable to find image 'ubuntu:latest' locally\n...\nNAME=\"Ubuntu\"" },
-  { c: 'docker run --rm alpine grep -w NAME /etc/os-release', o: "Unable to find image 'alpine:latest' locally\n...\nNAME=\"Alpine Linux\"" },
-  { c: 'docker run --rm ubuntu uname -r', o: '6.x.x-linuxkit' },
-  { c: 'docker run --rm alpine uname -r', o: '6.x.x-linuxkit' },
+  { c: 'docker run --rm ubuntu uname -r', o: "Unable to find image 'ubuntu:latest' locally\n...\n6.x.x-linuxkit" },
+  { c: 'docker run --rm alpine uname -r', o: "Unable to find image 'alpine:latest' locally\n...\n6.x.x-linuxkit" },
 ]
 </script>
 
 # 驗證 Q2：Container 使用的 kernel
 
-<TerminalTyping :cmds="cmds" :keep="4" />
+<TerminalTyping :cmds="cmds" :keep="2" />
 
 ::note::
 
 <Note :notes="[
-  '回到 Q2：Container 使用的 kernel 來自何處。以下實際驗證。',
-  '/etc/os-release 記錄作業系統名稱，此 Container 為 Ubuntu。',
-  '換成 alpine，作業系統名稱變為 Alpine Linux。',
-  'uname -r 顯示 kernel 版本。',
-  '兩者的 kernel 版本相同：Image 只包含作業系統的檔案與工具，kernel 一律使用主機的。',
+  'uname -r 顯示 kernel 版本。分別以 ubuntu 與 alpine 兩個 Image 啟動 Container。',
+  'Ubuntu 的 Container 印出 linuxkit 的 kernel。',
+  'Alpine 的 Container 印出相同的 kernel：Image 不含 kernel，所有 Container 共用 Docker Desktop 背後那台 Linux VM 的 kernel。',
 ]" />
 
 <!--
 驗證 Q2 的答案。先問大家：如果 Image 內附 kernel，ubuntu 與 alpine 印出的 kernel 版本應該一樣嗎？
-開場說明：以 ubuntu 與 alpine 兩個 Image 各啟動 Container，比較作業系統與 kernel。
+ubuntu 和 alpine 是兩套不同的 Linux 發行版，若 Image 自帶 kernel，版本應該不同。
 --rm 讓 Container 執行完就自動刪除，之後 Ch4 會再講。
 Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Docker Desktop 在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
