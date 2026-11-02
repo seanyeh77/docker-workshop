@@ -79,6 +79,7 @@ Sep 28, 2026 · @seanyeh
 1. 兩種做 Image 的方式：現場手做後拍照存檔（commit）vs 照食譜做（Dockerfile）
    接著講 commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
 2. 實作：`docker run --name=base-container -it alpine` → `apk add nodejs` 安裝 Node → `node -e` 驗證 → `exit`。用 alpine 而非 ubuntu：不必先 `apt update` 下載數十 MB 的套件清單，全班同時安裝也快得多，而且 alpine 在 Ch2 已經拉過
+   接著一張常見錯誤：重打 `docker run --name=base-container` 會名稱衝突；用 `docker start -ai base-container` 重新進入，想重來則 `docker rm -f base-container`
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
 5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`

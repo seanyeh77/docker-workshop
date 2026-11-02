@@ -110,7 +110,37 @@ const cmds = [
 
 <!--
 最常見的錯：還在 Container 裡就打 docker 指令，會出現 command not found。先看提示字元。
-重做時若出現 The container name "/base-container" is already in use，代表上一次的 base-container 還在，先執行 docker rm -f base-container 再重來。Ch4 會正式講名稱衝突。
+若有人遇到名稱衝突，下一張說明處理方式。
+-->
+
+---
+layout: textbook
+chapter: Ch 3 · Building Images
+ltag: Terminal
+clicks: 3
+---
+
+# 常見錯誤：重新進入已建立的 Container
+
+<TerminalTyping :keep="3" :cmds="[
+  { c: 'docker run --name=base-container -it alpine', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/base-container&quot; is already in use by container &quot;28c4c1f50039...&quot;.' },
+  { c: 'docker start -ai base-container', o: '', after: '/ # ' },
+  { p: '/ # ', c: 'which node', o: '/usr/bin/node' },
+]" />
+
+::note::
+
+<Note :notes="[
+  '已建立過 base-container 時，再次執行 docker run 會發生錯誤。',
+  '先前的 base-container 仍存在，名稱不能重複使用。',
+  'docker start -ai 重新啟動並進入該 Container：-a 顯示輸出，-i 接受輸入。',
+  '先前安裝的 Node 仍在，可直接接續。若想從頭開始，改以 docker rm -f base-container 刪除後重新建立。',
+]" />
+
+<!--
+離開 Container 不會刪掉它，所以重打一次 docker run 就會撞名。
+想接著做：docker start -ai 回到原本那個 Container，裝過的東西都還在。
+想重來：docker rm -f base-container 再 run。Ch4 會再正式講名稱衝突與 rm。
 -->
 
 ---
