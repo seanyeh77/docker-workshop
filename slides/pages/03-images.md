@@ -57,6 +57,25 @@ items:
 -->
 
 ---
+layout: quiz
+chapter: Ch 3 · Building Images
+question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
+clicks: 1
+answer: 1
+options:
+  - 有，commit 會一併更新 ubuntu Image
+  - 沒有，Node 只存在於 node-base
+  - 只在原本的 Container 執行時才有
+---
+
+commit 產生一個新的 Image，原本的 ubuntu Image 不會被修改。接下來實際建立 node-base 並驗證。
+
+<!--
+剛講完 commit 的流程，先舉手表決，再按一下公布答案。
+做完 node-base 後用 which node 驗證。
+-->
+
+---
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal

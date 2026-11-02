@@ -80,23 +80,3 @@ Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Do
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
 版本號每台電腦不同，重點是兩行相同。
 -->
-
----
-layout: quiz
-chapter: Ch 2 · Set up Docker
-question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
-clicks: 1
-answer: 1
-options:
-  - 有，commit 會一併更新 ubuntu Image
-  - 沒有，Node 只存在於 node-base
-  - 只在原本的 Container 執行時才有
----
-
-
-commit 產生一個新的 Image，原本的 ubuntu Image 不會被修改。Ch3 將實際建立 node-base 並驗證。
-
-<!--
-先舉手表決，再按一下公布答案。這題預告 Ch3 的 commit。
-Ch3 做完 node-base 後用 which node 驗證。
--->

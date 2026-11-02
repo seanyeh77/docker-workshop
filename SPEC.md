@@ -77,6 +77,7 @@ Sep 28, 2026 · @seanyeh
 ### Ch3 Building Images（35 分，12 張）
 
 1. 兩種做 Image 的方式：現場手做後拍照存檔（commit）vs 照食譜做（Dockerfile）
+   接著講 commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
 2. 實作：`docker run --name=base-container -it ubuntu` → 安裝 Node → `node -e` 驗證 → `exit`
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
@@ -255,7 +256,7 @@ Sep 28, 2026 · @seanyeh
 
 答案：Docker Desktop 在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。表決後立即公布；Ch2 用 ubuntu 與 alpine 各執行 `uname -r`，兩者版本相同且結尾為 linuxkit。
 
-### Q3：commit 會不會修改原本的 Image（Ch2 結尾，Ch3 驗證）
+### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
 題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
 
