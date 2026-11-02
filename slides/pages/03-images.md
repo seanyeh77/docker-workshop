@@ -89,7 +89,7 @@ const cmds = [
   { p: root, c: 'apk add nodejs', o: 'fetch https://dl-cdn.alpinelinux.org/alpine/v3.24/main/x86_64/APKINDEX.tar.gz\n...\nOK: xx MiB in xx packages' },
   { p: root, c: `node -e 'console.log("Hello world!")'`, o: 'Hello world!' },
   { p: root, c: 'exit', o: '', after: '$ ' },
-  { c: 'docker container commit -m "Add node" base-container node-base', o: 'sha256:067b2614e69d...' },
+  { c: 'docker container commit -m "Add node" base-container node-base', o: 'sha256:5c3477c0e3cb...' },
 ]
 </script>
 
@@ -180,7 +180,7 @@ ltag: Terminal
 
 <script setup>
 const docker = [
-  { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n067b2614e69d   13 seconds ago   70MB     Add node\n&lt;missing&gt;      2 weeks ago      0B\n&lt;missing&gt;      2 weeks ago      8.3MB' },
+  { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n5c3477c0e3cb   13 seconds ago   68.4MB   Add node\nf7bbaec1bd03   11 days ago      0B       buildkit.dockerfile.v0\n&lt;missing&gt;      11 days ago      8.66MB   buildkit.dockerfile.v0' },
 ]
 const git = [
   { c: 'git log --oneline', o: 'a1b2c3d Add login page\n9f8e7d6 Fix typo in README\n1234567 Initial commit' },
@@ -196,8 +196,8 @@ const git = [
 
 <!--
 剛剛 commit 完，先看 node-base 存了什麼。git 有 git log 看歷史，Docker 也有對應的指令。
-最上面那一層就是剛剛 commit 的 Add node，大小約 70MB，是裝 Node 多出來的（數字依版本而異，上課前以實際輸出為準）。
-下面幾層是 alpine 原本就有的，整個 alpine 不到 10MB。Image 就是這樣一層層疊起來的。
+最上面那一層就是剛剛 commit 的 Add node，68.4MB，是裝 Node 多出來的。
+下面兩層是 alpine 原本就有的：8.66MB 是 alpine 的檔案，0B 那層是 alpine 的 CMD 設定。整個 alpine 不到 10MB。Image 就是這樣一層層疊起來的。
 兩邊排版很像，下一張把 Docker 和 git 的指令整理成對照表。
 -->
 
@@ -211,7 +211,7 @@ clicks: 4
 rows:
   - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
   - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
-  - [命名, '<code>docker image tag</code>', '<code>git tag</code>']
+  - [命名, '<code>docker tag node-base node-base:v1</code>', '<code>git tag v1</code>']
   - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
 ---
 
@@ -219,6 +219,7 @@ rows:
 
 <!--
 一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
+命名那列：docker tag 是 docker image tag 的簡寫，要給兩個參數：原本的 Image 與新名稱。它不會複製 Image，只是多貼一張標籤，指向同一個 Image ID，就像 git tag v1 指向某個 commit。
 另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態，直接疊在原本的基底 Image（這裡是 alpine）上，再 commit 一次不會疊在前一次上面。下一張實際示範。
 -->
 
@@ -232,9 +233,9 @@ clicks: 3
 # 重複 commit 與未命名的 Image
 
 <TerminalTyping :keep="3" :cmds="[
-  { c: 'docker container commit base-container node-base', o: 'sha256:5a91c3e0d7b2...' },
-  { c: 'docker image ls -a', o: 'IMAGE                ID             DISK USAGE   CONTENT SIZE\nnode-base:latest     5a91c3e0d7b2         78MB          29MB\n&amp;lt;untagged&amp;gt;           067b2614e69d         78MB          29MB' },
-  { c: 'docker image prune', o: 'WARNING! This will remove all dangling images.\nAre you sure you want to continue? [y/N] y\nDeleted Images:\ndeleted: sha256:067b2614e69d...\n\nTotal reclaimed space: 70MB' },
+  { c: 'docker container commit base-container node-base', o: 'sha256:9e1f4a7c2d30...' },
+  { c: 'docker image ls -a', o: 'IMAGE                ID             DISK USAGE\nnode-base:latest     9e1f4a7c2d30         77.1MB\n&amp;lt;untagged&amp;gt;           5c3477c0e3cb         77.1MB' },
+  { c: 'docker image prune', o: 'WARNING! This will remove all dangling images.\nAre you sure you want to continue? [y/N] y\nDeleted Images:\ndeleted: sha256:5c3477c0e3cb...\n\nTotal reclaimed space: 68.4MB' },
 ]" />
 
 ::note::
@@ -250,7 +251,7 @@ clicks: 3
 原理：Image 的名稱（tag）只是一張標籤，同一時間只能貼在一個 Image 上。commit 到同一個名稱，標籤就移到新的 Image，舊的不會被刪除，只是沒有名字。
 和 git 不同：第二次 commit 不會疊在第一次上面，docker image history node-base 只會看到這一次的 commit 直接接在 alpine 上。
 prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
-數字依版本而異，上課前以實際輸出為準。
+大小依 alpine 與 nodejs 的版本而異。
 -->
 
 ---
@@ -448,7 +449,7 @@ RUN yarn install --production
 CMD [&quot;node&quot;, &quot;./src/index.js&quot;]"
   :layers="[
     { name: 'node:22-alpine', size: 'base' },
-    { name: 'WORKDIR /app', size: '0 B' },
+    { name: 'WORKDIR /app', size: '8.19 kB' },
     { name: 'COPY . .', size: '4.59 MB' },
     { name: 'RUN yarn install', size: '88.5 MB' },
     { name: 'CMD node ...', size: '0 B' },
@@ -458,7 +459,9 @@ CMD [&quot;node&quot;, &quot;./src/index.js&quot;]"
 <!--
 和手做時一樣，Image 是一層層疊起來的。
 RUN yarn install 那層最大，因為套件都裝在這層。
-WORKDIR 和 CMD 只改設定，不佔空間。
+每一行都會在 history 留下一筆紀錄，但只有改到檔案的 RUN、COPY、ADD 會產生有內容的 Layer。
+CMD、ENV、EXPOSE 只改設定，所以是 0 B。
+WORKDIR 比較特別：/app 不存在時它會建立這個目錄，所以有一點點大小（實測 8.19 kB）。
 -->
 
 ---
