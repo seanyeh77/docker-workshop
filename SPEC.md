@@ -318,7 +318,7 @@ Sep 28, 2026 · @seanyeh
 
 | 時機 | 畫面上的指令 | 下方文字 | 回來時的畫面 |
 | --- | --- | --- | --- |
-| 休息（1:40） | `docker stop audience` | 「請於 10 分鐘後回到座位」 | `docker restart audience` |
+| 休息（1:40） | `docker stop audience` | 無 | `docker restart audience` |
 
 休息畫面的 stop / restart 剛好是 Ch4 第 2 張投影片的內容，回來講到時可以說「你們剛剛就被 restart 過了」。
 
