@@ -29,27 +29,13 @@ clicks: 2
 <Note :notes="[
   '先開啟 Docker Desktop，確認左下角顯示正在執行。',
   'docker -v 僅確認指令已安裝，即使 Docker Desktop 未開啟也會顯示版本。',
-  'hello-world 會實際 pull 一個 Image 並執行，成功即代表安裝完成。',
+  'hello-world 會實際 pull 一個 Image 並執行。出現 Hello from Docker! 即代表安裝完成；若未出現，請舉手由 TA 協助。',
 ]" />
 
 <!--
 課前作業已經請大家裝好。這裡只做驗證，TA 下去巡。
 版本號每個人不一樣，沒關係。
--->
-
----
-layout: figure
-chapter: Ch 2 · Set up Docker
-takeaway: 出現 Hello from Docker! 即代表安裝成功；若未出現，請舉手由 TA 協助。
----
-
-# 檢查點：Docker 安裝完成
-
-<TerminalTyping all :cmds="[
-  { c: 'docker run hello-world', o: '\nHello from Docker!\nThis message shows that your installation appears to be working correctly.' },
-]" />
-
-<!--
+最後一步就是檢查點：看到 Hello from Docker! 就成功，沒看到的舉手。
 常見狀況：
 - Cannot connect to the Docker daemon：Docker Desktop 沒開。
 - Windows 還沒重開機：WSL2 沒啟用。

@@ -45,7 +45,7 @@ Sep 28, 2026 · @seanyeh
 
 ## 逐段內容與投影片大綱
 
-全份約 50 張投影片（含 1 張休息畫面）。每個實作段落結尾都放一張「看到這個就代表成功」的檢查點投影片，讓學員自己判斷要不要舉手求救。
+全份約 50 張投影片（含 1 張休息畫面）。每個實作段落都說清楚「看到這個就代表成功」，讓學員自己判斷要不要舉手求救。終端機實作的成功標準寫在該頁最後一則 NOTE，不另開一張重複的畫面；需要看瀏覽器結果的段落（Ch4、Ch5）才放獨立的檢查點投影片。
 
 ### 暖場（10 分，3 張）
 
@@ -72,7 +72,7 @@ Sep 28, 2026 · @seanyeh
 ### Ch2 Set up Docker（10 分，2 張）
 
 1. 課前作業回顧：開啟 Docker Desktop，執行 `docker run hello-world`，順便看一次 `docker -v`
-2. 檢查點：看到 Hello from Docker! 就成功；沒看到的舉手，TA 到場處理。講師在這段先把下一章的指令貼到共用連結
+   檢查點寫在同一頁最後一則 NOTE：看到 Hello from Docker! 就成功；沒看到的舉手，TA 到場處理。講師在這段先把下一章的指令貼到共用連結
 
 ### Ch3 Building Images（35 分，12 張）
 
@@ -87,7 +87,7 @@ Sep 28, 2026 · @seanyeh
 9. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的
 10. 故意失敗：講師在錯的資料夾執行 `docker build .`，讓大家看找不到 Dockerfile 的錯誤，再 `cd` 回正確位置
 11. sha256 長名字梗：「你會背自己的身分證字號嗎？」→ `docker build -t`，對照 `git tag`
-12. 檢查點：`docker image ls` 看到 `my-username/my-image` 就成功
+    檢查點寫在 build -t 那頁最後一則 NOTE：`docker image ls` 看到 `my-username/my-image` 就成功
 
 ### Ch4 Running Containers（35 分，12 張）
 
@@ -149,7 +149,7 @@ Sep 28, 2026 · @seanyeh
 提問與檢查點直接套既有 layout，只有梗圖對話框要新做：
 
 - 提問投影片：用 tb-quiz layout，選項用 A、B、C、D 方框；揭曉時正確選項轉成 teal 並淡入解說。
-- 檢查點投影片：用 tb-figure layout，上方放 Terminal 輸出或瀏覽器截圖，下方 teal 左框的一行 takeaway「看到這個就成功」。
+- 檢查點投影片：用 tb-figure layout，上方放瀏覽器畫面，下方 teal 左框的一行 takeaway「看到這個就成功」。終端機實作不另做檢查點投影片，成功標準寫在該頁最後一則 NOTE。
 - 梗圖對話框：左右兩個直角對話框依 click 出現，框線 1.5px、無圓角，配色用 Textbook 色票；用在「在我電腦上可以跑啊」與 Port 的「已讀不回」。
 
 ### Q1 與 Q2 的揭曉動畫

@@ -395,20 +395,13 @@ clicks: 2
 <Note :notes="[
   'build 完成後僅產生一串 sha256，難以辨識。',
   '-t 在 build 時同時指定名稱，作用如同 git tag。',
-  'docker image ls 列出所有 Image；未指定版本時，TAG 預設為 latest。',
+  'docker image ls 列出所有 Image。列表中出現剛建立的 Image 即代表完成；未指定版本時預設為 latest。',
 ]" />
 
----
-layout: figure
-chapter: Ch 3 · Building Images
-takeaway: 列表中出現 my-username/my-image 即代表成功；提前完成者可修改 src/index.js 後重新 build，觀察哪些 Layer 顯示 CACHED。
----
-
-# 檢查點：Image 建立完成
-
-<TerminalTyping all :cmds="[
-  { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE   CONTENT SIZE\nmy-username/my-image:latest   746c7e06537f        354MB         93MB' },
-]" />
+<!--
+最後一步就是檢查點：列表中出現 my-username/my-image 就成功，沒看到的舉手。
+做得快的人：改一下 src/index.js 再 build 一次，看哪幾層顯示 CACHED。
+-->
 
 ---
 layout: bento
