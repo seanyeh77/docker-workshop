@@ -82,6 +82,7 @@ Sep 28, 2026 · @seanyeh
    接著兩張常見錯誤：重打 `docker run --name=base-container` 會名稱衝突；兩種處理各一張：用 `docker start -ai base-container` 重新進入接續，或 `docker rm -f base-container` 刪除後重新建立
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
+   接著對照表，再示範重複 commit：舊的 Image 失去名稱成為未命名（dangling），`docker image ls -a` 才看得到；用 `docker image prune` 清除。並說明 docker commit 不會像 git 一樣串成歷史
 5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`
 6. 驗證 Q3：`docker run alpine which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node`
 7. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
@@ -95,6 +96,7 @@ Sep 28, 2026 · @seanyeh
 
 1. 痛點：關掉 Terminal 服務就停了 → `-d` 背景執行、`docker ps` 查看
 2. `docker stop`、`docker restart`、`docker rm`：一張圖畫出 Container 的狀態變化
+   接著一張 `docker container prune`：exit 與 stop 不會刪除 Container，用 `docker ps -a` 看到累積的已停止 Container，再一次清除
 3. 故意失敗：直接再跑一次同名的 `docker run -d --name=my-image` → 名稱衝突錯誤 → 教 `docker rm -f my-image`，之後每次重開前都先執行它
 4. 環境變數 `-e` 與 `--env-file`：用 postgres 範例，看 `env` 的輸出
 5. Port 梗：Container 是大樓裡的房間，`-p 3000:3000` 是總機轉接

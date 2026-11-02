@@ -219,6 +219,38 @@ rows:
 
 <!--
 一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
+另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態，直接疊在原本的基底 Image（這裡是 alpine）上，再 commit 一次不會疊在前一次上面。下一張實際示範。
+-->
+
+---
+layout: textbook
+chapter: Ch 3 · Building Images
+ltag: Terminal
+clicks: 3
+---
+
+# 重複 commit 與未命名的 Image
+
+<TerminalTyping :keep="3" :cmds="[
+  { c: 'docker container commit base-container node-base', o: 'sha256:5a91c3e0d7b2...' },
+  { c: 'docker image ls -a', o: 'IMAGE                ID             DISK USAGE   CONTENT SIZE\nnode-base:latest     5a91c3e0d7b2         78MB          29MB\n&amp;lt;untagged&amp;gt;           067b2614e69d         78MB          29MB' },
+  { c: 'docker image prune', o: 'WARNING! This will remove all dangling images.\nAre you sure you want to continue? [y/N] y\nDeleted Images:\ndeleted: sha256:067b2614e69d...\n\nTotal reclaimed space: 70MB' },
+]" />
+
+::note::
+
+<Note :notes="[
+  '對同一個 base-container 再 commit 一次，並沿用名稱 node-base。',
+  '產生新的 Image，node-base 這個名稱移到新的 Image 上。',
+  '舊的 Image 失去名稱，成為未命名（dangling）的 Image。docker image ls 需加 -a 才會顯示，但仍佔用硬碟空間。',
+  'docker image prune 刪除所有未命名、且未被任何 Container 使用的 Image。',
+]" />
+
+<!--
+原理：Image 的名稱（tag）只是一張標籤，同一時間只能貼在一個 Image 上。commit 到同一個名稱，標籤就移到新的 Image，舊的不會被刪除，只是沒有名字。
+和 git 不同：第二次 commit 不會疊在第一次上面，docker image history node-base 只會看到這一次的 commit 直接接在 alpine 上。
+prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
+數字依版本而異，上課前以實際輸出為準。
 -->
 
 ---

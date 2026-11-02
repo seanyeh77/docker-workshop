@@ -37,12 +37,14 @@ cols: 2
 | `docker build -t name .` | 依 Dockerfile 建立 Image |
 | `docker image ls` | 列出所有 Image |
 | `docker image history` | 列出 Image 的每個 Layer |
+| `docker image prune` | 刪除未命名的 Image |
 
 | 指令 | 用途 |
 | --- | --- |
 | `docker run -d -p -v` | 背景執行、對應 Port、掛載 Volume |
 | `docker ps` | 列出執行中的 Container |
 | `docker rm -f name` | 停止並刪除 Container |
+| `docker container prune` | 刪除所有已停止的 Container |
 | `docker volume create` | 建立 Volume |
 | `docker compose up -d` | 依 compose.yaml 啟動服務 |
 
