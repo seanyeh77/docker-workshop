@@ -117,18 +117,15 @@ const cmds = [
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
-clicks: 6
+clicks: 3
 ---
 
-# 常見錯誤：Container 名稱已被使用
+# 名稱已被使用：重新進入原本的 Container
 
 <TerminalTyping :keep="3" :cmds="[
   { c: 'docker run --name=base-container -it alpine', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/base-container&quot; is already in use by container &quot;28c4c1f50039...&quot;.' },
   { c: 'docker start -ai base-container', o: '', after: '/ # ' },
   { p: '/ # ', c: 'which node', o: '/usr/bin/node' },
-  { p: '/ # ', c: 'exit', o: '', after: '$ ' },
-  { c: 'docker rm -f base-container', o: 'base-container' },
-  { c: 'docker run --name=base-container -it alpine', o: '', after: '/ # ' },
 ]" />
 
 ::note::
@@ -138,15 +135,39 @@ clicks: 6
   '先前的 base-container 仍存在，名稱不能重複使用。',
   'docker start -ai 重新啟動並進入該 Container：-a 顯示輸出，-i 接受輸入。',
   '先前安裝的 Node 仍在，可直接接續。',
-  '若想從頭開始，先離開 Container。',
-  'rm -f 會先停止再刪除 base-container。',
-  '名稱已釋出，重新建立一個乾淨的 base-container。',
 ]" />
 
 <!--
 離開 Container 不會刪掉它，所以重打一次 docker run 就會撞名。
-想接著做：docker start -ai 回到原本那個 Container，裝過的東西都還在。
-想重來：docker rm -f base-container 再 run。Ch4 會再正式講名稱衝突與 rm。
+第一種處理：docker start -ai 回到原本那個 Container，裝過的東西都還在。
+-->
+
+---
+layout: textbook
+chapter: Ch 3 · Building Images
+ltag: Terminal
+clicks: 3
+---
+
+# 名稱已被使用：刪除後重新建立
+
+<TerminalTyping :keep="3" :cmds="[
+  { c: 'docker run --name=base-container -it alpine', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/base-container&quot; is already in use by container &quot;28c4c1f50039...&quot;.' },
+  { c: 'docker rm -f base-container', o: 'base-container' },
+  { c: 'docker run --name=base-container -it alpine', o: '', after: '/ # ' },
+]" />
+
+::note::
+
+<Note :notes="[
+  '同樣的名稱衝突。',
+  '若想從頭開始，以 docker rm -f 刪除舊的 base-container；-f 會先停止再刪除。',
+  '名稱已釋出，重新建立一個乾淨的 base-container。',
+  '舊 Container 中的變更會一併消失，需重新安裝 Node。',
+]" />
+
+<!--
+第二種處理：刪掉重來。Ch4 會再正式講名稱衝突與 rm。
 -->
 
 ---
