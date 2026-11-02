@@ -37,14 +37,14 @@ numbered: true
 clicks: 3
 items:
   - title: 進入 Container
-    code: docker run -it ubuntu
-    text: 以 ubuntu Image 啟動一個 Container，並進入其 Terminal。
+    code: docker run -it alpine
+    text: 以 alpine Image 啟動一個 Container，並進入其 Terminal。
   - title: 安裝 Node
-    code: apt update && apt install -y nodejs
-    text: 先以 <code>apt update</code> 取得套件清單，再安裝 Node；ubuntu Image 預設不含套件清單，直接安裝會出現 Unable to locate package。
+    code: apk add nodejs
+    text: 以 Alpine 的套件管理工具 <code>apk</code> 安裝 Node；它會自動取得套件清單。
   - title: 離開 Container
     code: exit
-    text: 返回主機，提示字元由 <code>root@...#</code> 恢復為原本的格式。
+    text: 返回主機，提示字元由 <code>/ #</code> 恢復為原本的格式。
   - title: 儲存為 Image
     code: docker container commit
     text: 將已安裝 Node 的 Container 儲存為新的 Image，命名為 <code>node-base</code>。
@@ -59,16 +59,16 @@ items:
 ---
 layout: quiz
 chapter: Ch 3 · Building Images
-question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
+question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
 clicks: 1
 answer: 1
 options:
-  - 有，commit 會一併更新 ubuntu Image
+  - 有，commit 會一併更新 alpine Image
   - 沒有，Node 只存在於 node-base
   - 只在原本的 Container 執行時才有
 ---
 
-commit 產生一個新的 Image，原本的 ubuntu Image 不會被修改。接下來實際建立 node-base 並驗證。
+commit 產生一個新的 Image，原本的 alpine Image 不會被修改。接下來實際建立 node-base 並驗證。
 
 <!--
 剛講完 commit 的流程，先舉手表決，再按一下公布答案。
@@ -83,10 +83,10 @@ clicks: 5
 ---
 
 <script setup>
-const root = 'root@d8c5ca119fcd:/# '
+const root = '/ # '
 const cmds = [
-  { c: 'docker run --name=base-container -it ubuntu', o: '', after: root },
-  { p: root, c: 'apt update && apt install -y nodejs', o: '...\nSetting up nodejs ...' },
+  { c: 'docker run --name=base-container -it alpine', o: '', after: root },
+  { p: root, c: 'apk add nodejs', o: 'fetch https://dl-cdn.alpinelinux.org/alpine/v3.24/main/x86_64/APKINDEX.tar.gz\n...\nOK: xx MiB in xx packages' },
   { p: root, c: `node -e 'console.log("Hello world!")'`, o: 'Hello world!' },
   { p: root, c: 'exit', o: '', after: '$ ' },
   { c: 'docker container commit -m "Add node" base-container node-base', o: 'sha256:067b2614e69d...' },
@@ -101,8 +101,8 @@ const cmds = [
 
 <Note :notes="[
   '指令皆已放在共用連結，可直接複製使用。',
-  '-it 用於進入 Container 操作。提示字元變為 root@ 開頭，代表已位於 Container 內。',
-  '此 Container 僅包含基本的 Ubuntu，需自行安裝 Node。',
+  '-it 用於進入 Container 操作。提示字元變為 / #，代表已位於 Container 內。',
+  '此 Container 僅包含基本的 Alpine，以 apk 安裝 Node。',
   '輸出 Hello world! 代表 Node 安裝完成。',
   'exit 返回主機，提示字元恢復原狀。',
   'commit 將此 Container 的狀態儲存為新的 Image，名稱為 node-base。',
@@ -120,7 +120,7 @@ ltag: Terminal
 
 <script setup>
 const docker = [
-  { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n067b2614e69d   13 seconds ago   155MB    Add node\nbbdabce66f1b   13 days ago      0B\n&lt;missing&gt;      13 days ago      78.1MB' },
+  { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n067b2614e69d   13 seconds ago   70MB     Add node\n&lt;missing&gt;      2 weeks ago      0B\n&lt;missing&gt;      2 weeks ago      8.3MB' },
 ]
 const git = [
   { c: 'git log --oneline', o: 'a1b2c3d Add login page\n9f8e7d6 Fix typo in README\n1234567 Initial commit' },
@@ -136,8 +136,8 @@ const git = [
 
 <!--
 剛剛 commit 完，先看 node-base 存了什麼。git 有 git log 看歷史，Docker 也有對應的指令。
-最上面那一層就是剛剛 commit 的 Add node，大小 155MB，是裝 Node 多出來的。
-下面幾層是 ubuntu 原本就有的。Image 就是這樣一層層疊起來的。
+最上面那一層就是剛剛 commit 的 Add node，大小約 70MB，是裝 Node 多出來的（數字依版本而異，上課前以實際輸出為準）。
+下面幾層是 alpine 原本就有的，整個 alpine 不到 10MB。Image 就是這樣一層層疊起來的。
 兩邊排版很像，下一張把 Docker 和 git 的指令整理成對照表。
 -->
 
@@ -169,7 +169,7 @@ clicks: 6
 ---
 
 <script setup>
-const root = 'root@4f2a91c0b7e3:/# '
+const root = '/ # '
 const cmds = [
   { c: 'docker run --name=app-container -it node-base', o: '', after: root },
   { p: root, c: `echo 'console.log("Hello from an app")' > app.js`, o: '' },
@@ -226,7 +226,7 @@ clicks: 2
 # 驗證 Q3：commit 不會修改原本的 Image
 
 <TerminalTyping :keep="2" :cmds="[
-  { c: 'docker run ubuntu which node', o: '' },
+  { c: 'docker run alpine which node', o: '' },
   { c: 'docker run node-base which node', o: '/usr/bin/node' },
 ]" />
 
@@ -234,7 +234,7 @@ clicks: 2
 
 <Note :notes="[
   'which node 會輸出 node 的位置；找不到時不輸出任何內容。',
-  '以原本的 ubuntu 啟動：找不到 node。',
+  '以原本的 alpine 啟動：找不到 node。',
   '以 node-base 啟動：Node 位於 /usr/bin/node。',
 ]" />
 

@@ -78,11 +78,11 @@ Sep 28, 2026 · @seanyeh
 
 1. 兩種做 Image 的方式：現場手做後拍照存檔（commit）vs 照食譜做（Dockerfile）
    接著講 commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
-2. 實作：`docker run --name=base-container -it ubuntu` → 安裝 Node → `node -e` 驗證 → `exit`
+2. 實作：`docker run --name=base-container -it alpine` → `apk add nodejs` 安裝 Node → `node -e` 驗證 → `exit`。用 alpine 而非 ubuntu：不必先 `apt update` 下載數十 MB 的套件清單，全班同時安裝也快得多，而且 alpine 在 Ch2 已經拉過
 3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
 4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
 5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`
-6. 驗證 Q3：`docker run ubuntu which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node`
+6. 驗證 Q3：`docker run alpine which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node`
 7. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
 8. Dockerfile 常見指令表（講義的 8 個指令，今天只用 FROM、WORKDIR、COPY、RUN、CMD 五個，其他標灰）
 9. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的
@@ -137,7 +137,7 @@ Sep 28, 2026 · @seanyeh
 | 流程動畫（Motion Canvas） | 一個流程分步推進，每個 click 一步 | Ch1：Registry → pull → Image → run → Container → stop → rm |
 | Magic Move | 程式碼逐步變形成下一版 | Ch3：Dockerfile 從 FROM 一行長到 5 行；Ch5：`docker run` 越變越長再縮成 compose.yaml |
 | Line highlight | 其他行變淡，逐段點亮 | Ch3：逐行讀懂 Dockerfile；Ch5：逐段讀懂 compose.yaml |
-| Terminal typing | 逐字打出指令再顯示輸出，保留前一條 | Ch3：`docker run -it ubuntu` 進去再 `exit` 出來的提示字元變化；Ch4：`docker ps` 的 STATUS 與 PORTS；休息畫面 |
+| Terminal typing | 逐字打出指令再顯示輸出，保留前一條 | Ch3：`docker run -it alpine` 進去再 `exit` 出來的提示字元變化；Ch4：`docker ps` 的 STATUS 與 PORTS；休息畫面 |
 | Code-to-diagram | 左邊點亮一行 code，右邊圖上對應的部分同步亮起 | Ch3：Dockerfile 每一行點亮右邊 Image 疊上去的那一層 |
 | Annotated command | 指令下方逐一拉出標籤，說明每個參數 | Ch3：`docker container commit -c -m`；Ch4：最長的 `docker run -d -p -v --name` |
 | SVG 步驟動畫 | 圖表配色的 SVG，右下角 Step x of y，下方一行 caption | Ch3 與 Ch4：Q1、Q2 的揭曉動畫 |
@@ -258,13 +258,13 @@ Sep 28, 2026 · @seanyeh
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
-題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 ubuntu Image 啟動的 Container 有 Node 嗎？
+題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
 
-- 有，commit 會一併更新 ubuntu Image
+- 有，commit 會一併更新 alpine Image
 - 沒有，Node 只存在於 node-base
 - 只在原本的 Container 執行時才有
 
-答案：沒有。表決後立即公布；Ch3 做完 node-base 後執行 `docker run ubuntu which node`（無輸出）與 `docker run node-base which node`（`/usr/bin/node`）。
+答案：沒有。表決後立即公布；Ch3 做完 node-base 後執行 `docker run alpine which node`（無輸出）與 `docker run node-base which node`（`/usr/bin/node`）。
 
 ### Q4：刪除 Container 後資料還在嗎（Ch4，引出 Volume）
 
@@ -348,7 +348,8 @@ Sep 28, 2026 · @seanyeh
 - [ ] 安裝 Docker Desktop；Windows 依安裝程式指示啟用 WSL2 並重開機
 - [ ] 預留至少 10 GB 硬碟空間
 - [ ] 開啟 Docker Desktop 後執行 `docker run hello-world`，看到 `Hello from Docker!` 就代表安裝成功
-- [ ] 預先下載課堂會用到的 3 個 Image：`docker pull ubuntu`、`docker pull node:22-alpine`、`docker pull postgres`
+- [ ] 預先下載課堂會用到的 Image：`docker pull ubuntu`、`docker pull alpine`、`docker pull node:22-alpine`、`docker pull postgres`
+- [ ] 在自己電腦跑一次 `apk add nodejs` 與 `docker image history node-base`，把 Ch3 範例輸出的大小換成實際數字
 - [ ] 回報表單：成功或卡在哪一步，讓 TA 課前先處理
 
 用 `docker run hello-world` 而不是只用 `docker -v` 驗證，是因為 `docker -v` 只檢查指令有沒有裝好，Docker Desktop 沒開也會顯示版本；`hello-world` 才能確認 Docker 真的能跑 Container。

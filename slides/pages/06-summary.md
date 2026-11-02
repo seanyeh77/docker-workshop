@@ -32,7 +32,7 @@ cols: 2
 
 | 指令 | 用途 |
 | --- | --- |
-| `docker run -it ubuntu` | 啟動 Container 並進入 |
+| `docker run -it alpine` | 啟動 Container 並進入 |
 | `docker container commit` | 將 Container 儲存為 Image |
 | `docker build -t name .` | 依 Dockerfile 建立 Image |
 | `docker image ls` | 列出所有 Image |
