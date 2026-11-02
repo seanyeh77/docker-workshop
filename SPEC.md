@@ -99,8 +99,9 @@ Sep 28, 2026 · @seanyeh
 
 1. 痛點：關掉 Terminal 服務就停了 → `-d` 背景執行、`docker ps` 查看
 2. `docker stop`、`docker restart`、`docker rm`：一張圖畫出 Container 的狀態變化
-   接著一張 `docker container prune`：exit 與 stop 不會刪除 Container，用 `docker ps -a` 看到累積的已停止 Container，再一次清除
+
 3. 故意失敗：直接再跑一次同名的 `docker run -d --name=my-image` → 名稱衝突錯誤 → 教 `docker rm -f my-image`，之後每次重開前都先執行它
+   接著一張 `docker container prune`：rm 一次刪一個，prune 一次刪掉所有已停止的；exit 與 stop 不會刪除 Container，用 `docker ps -a` 看到 Ch3 累積的已停止 Container，再一次清除
 4. 環境變數 `-e` 與 `--env-file`：用 postgres 範例，看 `env` 的輸出
 5. Port 梗：Container 是大樓裡的房間，`-p 3000:3000` 是總機轉接
 6. 實作：先 `-p 3000` 看隨機 port，再 `-p 3000:3000`，瀏覽器打開 `localhost:3000` 看到 todo app

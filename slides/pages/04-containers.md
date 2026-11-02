@@ -85,37 +85,6 @@ ltag: Terminal
 clicks: 3
 ---
 
-# 以 prune 清除已停止的 Container
-
-<TerminalTyping :keep="3" :cmds="[
-  { c: 'docker ps -a', o: 'CONTAINER ID   IMAGE                  STATUS                      NAMES\n7c604fab2e45   my-username/my-image   Up 3 minutes                my-image\n3b2e9d10c4a7   node-base              Exited (0) 40 minutes ago   app-container\n28c4c1f50039   alpine                 Exited (0) 45 minutes ago   base-container' },
-  { c: 'docker container prune', o: 'WARNING! This will remove all stopped containers.\nAre you sure you want to continue? [y/N] y\nDeleted Containers:\n3b2e9d10c4a7...\n28c4c1f50039...\n\nTotal reclaimed space: 70MB' },
-  { c: 'docker ps -a', o: 'CONTAINER ID   IMAGE                  STATUS                      NAMES\n7c604fab2e45   my-username/my-image   Up 4 minutes                my-image' },
-]" />
-
-::note::
-
-<Note :notes="[
-  'exit 與 docker stop 只會停止 Container，不會刪除；用過的 Container 會持續累積並佔用空間。',
-  'docker ps 只列出執行中的 Container，加 -a 才會列出已停止的。',
-  'docker container prune 一次刪除所有已停止的 Container；執行中的 my-image 不受影響。',
-  '只剩執行中的 Container。刪除前請確認不再需要其中的資料。',
-]" />
-
-<!--
-原理：Container 停止後，裡面的檔案（可寫層）仍保留在硬碟上，所以才能 restart 或 start -ai 回去。不再需要時要自己刪。
-Ch3 留下的 base-container、app-container 都是已停止的，正好一次清掉。
-image prune 刪的是沒有名字的 Image；container prune 刪的是已停止的 Container。被 Container 使用中的 Image 不會被 image prune 刪除，所以通常先 container prune 再 image prune。
-prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
--->
-
----
-layout: textbook
-chapter: Ch 4 · Running Containers
-ltag: Terminal
-clicks: 3
----
-
 # 常見錯誤：Container 名稱衝突
 
 <TerminalTyping :keep="3" :cmds="[
@@ -132,6 +101,38 @@ clicks: 3
   'rm -f 會先停止再刪除 Container。',
   '之後重新啟動同名 Container 前，請先執行 rm -f。',
 ]" />
+
+---
+layout: textbook
+chapter: Ch 4 · Running Containers
+ltag: Terminal
+clicks: 3
+---
+
+# 以 prune 清除已停止的 Container
+
+<TerminalTyping :keep="2" :cmds="[
+  { c: 'docker ps -a', o: 'CONTAINER ID   IMAGE                  STATUS                      NAMES\n0b8d1e5f93a2   my-username/my-image   Up 1 minute                 my-image\n3b2e9d10c4a7   node-base              Exited (0) 40 minutes ago   app-container\n28c4c1f50039   alpine                 Exited (0) 45 minutes ago   base-container' },
+  { c: 'docker container prune', o: 'WARNING! This will remove all stopped containers.\nAre you sure you want to continue? [y/N] y\nDeleted Containers:\n3b2e9d10c4a7...\n28c4c1f50039...\n\nTotal reclaimed space: 68.41MB' },
+  { c: 'docker ps -a', o: 'CONTAINER ID   IMAGE                  STATUS                      NAMES\n0b8d1e5f93a2   my-username/my-image   Up 2 minutes                my-image' },
+]" />
+
+::note::
+
+<Note :notes="[
+  'exit 與 docker stop 只會停止 Container，不會刪除；用過的 Container 會持續累積並佔用空間。',
+  'docker ps 只列出執行中的 Container，加 -a 才會列出已停止的。',
+  'docker container prune 一次刪除所有已停止的 Container；執行中的 my-image 不受影響。',
+  '只剩執行中的 Container。刪除前請確認不再需要其中的資料。',
+]" />
+
+<!--
+銜接上一張：rm 一次刪一個指定的 Container；prune 一次刪掉所有已停止的。
+原理：Container 停止後，裡面的檔案（可寫層）仍保留在硬碟上，所以才能 restart 或 start -ai 回去。不再需要時要自己刪。
+Ch3 留下的 base-container、app-container 都是已停止的，正好一次清掉。
+image prune 刪的是沒有名字的 Image；container prune 刪的是已停止的 Container。被 Container 使用中的 Image 不會被 image prune 刪除，所以通常先 container prune 再 image prune。
+prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
+-->
 
 ---
 layout: textbook
