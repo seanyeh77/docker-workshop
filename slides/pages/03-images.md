@@ -117,15 +117,18 @@ const cmds = [
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
-clicks: 3
+clicks: 6
 ---
 
-# 常見錯誤：重新進入已建立的 Container
+# 常見錯誤：Container 名稱已被使用
 
 <TerminalTyping :keep="3" :cmds="[
   { c: 'docker run --name=base-container -it alpine', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/base-container&quot; is already in use by container &quot;28c4c1f50039...&quot;.' },
   { c: 'docker start -ai base-container', o: '', after: '/ # ' },
   { p: '/ # ', c: 'which node', o: '/usr/bin/node' },
+  { p: '/ # ', c: 'exit', o: '', after: '$ ' },
+  { c: 'docker rm -f base-container', o: 'base-container' },
+  { c: 'docker run --name=base-container -it alpine', o: '', after: '/ # ' },
 ]" />
 
 ::note::
@@ -134,7 +137,10 @@ clicks: 3
   '已建立過 base-container 時，再次執行 docker run 會發生錯誤。',
   '先前的 base-container 仍存在，名稱不能重複使用。',
   'docker start -ai 重新啟動並進入該 Container：-a 顯示輸出，-i 接受輸入。',
-  '先前安裝的 Node 仍在，可直接接續。若想從頭開始，改以 docker rm -f base-container 刪除後重新建立。',
+  '先前安裝的 Node 仍在，可直接接續。',
+  '若想從頭開始，先離開 Container。',
+  'rm -f 會先停止再刪除 base-container。',
+  '名稱已釋出，重新建立一個乾淨的 base-container。',
 ]" />
 
 <!--
