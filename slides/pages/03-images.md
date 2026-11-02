@@ -173,6 +173,23 @@ clicks: 3
 -->
 
 ---
+layout: figure
+chapter: Ch 3 · Building Images
+takeaway: Image 經 run 產生 Container，Container 經 commit 產生新的 Image；原本的 alpine 不會改變。
+---
+
+# 目前的 Image 與 Container
+
+<ImageMap :stage="1" />
+
+<!--
+盤點一下目前手上有什麼。綠色是 Image，灰色是 Container，teal 框是這一段新增的。
+alpine 經 run 變成 base-container，裝了 Node 之後 commit 成 node-base。
+請大家打 docker image ls 與 docker ps -a 對照：Image 會看到 alpine、node-base（以及 Ch2 的 hello-world、ubuntu）；Container 會看到已停止的 base-container。
+這張圖之後還會出現兩次，每次多幾個方塊。
+-->
+
+---
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
@@ -248,7 +265,7 @@ const cmds = [
   { p: root, c: 'node app.js', o: 'Hello from an app' },
   { p: root, c: 'exit', o: '', after: '$ ' },
   { c: 'docker container commit -c "CMD node app.js" -m "Add app" app-container sample-app', o: 'sha256:d7f9fd6abcf2...' },
-  { c: 'docker run sample-app', o: 'Hello from an app' },
+  { c: 'docker run --rm sample-app', o: 'Hello from an app' },
 ]
 </script>
 
@@ -265,11 +282,27 @@ const cmds = [
   '先在 Container 內執行一次確認結果。',
   '離開 Container。',
   '儲存為 sample-app，並以 -c 指定啟動時執行的指令。',
-  '無須進入 Container，執行後即直接輸出結果。',
+  '無須進入 Container，執行後即直接輸出結果；--rm 讓這個 Container 用完即刪除。',
 ]" />
 
 <!--
 重做時若出現 The container name "/app-container" is already in use，先執行 docker rm -f app-container 再重來。
+-->
+
+---
+layout: figure
+chapter: Ch 3 · Building Images
+takeaway: sample-app 由 node-base 衍生而來；每個 Container 都來自一個 Image。
+---
+
+# 目前的 Image 與 Container
+
+<ImageMap :stage="2" />
+
+<!--
+再盤點一次：從 node-base 開出 app-container，寫好 app.js 後 commit 成 sample-app。
+同樣的 run、commit 循環又走了一次，只是起點換成 node-base。
+docker run --rm 開的 Container 用完就刪，所以不會出現在圖上。
 -->
 
 ---
@@ -302,8 +335,8 @@ clicks: 2
 # 驗證 Q3：commit 不會修改原本的 Image
 
 <TerminalTyping :keep="2" :cmds="[
-  { c: 'docker run alpine which node', o: '' },
-  { c: 'docker run node-base which node', o: '/usr/bin/node' },
+  { c: 'docker run --rm alpine which node', o: '' },
+  { c: 'docker run --rm node-base which node', o: '/usr/bin/node' },
 ]" />
 
 ::note::
@@ -520,6 +553,22 @@ rows:
 Ch3 的指令都學完了，用這張和 git 對照整理。一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
 命名那列：docker tag 是 docker image tag 的簡寫，要給兩個參數：原本的 Image 與新名稱。它不會複製 Image，只是多貼一張標籤，指向同一個 Image ID，就像 git tag v1 指向某個 commit。
 另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態直接疊在基底 Image 上，前面重複 commit 時已經看過。
+-->
+
+---
+layout: figure
+chapter: Ch 3 · Building Images
+takeaway: Dockerfile 以 build 直接產生 Image，不需手動 run 與 commit。
+---
+
+# 目前的 Image 與 Container
+
+<ImageMap :stage="3" />
+
+<!--
+最後一次盤點。上面兩排是手動 run、commit 做出來的；最下面一排是 Dockerfile 用 docker build 一步做出來的。
+build 的過程中 Docker 也會開暫時的環境執行每一行，但做完就清掉，所以只留下 Image。
+Ch4 會從 my-username/my-image 開始跑 Container。
 -->
 
 ---

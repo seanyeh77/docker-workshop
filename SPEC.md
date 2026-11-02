@@ -76,6 +76,8 @@ Sep 28, 2026 · @seanyeh
 
 ### Ch3 Building Images（35 分，12 張）
 
+在 Ch3 的三個時間點放同一張「目前的 Image 與 Container」關係圖（node-base 完成後、sample-app 完成後、章節整理前），每次新增的方塊以 teal 框標出，讓學員知道自己手上有哪些 Image 與 Container、誰從誰衍生。驗證用、用完即丟的 `docker run` 一律加 `--rm`，避免留下隨機命名的 Container。
+
 1. 兩種做 Image 的方式：現場手做後拍照存檔（commit）vs 照食譜做（Dockerfile）
    接著講 commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
 2. 實作：`docker run --name=base-container -it alpine` → `apk add nodejs` 安裝 Node → `node -e` 驗證 → `exit`。用 alpine 而非 ubuntu：不必先 `apt update` 下載數十 MB 的套件清單，全班同時安裝也快得多，而且 alpine 在 Ch2 已經拉過
