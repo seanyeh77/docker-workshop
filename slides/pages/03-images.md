@@ -110,6 +110,7 @@ const cmds = [
 
 <!--
 最常見的錯：還在 Container 裡就打 docker 指令，會出現 command not found。先看提示字元。
+重做時若出現 The container name "/base-container" is already in use，代表上一次的 base-container 還在，先執行 docker rm -f base-container 再重來。Ch4 會正式講名稱衝突。
 -->
 
 ---
@@ -195,6 +196,10 @@ const cmds = [
   '儲存為 sample-app，並以 -c 指定啟動時執行的指令。',
   '無須進入 Container，執行後即直接輸出結果。',
 ]" />
+
+<!--
+重做時若出現 The container name "/app-container" is already in use，先執行 docker rm -f app-container 再重來。
+-->
 
 ---
 layout: textbook
