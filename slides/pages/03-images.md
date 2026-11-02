@@ -480,16 +480,17 @@ WORKDIR 比較特別：/app 不存在時它會建立這個目錄，所以有一�
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
-clicks: 3
+clicks: 4
 ---
 
 <script setup>
 const up = '~/getting-started-todo-app$ '
 const inApp = '~/getting-started-todo-app/app$ '
 const cmds = [
+  { p: inApp, c: 'cd ..', o: '', after: up },
   { p: up, c: 'docker build .', o: 'ERROR: failed to solve: failed to read dockerfile:\nopen Dockerfile: no such file or directory' },
   { p: up, c: 'cd app', o: '', after: inApp },
-  { p: inApp, c: 'docker build .', o: ' => [4/4] RUN yarn install --production    15.0s\n => => writing image sha256:8f6fed8c4a12...' },
+  { p: inApp, c: 'docker build .', o: ' => [4/4] RUN yarn install --production    9.7s\n => => writing image sha256:4c27aec27050...' },
 ]
 </script>
 
@@ -500,11 +501,17 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '這是初學者最常遇到的錯誤，先認識錯誤訊息的格式。',
+  '這是初學者最常遇到的錯誤，由講師示範，學生不必跟著做。',
+  '先刻意回到上一層的 getting-started-todo-app。',
   'docker build . 的點代表目前目錄，此目錄中沒有 Dockerfile。',
   '從提示字元確認目前位置，再 cd 至 app。',
   '於正確的目錄中執行即可 build 成功。',
 ]" />
+
+<!--
+講師示範即可。學生前面已經 cd 到 app 並在那裡寫好 Dockerfile，直接 docker build . 就會成功。
+真正會踩到的情境：開新的 Terminal、或 clone 完忘了 cd，停在上一層就執行 build。
+-->
 
 ---
 layout: textbook
