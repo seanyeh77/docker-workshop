@@ -59,7 +59,7 @@ items:
 ---
 layout: quiz
 chapter: Ch 3 · Building Images
-question: Q3．將安裝好 Node 的 Container commit 成 node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
+question: Q3．將裝好 Node 的 base-container commit 成 Image node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
 clicks: 1
 answer: 1
 options:
@@ -233,7 +233,7 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'which node 會輸出 node 的位置；找不到時不輸出任何內容。',
+  'which node 會輸出 node 的位置；找不到時不輸出任何內容。這裡比較兩個 Image：原本的 alpine 與 commit 出的 node-base。',
   '以原本的 alpine 啟動：找不到 node。',
   '以 node-base 啟動：Node 位於 /usr/bin/node。',
 ]" />

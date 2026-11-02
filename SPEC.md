@@ -258,7 +258,7 @@ Sep 28, 2026 · @seanyeh
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
-題目：將安裝好 Node 的 Container commit 成 node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
+題目：將裝好 Node 的 base-container commit 成 Image node-base 後，以原本的 alpine Image 啟動的 Container 有 Node 嗎？
 
 - 有，commit 會一併更新 alpine Image
 - 沒有，Node 只存在於 node-base
