@@ -91,6 +91,7 @@ Sep 28, 2026 · @seanyeh
 10. 故意失敗：講師在錯的資料夾執行 `docker build .`，讓大家看找不到 Dockerfile 的錯誤，再 `cd` 回正確位置
 11. sha256 長名字梗：「你會背自己的身分證字號嗎？」→ `docker build -t`，對照 `git tag`
     檢查點寫在 build -t 那頁最後一則 NOTE：`docker image ls` 看到 `my-username/my-image` 就成功
+    接著 Docker 與 git 的對應表：commit、history、tag 都教完後才整理對照
 
 ### Ch4 Running Containers（35 分，12 張）
 

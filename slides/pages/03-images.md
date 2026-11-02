@@ -198,29 +198,7 @@ const git = [
 剛剛 commit 完，先看 node-base 存了什麼。git 有 git log 看歷史，Docker 也有對應的指令。
 最上面那一層就是剛剛 commit 的 Add node，68.4MB，是裝 Node 多出來的。
 下面兩層是 alpine 原本就有的：8.66MB 是 alpine 的檔案，0B 那層是 alpine 的 CMD 設定。整個 alpine 不到 10MB。Image 就是這樣一層層疊起來的。
-兩邊排版很像，下一張把 Docker 和 git 的指令整理成對照表。
--->
-
----
-layout: compare
-chapter: Ch 3 · Building Images
-left: Docker
-right: git
-reveal: true
-clicks: 4
-rows:
-  - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
-  - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
-  - [命名, '<code>docker tag node-base node-base:v1</code>', '<code>git tag v1</code>']
-  - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
----
-
-# Docker 與 git 的對應
-
-<!--
-一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
-命名那列：docker tag 是 docker image tag 的簡寫，要給兩個參數：原本的 Image 與新名稱。它不會複製 Image，只是多貼一張標籤，指向同一個 Image ID，就像 git tag v1 指向某個 commit。
-另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態，直接疊在原本的基底 Image（這裡是 alpine）上，再 commit 一次不會疊在前一次上面。下一張實際示範。
+兩邊排版很像，但有一個關鍵差異，下一張再 commit 一次就看得出來。
 -->
 
 ---
@@ -232,10 +210,10 @@ clicks: 3
 
 # 重複 commit 與未命名的 Image
 
-<TerminalTyping :keep="3" :cmds="[
+<TerminalTyping :keep="2" :cmds="[
   { c: 'docker container commit base-container node-base', o: 'sha256:9e1f4a7c2d30...' },
   { c: 'docker image ls -a', o: 'IMAGE                ID             DISK USAGE\nnode-base:latest     9e1f4a7c2d30         77.1MB\n&amp;lt;untagged&amp;gt;           5c3477c0e3cb         77.1MB' },
-  { c: 'docker image prune', o: 'WARNING! This will remove all dangling images.\nAre you sure you want to continue? [y/N] y\nDeleted Images:\ndeleted: sha256:5c3477c0e3cb...\n\nTotal reclaimed space: 68.4MB' },
+  { c: 'docker image prune', o: 'WARNING! This will remove all dangling images.\nAre you sure you want to continue? [y/N] y\nDeleted Images:\ndeleted: sha256:44ed90d734c1...\ndeleted: sha256:be2fc08f6950...\n...\n\nTotal reclaimed space: 68.41MB' },
 ]" />
 
 ::note::
@@ -251,6 +229,7 @@ clicks: 3
 原理：Image 的名稱（tag）只是一張標籤，同一時間只能貼在一個 Image 上。commit 到同一個名稱，標籤就移到新的 Image，舊的不會被刪除，只是沒有名字。
 和 git 不同：第二次 commit 不會疊在第一次上面，docker image history node-base 只會看到這一次的 commit 直接接在 alpine 上。
 prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
+刪除的 sha256 會列出好幾行，那是這個 Image 的設定與各個 Layer，一起被刪掉。
 大小依 alpine 與 nodejs 的版本而異。
 -->
 
@@ -505,7 +484,7 @@ clicks: 2
 
 <TerminalTyping :keep="2" :cmds="[
   { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
-  { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE   CONTENT SIZE\nmy-username/my-image:latest   746c7e06537f        354MB         93MB' },
+  { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE\nmy-username/my-image:latest   314f68b864b1        258MB' },
 ]" />
 
 ::note::
@@ -519,6 +498,28 @@ clicks: 2
 <!--
 最後一步就是檢查點：列表中出現 my-username/my-image 就成功，沒看到的舉手。
 做得快的人：改一下 src/index.js 再 build 一次，看哪幾層顯示 CACHED。
+-->
+
+---
+layout: compare
+chapter: Ch 3 · Building Images
+left: Docker
+right: git
+reveal: true
+clicks: 4
+rows:
+  - [存檔, '<code>docker container commit -m "Add node"</code>', '<code>git commit -m "Add node"</code>']
+  - [查看歷史, '<code>docker image history</code>', '<code>git log</code>']
+  - [命名, '<code>docker tag node-base node-base:v1</code>', '<code>git tag v1</code>']
+  - [儲存內容, 整個 Container 的檔案狀態, 僅包含 add 過的檔案]
+---
+
+# Docker 與 git 的對應
+
+<!--
+Ch3 的指令都學完了，用這張和 git 對照整理。一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
+命名那列：docker tag 是 docker image tag 的簡寫，要給兩個參數：原本的 Image 與新名稱。它不會複製 Image，只是多貼一張標籤，指向同一個 Image ID，就像 git tag v1 指向某個 commit。
+另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態直接疊在基底 Image 上，前面重複 commit 時已經看過。
 -->
 
 ---
