@@ -95,7 +95,7 @@ const cmds = [
 
 # 實作：建立 node-base
 
-<TerminalTyping :cmds="cmds" :keep="3" />
+<TerminalTyping :cmds="cmds" :keep="5" />
 
 ::note::
 
