@@ -117,7 +117,7 @@ const cmds = [
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
-clicks: 3
+clicks: 4
 ---
 
 # 名稱已被使用：重新進入原本的 Container
@@ -126,6 +126,7 @@ clicks: 3
   { c: 'docker run --name=base-container -it alpine', o: 'docker: Error response from daemon: Conflict. The container name\n&quot;/base-container&quot; is already in use by container &quot;28c4c1f50039...&quot;.' },
   { c: 'docker start -ai base-container', o: '', after: '/ # ' },
   { p: '/ # ', c: 'which node', o: '/usr/bin/node' },
+  { p: '/ # ', c: 'exit', o: '', after: '$ ' },
 ]" />
 
 ::note::
@@ -135,6 +136,7 @@ clicks: 3
   '先前的 base-container 仍存在，名稱不能重複使用。',
   'docker start -ai 重新啟動並進入該 Container：-a 顯示輸出，-i 接受輸入。',
   '先前安裝的 Node 仍在，可直接接續。',
+  '以 exit 離開 Container，回到主機；Container 會停止，但不會被刪除，之後可再以 docker start -ai 進入。',
 ]" />
 
 <!--
