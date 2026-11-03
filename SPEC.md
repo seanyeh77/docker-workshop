@@ -92,6 +92,7 @@ Sep 28, 2026 · @seanyeh
 12. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
 13. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的（每一行出現時就講解該行指令）
 14. Dockerfile 與 Image Layer：一次顯示全部，說明每一行各自產生一層
+    接著用實際的 `docker image history` 比較 commit 做出的 node-base 與 Dockerfile 做出的 my-username/my-image：前者 CREATED BY 只有 /bin/sh，後者每層都記錄 Dockerfile 的那一行
 15. 故意失敗：講師退回上一層執行 `docker build .`，讓大家看找不到 Dockerfile 的錯誤，再 `cd` 回正確位置
 16. sha256 長名字梗：「你會背自己的身分證字號嗎？」→ `docker build -t`，對照 `git tag`；檢查點寫在這頁最後一則 NOTE：`docker image ls` 看到 `my-username/my-image` 就成功
 17. Docker 與 git 的對應表：commit、history、tag 都教完後才整理對照
