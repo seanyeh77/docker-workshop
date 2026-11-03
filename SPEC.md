@@ -85,7 +85,7 @@ Sep 28, 2026 · @seanyeh
 5. 驗證 Q3：`docker run --rm alpine which node` 沒有輸出、`docker run --rm node-base which node` 輸出 `/usr/bin/node`
 6. 同一 Image 的獨立 Container：A 裡建立 hello.txt，B 看不到（Ch4 的 Volume 圖接著這張往下演）
 7. 盤點圖 ①
-8. `docker image history`：左右並排 `git log` 的輸出
+8. 查看 node-base 的 Layer：`docker image history node-base`，對照盤點圖確認它疊在 alpine 上（git log 的對照留到章節最後的對照表）
 9. 重複 commit：舊的 Image 失去名稱成為未命名（dangling），`docker image ls -a` 才看得到；用 `docker image prune` 清除。並說明 docker commit 不會像 git 一樣串成歷史
 10. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run --rm sample-app` 看到 `Hello from an app`
 11. commit 指令的參數（`-c`、`-m`），接著盤點圖 ②

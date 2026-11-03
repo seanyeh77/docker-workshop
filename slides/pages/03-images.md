@@ -240,29 +240,31 @@ alpine 經 run 變成 base-container，裝了 Node 之後 commit 成 node-base�
 layout: textbook
 chapter: Ch 3 · Building Images
 ltag: Terminal
+clicks: 1
 ---
 
 <script setup>
-const docker = [
+const cmds = [
   { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n5c3477c0e3cb   13 seconds ago   68.4MB   Add node\nf7bbaec1bd03   11 days ago      0B       buildkit.dockerfile.v0\n&lt;missing&gt;      11 days ago      8.66MB   buildkit.dockerfile.v0' },
-]
-const git = [
-  { c: 'git log --oneline', o: 'a1b2c3d Add login page\n9f8e7d6 Fix typo in README\n1234567 Initial commit' },
 ]
 </script>
 
-# Image 歷史與 git log
+# 查看 node-base 的 Layer
 
-<div class="pair">
-  <TerminalTyping all :cmds="docker" />
-  <TerminalTyping all :cmds="git" />
-</div>
+<TerminalTyping :cmds="cmds" :keep="1" />
+
+::note::
+
+<Note :notes="[
+  '盤點圖中 node-base 由 alpine 而來。docker image history 列出一個 Image 由哪些 Layer 組成，最上面是最新的。',
+  '最上層 68.4MB 是 commit 時新增的 Add node；下面兩層是 alpine 原有的設定（0B）與檔案（8.66MB）。',
+]" />
 
 <!--
-剛剛 commit 完，先看 node-base 存了什麼。git 有 git log 看歷史，Docker 也有對應的指令。
-最上面那一層就是剛剛 commit 的 Add node，68.4MB，是裝 Node 多出來的。
-下面兩層是 alpine 原本就有的：8.66MB 是 alpine 的檔案，0B 那層是 alpine 的 CMD 設定。整個 alpine 不到 10MB。Image 就是這樣一層層疊起來的。
-兩邊排版很像，但有一個關鍵差異，下一張再 commit 一次就看得出來。
+接續盤點圖：圖上說 node-base 是從 alpine commit 出來的，這裡用指令親眼確認。
+最上面那一層就是剛剛 commit 的 Add node，68.4MB，是裝 Node 多出來的；下面兩層是 alpine 本來就有的，整個 alpine 不到 10MB。
+Image 就是這樣一層層疊起來的。git 也有類似的指令 git log，Ch3 最後的對照表會整理。
+下一張：如果對同一個 Container 再 commit 一次，這個歷史會變成什麼樣子？
 -->
 
 ---
