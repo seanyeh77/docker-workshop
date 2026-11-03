@@ -152,7 +152,7 @@ const cmds = [
 
 # 環境變數
 
-<TerminalTyping :cmds="cmds" :keep="3" />
+<TerminalTyping :cmds="cmds" :keep="3" prompt="~/getting-started-todo-app/app$ " />
 
 ::note::
 

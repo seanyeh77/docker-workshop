@@ -392,10 +392,10 @@ clicks: 3
 
 # 實作：下載範例專案
 
-<TerminalTyping :keep="3" :cmds="[
+<TerminalTyping :keep="3" prompt="~$ " :cmds="[
   { c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
-  { c: 'cd getting-started-todo-app/app', o: '' },
-  { c: 'rm Dockerfile', o: '' },
+  { c: 'cd getting-started-todo-app/app', o: '', after: '~/getting-started-todo-app/app$ ' },
+  { p: '~/getting-started-todo-app/app$ ', c: 'rm Dockerfile', o: '' },
 ]" />
 
 <!--
@@ -565,7 +565,7 @@ clicks: 2
 
 # 以 Tag 命名 Image
 
-<TerminalTyping :keep="2" :cmds="[
+<TerminalTyping :keep="2" prompt="~/getting-started-todo-app/app$ " :cmds="[
   { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
   { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE\nmy-username/my-image:latest   314f68b864b1        258MB' },
 ]" />
