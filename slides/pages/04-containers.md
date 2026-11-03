@@ -138,12 +138,13 @@ prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
 layout: textbook
 chapter: Ch 4 · Running Containers
 ltag: Terminal
-clicks: 3
+clicks: 4
 ---
 
 <script setup>
 const cmds = [
   { c: 'docker run --rm -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=default postgres env', o: '...\nPOSTGRES_PASSWORD=secret\nPOSTGRES_DB=default\n...\nPG_MAJOR=18\n...' },
+  { c: "printf 'POSTGRES_DB=default\\nPOSTGRES_PASSWORD=secret\\n' > .env", o: '' },
   { c: 'cat .env', o: 'POSTGRES_DB=default\nPOSTGRES_PASSWORD=secret' },
   { c: 'docker run --rm --env-file .env postgres env', o: '...\nPOSTGRES_DB=default\nPOSTGRES_PASSWORD=secret\n...' },
 ]
@@ -151,14 +152,15 @@ const cmds = [
 
 # 環境變數
 
-<TerminalTyping :cmds="cmds" :keep="2" />
+<TerminalTyping :cmds="cmds" :keep="3" />
 
 ::note::
 
 <Note :notes="[
   'Dockerfile 中的 ENV 為預設值，實際使用時常需調整，例如資料庫的密碼與名稱。',
   '-e 設定一個環境變數，並覆蓋 Image 中的預設值。最後的 env 會輸出所有變數。',
-  '變數較多時，以編輯器建立 .env 檔，每行一個變數，再以 cat 確認內容。',
+  '變數較多時，改寫在 .env 檔中，每行一個變數。此處以 printf 在目前的資料夾建立該檔，\\n 表示換行；也可以用編輯器建立。',
+  '以 cat 確認 .env 的內容。',
   '--env-file 一次讀取整個檔案；--rm 使 Container 結束後自動刪除。',
 ]" />
 
