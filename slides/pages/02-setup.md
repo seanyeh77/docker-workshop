@@ -79,6 +79,6 @@ const cmds = [
 ubuntu 和 alpine 是兩套不同的 Linux 發行版，若 Image 自帶 kernel，版本應該不同。
 Alpine 是很輕量的 Linux 發行版，整個 Image 不到 10MB，Ch3 會用它來做 node-base。
 --rm 前面 hello-world 已經用過：Container 執行完就自動刪除，不會留下來。
-三行相同，而且都不是 PVE 主機的 kernel：VM 有自己的 kernel，Container 只共用到 VM 這一層。
+三行相同，而且都不是 VM 所在實體主機的 kernel：VM 有自己的 kernel，Container 只共用到 VM 這一層。
 延伸：在自己的 Mac 或 Windows 上用 Docker Desktop 時，uname -r 結尾是 linuxkit；OrbStack 則會出現 orbstack 字樣（例如 7.2.12-orbstack-...）。兩者都是在背後開了一台小型 Linux VM，所有 Container 都跑在裡面，這也回答了「Windows 怎麼能跑 Linux Container」。
 -->

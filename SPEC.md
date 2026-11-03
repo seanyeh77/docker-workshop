@@ -8,7 +8,7 @@ Sep 28, 2026 · @seanyeh
 
 - 對象：學過寫程式、上過 Terminal 與 git；沒有軟體開發經驗、沒自己裝過程式環境、不知道 Docker 是什麼。
 - 課後目標：能說出 Image、Container、Registry 的差別；能寫出一份 Dockerfile 並 build 成 Image；能用 `-d`、`-p`、`-v` 跑起 todo app；能用 `docker compose up` 取代一長串 `docker run`。
-- 環境假設：每位學員一台 PVE 上的 Debian 13 VM，已預裝 Docker Engine，透過 pvelab 匯出的 SSH port 連線。連線時加上 `-L 3000:localhost:3000`，讓筆電的瀏覽器能開啟 `localhost:3000`。
+- 環境假設：每位學員一台 Debian 13 VM，已預裝 Docker Engine，以 SSH 連線。連線時加上 `-L 3000:localhost:3000`，讓筆電的瀏覽器能開啟 `localhost:3000`。
 - 時長假設：180 分。若只有 120 分，優先砍 Ch3 的 commit 做法（改成講師 demo）與 Ch4 的環境變數段。
 
 ### 故事線
@@ -263,10 +263,10 @@ Sep 28, 2026 · @seanyeh
 題目：在課堂的 VM 中以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 
 - Image 內附的 Ubuntu kernel
-- VM 所在的 PVE 主機的 kernel
+- VM 所在實體主機的 kernel
 - 執行 Docker 的這台 VM 的 kernel
 
-答案：執行 Docker 的這台 VM 的 kernel。表決後立即公布；Ch2 先在 VM 上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`，不是 Ubuntu 的 kernel，也不是 PVE 主機的。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
+答案：執行 Docker 的這台 VM 的 kernel。表決後立即公布；Ch2 先在 VM 上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`，不是 Ubuntu 的 kernel，也不是 VM 所在實體主機的。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
@@ -360,7 +360,7 @@ Sep 28, 2026 · @seanyeh
 - [ ] Debian 13，安裝 Docker Engine，學員帳號加入 docker 群組
 - [ ] 預先下載課堂會用到的 Image：`docker pull hello-world`、`ubuntu`、`alpine`、`node:22-alpine`、`postgres`
 - [ ] 預留至少 10 GB 硬碟空間
-- [ ] 以 pvelab 匯出每台 VM 的 SSH port，整理成每人一行的連線指令（含 `-L 3000:localhost:3000`）
+- [ ] 整理每人一行的連線指令（含 `-L 3000:localhost:3000`）
 - [ ] 用一台學員 VM 照講義從頭到尾跑一次
 
 ### 學員課前作業
