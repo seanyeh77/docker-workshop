@@ -146,7 +146,7 @@ const cmds = [
   { c: 'docker run --rm -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=default postgres env', o: '...\nPOSTGRES_PASSWORD=secret\nPOSTGRES_DB=default\n...\nPG_MAJOR=18\n...' },
   { c: "printf 'POSTGRES_DB=default\\nPOSTGRES_PASSWORD=secret\\n' > .env", o: '' },
   { c: 'cat .env', o: 'POSTGRES_DB=default\nPOSTGRES_PASSWORD=secret' },
-  { c: 'docker run --rm --env-file .env postgres env', o: '...\nPOSTGRES_DB=default\nPOSTGRES_PASSWORD=secret\n...' },
+  { c: 'docker run --rm --env-file .env postgres env', o: '...\nPOSTGRES_PASSWORD=secret\n...\nPG_MAJOR=18\n...\nPOSTGRES_DB=default' },
 ]
 </script>
 
@@ -209,8 +209,8 @@ clicks: 5
 <script setup>
 const cmds = [
   { c: 'docker rm -f my-image', o: 'my-image' },
-  { c: 'docker run -d -p 3000 --name=my-image my-username/my-image', o: 'f0e47efa2504...' },
-  { c: 'docker ps', o: 'IMAGE                  PORTS                     NAMES\nmy-username/my-image   0.0.0.0:50683->3000/tcp   my-image' },
+  { c: 'docker run -d -p 3000 --name=my-image my-username/my-image', o: 'ced6da9e318c...' },
+  { c: 'docker ps', o: 'IMAGE                  PORTS                     NAMES\nmy-username/my-image   0.0.0.0:32768->3000/tcp   my-image' },
   { c: 'docker rm -f my-image', o: 'my-image' },
   { c: 'docker run -d -p 3000:3000 --name=my-image my-username/my-image', o: 'bcce8acb5047...' },
 ]
@@ -225,7 +225,7 @@ const cmds = [
 <Note :notes="[
   '先刪除未設定 Port 的 Container。',
   '僅指定 -p 3000 時，Container 的 3000 會對應到主機上隨機的 Port。',
-  '此次為 50683，每次皆不同，不利於開發。',
+  '此次為 32768，每次可能不同，不利於開發。',
   '再次刪除，並明確指定兩側的 Port。',
   '主機的 3000 固定對應到 Container 的 3000。',
 ]" />
@@ -250,7 +250,7 @@ clicks: 2
 # 常見錯誤：Port 已被占用
 
 <TerminalTyping :keep="2" :cmds="[
-  { c: 'docker run -d -p 3000:3000 --name=my-image-2 my-username/my-image', o: 'docker: Error response from daemon: ... Bind for 0.0.0.0:3000 failed:\nport is already allocated.' },
+  { c: 'docker run -d -p 3000:3000 --name=my-image-2 my-username/my-image', o: 'docker: Error response from daemon: failed to set up container networking:\n... Bind for 0.0.0.0:3000 failed: port is already allocated' },
   { c: 'docker rm -f my-image-2', o: 'my-image-2' },
 ]" />
 
@@ -258,7 +258,7 @@ clicks: 2
 
 <Note :notes="[
   '同一個 Port 僅能對應一個 Container。',
-  '3000 已對應到 my-image，第二個 Container 無法使用。',
+  '3000 已對應到 my-image，第二個 Container 無法使用。主機上其他程式占用 3000 時也會出現相同錯誤，可用 docker ps 查看是誰占用。',
   '啟動失敗的 Container 仍會保留，需先刪除。若要同時執行兩個，可將第二個改為 -p 3001:3000。',
 ]" />
 
