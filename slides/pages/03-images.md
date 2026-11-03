@@ -245,8 +245,7 @@ clicks: 1
 
 <script setup>
 const cmds = [
-  { c: 'docker image history node-base', o: 'CREATED BY                                      SIZE      COMMENT\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB    buildkit.dockerfile.v0' },
-  { c: 'docker image history my-username/my-image', o: 'CREATED BY                                      SIZE      COMMENT\nCMD ["node" "./src/index.js"]                   0B        buildkit.dockerfile.v0\nRUN /bin/sh -c yarn install --production # b…   89.8MB    buildkit.dockerfile.v0\nCOPY . . # buildkit                             4.59MB    buildkit.dockerfile.v0\nWORKDIR /app                                    0B        buildkit.dockerfile.v0\n...' },
+  { c: 'docker image history node-base', o: 'IMAGE          CREATED          SIZE     COMMENT\n5c3477c0e3cb   13 seconds ago   68.4MB   Add node\nf7bbaec1bd03   11 days ago      0B       buildkit.dockerfile.v0\n&lt;missing&gt;      11 days ago      8.66MB   buildkit.dockerfile.v0' },
 ]
 </script>
 
@@ -496,8 +495,8 @@ clicks: 2
 
 <script setup>
 const cmds = [
-  { c: 'docker image history node-base', o: 'CREATED BY                                      SIZE\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB' },
-  { c: 'docker image history my-username/my-image', o: 'CREATED BY                                      SIZE\nCMD ["node" "./src/index.js"]                   0B\nRUN /bin/sh -c yarn install --production # b…   89.8MB\nCOPY . . # buildkit                             4.59MB\nWORKDIR /app                                    0B\n...' },
+  { c: 'docker image history node-base', o: 'CREATED BY                                      SIZE      COMMENT\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB    buildkit.dockerfile.v0' },
+  { c: 'docker image history my-username/my-image', o: 'CREATED BY                                      SIZE      COMMENT\nCMD ["node" "./src/index.js"]                   0B        buildkit.dockerfile.v0\nRUN /bin/sh -c yarn install --production # b…   89.8MB    buildkit.dockerfile.v0\nCOPY . . # buildkit                             4.59MB    buildkit.dockerfile.v0\nWORKDIR /app                                    0B        buildkit.dockerfile.v0\n...' },
 ]
 </script>
 
@@ -517,7 +516,7 @@ const cmds = [
 回扣「commit 無法記錄建立過程」那張：同樣是一層層的 Image，差別在 CREATED BY 這一欄。
 node-base 最上層 68.4MB 是 apk add nodejs 裝進去的，但 history 只寫 /bin/sh，因為 commit 只拍下結果。
 my-username/my-image 的每一層都寫著 Dockerfile 的那一行；最下面的 ... 是 node:22-alpine 本身的 9 層，共約 164MB。
-畫面上的輸出省略 IMAGE 與 CREATED 兩欄。COMMENT 欄：BuildKit 依 Dockerfile 建立的層會標 buildkit.dockerfile.v0；commit 產生的層是空的，除非 commit 時用 -m 自己寫說明。
+畫面上的輸出省略 IMAGE 與 CREATED 兩欄。COMMENT 欄：BuildKit 依 Dockerfile 建立的層會標 buildkit.dockerfile.v0；commit 產生的層只會有 -m 寫的那句說明；前面重複 commit 時沒有加 -m，所以這裡是空的，就算有也只是一句話，不是建立步驟。
 -->
 
 ---
