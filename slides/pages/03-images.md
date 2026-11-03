@@ -494,10 +494,9 @@ clicks: 2
 ---
 
 <script setup>
-const fmt = '--format "table {{.CreatedBy}}\\t{{.Size}}"'
 const cmds = [
-  { c: `docker image history ${fmt} node-base`, o: 'CREATED BY                                      SIZE\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB' },
-  { c: `docker image history ${fmt} my-username/my-image`, o: 'CREATED BY                                      SIZE\nCMD ["node" "./src/index.js"]                   0B\nRUN /bin/sh -c yarn install --production # b…   89.8MB\nCOPY . . # buildkit                             4.59MB\nWORKDIR /app                                    0B\n...' },
+  { c: 'docker image history node-base', o: 'CREATED BY                                      SIZE\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB' },
+  { c: 'docker image history my-username/my-image', o: 'CREATED BY                                      SIZE\nCMD ["node" "./src/index.js"]                   0B\nRUN /bin/sh -c yarn install --production # b…   89.8MB\nCOPY . . # buildkit                             4.59MB\nWORKDIR /app                                    0B\n...' },
 ]
 </script>
 
@@ -508,7 +507,7 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '以相同格式比較兩個 Image 的 history，只列出建立該層的指令與大小。',
+  '比較兩個 Image 的 history；輸出已省略其他欄位，只保留 CREATED BY 與 SIZE。',
   'commit 做出的 node-base：最上層只記錄 /bin/sh，看不出在 Container 中做了什麼。',
   'Dockerfile 做出的 my-username/my-image：每一層都記錄對應的那一行指令，任何人都能照著重建。',
 ]" />
@@ -517,7 +516,7 @@ const cmds = [
 回扣「commit 無法記錄建立過程」那張：同樣是一層層的 Image，差別在 CREATED BY 這一欄。
 node-base 最上層 68.4MB 是 apk add nodejs 裝進去的，但 history 只寫 /bin/sh，因為 commit 只拍下結果。
 my-username/my-image 的每一層都寫著 Dockerfile 的那一行；最下面的 ... 是 node:22-alpine 本身的 9 層，共約 164MB。
---format 只是讓輸出變窄方便比較，學生不用跟著打；直接 docker image history 也看得到 CREATED BY 欄。
+畫面上的輸出只保留 CREATED BY 與 SIZE 兩欄，實際執行還會看到 IMAGE、CREATED、COMMENT 等欄位，提醒學生看 CREATED BY 這一欄即可。
 -->
 
 ---
