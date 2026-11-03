@@ -8,7 +8,7 @@ Sep 28, 2026 · @seanyeh
 
 - 對象：學過寫程式、上過 Terminal 與 git；沒有軟體開發經驗、沒自己裝過程式環境、不知道 Docker 是什麼。
 - 課後目標：能說出 Image、Container、Registry 的差別；能寫出一份 Dockerfile 並 build 成 Image；能用 `-d`、`-p`、`-v` 跑起 todo app；能用 `docker compose up` 取代一長串 `docker run`。
-- 環境假設：學員在自己電腦上用 Docker Desktop，課前已完成安裝。若改用每人一台 VM，只有 Ch2 需要改成「連上你的 VM」。
+- 環境假設：每位學員一台 PVE 上的 Debian 13 VM，已預裝 Docker Engine，透過 pvelab 匯出的 SSH port 連線。連線時加上 `-L 3000:localhost:3000`，讓筆電的瀏覽器能開啟 `localhost:3000`。
 - 時長假設：180 分。若只有 120 分，優先砍 Ch3 的 commit 做法（改成講師 demo）與 Ch4 的環境變數段。
 
 ### 故事線
@@ -35,7 +35,7 @@ Sep 28, 2026 · @seanyeh
 | --- | --- | --- | --- | --- |
 | 0:00 | 10 | 暖場 | 破冰、點出「環境是別人幫你裝的」 | Q1 舉手表決 |
 | 0:10 | 30 | Ch1 Intro to Docker | 三個痛點、git 不存環境、Image / Container / Registry、VM vs Docker | 梗圖 |
-| 0:40 | 5 | Q2 | Mac 或 Windows 上的 Container 使用誰的 kernel | 表決後立即公布答案 |
+| 0:40 | 5 | Q2 | VM 中的 Container 使用誰的 kernel | 表決後立即公布答案 |
 | 0:45 | 10 | Ch2 Set up Docker | `docker run hello-world` 驗證、TA 救援 | TA 巡場 |
 | 0:55 | 45 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
 | 1:40 | 10 | 休息 |  | `docker stop audience` |
@@ -71,7 +71,7 @@ Sep 28, 2026 · @seanyeh
 
 ### Ch2 Set up Docker（10 分，2 張）
 
-1. 課前作業回顧：開啟 Docker Desktop，執行 `docker run hello-world`，順便看一次 `docker -v`
+1. 以 `ssh -p <port> -L 3000:localhost:3000 <user>@<host>` 連線至 VM，執行 `docker -v` 與 `docker run --rm hello-world`
    檢查點寫在同一頁最後一則 NOTE：看到 Hello from Docker! 就成功；沒看到的舉手，TA 到場處理。講師在這段先把下一章的指令貼到共用連結
 
 ### Ch3 Building Images（45 分）
@@ -260,13 +260,13 @@ Sep 28, 2026 · @seanyeh
 
 ### Q2：Container 使用誰的 kernel（Ch1 結尾，Ch2 驗證）
 
-題目：在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+題目：在課堂的 VM 中以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 
 - Image 內附的 Ubuntu kernel
-- 主機的 macOS 或 Windows kernel
-- Docker 工具在背景啟動的 Linux VM
+- VM 所在的 PVE 主機的 kernel
+- 執行 Docker 的這台 VM 的 kernel
 
-答案：Docker 工具（Docker Desktop、OrbStack）在背景啟動的 Linux VM。剛看完 VM 與 Container 的分層圖，多數人會選「主機的 kernel」。表決後立即公布；Ch2 以 ubuntu 與 alpine 各執行一次 `uname -r`，兩者版本相同；Docker Desktop 結尾為 linuxkit，OrbStack 含 orbstack 字樣。
+答案：執行 Docker 的這台 VM 的 kernel。表決後立即公布；Ch2 先在 VM 上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`，不是 Ubuntu 的 kernel，也不是 PVE 主機的。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
@@ -353,25 +353,27 @@ Sep 28, 2026 · @seanyeh
 
 ## 課前準備清單
 
-安裝與下載 Image 都移到課前，因為 Windows 的 WSL2 要重開機，而且全班同時從同一個 Wi-Fi 下載 postgres 這類大 Image 會卡住整堂課。
+安裝與下載 Image 都在 VM 範本中完成，全班同時從同一個對外 IP 下載大 Image 會卡住整堂課，也容易碰到 Docker Hub 對未登入使用者的下載次數限制。
 
-### 學員課前作業（課前 3 天發出）
+### VM 範本（講師課前完成）
 
-- [ ] 安裝 Docker Desktop；Windows 依安裝程式指示啟用 WSL2 並重開機
+- [ ] Debian 13，安裝 Docker Engine，學員帳號加入 docker 群組
+- [ ] 預先下載課堂會用到的 Image：`docker pull hello-world`、`ubuntu`、`alpine`、`node:22-alpine`、`postgres`
 - [ ] 預留至少 10 GB 硬碟空間
-- [ ] 開啟 Docker Desktop 後執行 `docker run hello-world`，看到 `Hello from Docker!` 就代表安裝成功
-- [ ] 預先下載課堂會用到的 Image：`docker pull ubuntu`、`docker pull alpine`、`docker pull node:22-alpine`、`docker pull postgres`
-- [ ] 在自己電腦跑一次 `apk add nodejs` 與 `docker image history node-base`，把 Ch3 範例輸出的大小換成實際數字
+- [ ] 以 pvelab 匯出每台 VM 的 SSH port，整理成每人一行的連線指令（含 `-L 3000:localhost:3000`）
+- [ ] 用一台學員 VM 照講義從頭到尾跑一次
+
+### 學員課前作業
+
+- [ ] 確認能以分配到的 ssh 指令連上 VM，並執行 `docker run --rm hello-world`，看到 `Hello from Docker!` 就代表可以使用
 - [ ] 回報表單：成功或卡在哪一步，讓 TA 課前先處理
 
-用 `docker run hello-world` 而不是只用 `docker -v` 驗證，是因為 `docker -v` 只檢查指令有沒有裝好，Docker Desktop 沒開也會顯示版本；`hello-world` 才能確認 Docker 真的能跑 Container。
+用 `docker run hello-world` 而不是只用 `docker -v` 驗證，是因為 `docker -v` 只檢查指令有沒有裝好，Docker 沒在執行也會顯示版本；`hello-world` 才能確認 Docker 真的能跑 Container。
 
 ### 講師與 TA 課前準備
 
-- [ ] 在一台乾淨的 Windows 與一台 Mac 上，照講義從頭到尾跑一次
 - [ ] 修完講義裡的錯誤（見下一章節）
 - [ ] 準備指令共用連結，每個實作段落一區，學員直接複製
-- [ ] 準備 Wi-Fi 斷線備案：用 `docker save` 把 3 個 Image 存成檔案放 USB，現場用 `docker load` 匯入
 - [ ] 回饋表單與 QR code
 
 ## 講義修正與現場會踩的坑
@@ -391,7 +393,7 @@ Sep 28, 2026 · @seanyeh
 
 | 講義位置 | 問題 | 修正 |
 | --- | --- | --- |
-| Installation 測試 | 只用 `docker -v`，Docker Desktop 沒開也會通過 | 改成 `docker run hello-world` |
+| Installation 測試 | 只用 `docker -v`，Docker 沒在執行也會通過 | 改成 `docker run hello-world` |
 | Set up（Writing Dockerfile） | 下載 zip 再解壓縮 | 改成 `git clone` 後切到 `build-image-from-scratch` branch |
 | Exposing Port 說明文字 | 寫 `50638->80`，但上面的輸出是 `50683->3000` | 改成與輸出一致 |
 | 環境變數設定 | `POSTGRES_DATABASE` 不是 postgres 認得的變數，實際是 `POSTGRES_DB` | 改名；示範 `env` 輸出不受影響，但學員之後照抄會沒效果 |
@@ -404,10 +406,10 @@ Sep 28, 2026 · @seanyeh
 
 | 症狀 | 原因 | 處理 |
 | --- | --- | --- |
-| 打 `docker` 指令出現 command not found | 還在 Container 裡面，提示字元是 `root@...#` | 先 `exit` 回到自己電腦 |
-| Windows 出現 the input device is not a TTY | 用 Git Bash 跑 `-it` | 改用 PowerShell |
-| Cannot connect to the Docker daemon | Docker Desktop 沒開 | 開啟 Docker Desktop 等它跑起來 |
+| 打 `docker` 指令出現 command not found | 還在 Container 裡面，提示字元是 `/ #` | 先 `exit` 回到 VM |
+| permission denied ... docker.sock | 帳號不在 docker 群組 | `sudo usermod -aG docker $USER` 後重新登入 |
 | `docker build .` 找不到 Dockerfile | Terminal 不在 `app` 資料夾 | `cd` 到 `app` 資料夾 |
 | Conflict. The container name is already in use | 同名 Container 還在 | `docker rm -f <名稱>` |
 | port is already allocated | 3000 已被其他 Container 占用 | `docker ps` 找出來 `rm -f` |
-| 瀏覽器打不開 `localhost:3000` | 忘了加 `-p 3000:3000` | 加上後重開 |
+| 瀏覽器打不開 `localhost:3000` | 忘了加 `-p 3000:3000`，或 ssh 連線時沒加 `-L 3000:localhost:3000` | 補上後重開 Container 或重新連線 |
+| ssh 出現 bind [127.0.0.1]:3000: Address already in use | 筆電上已有程式占用 3000 | 關掉該程式，或改用 `-L 3001:localhost:3000` 並開啟 `localhost:3001` |

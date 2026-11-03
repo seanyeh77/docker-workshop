@@ -170,27 +170,27 @@ clicks: 3
 3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
 4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
 類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-講完接 Q2：Mac 和 Windows 的情況先讓大家猜，再公布答案；Ch2 裝好 Docker 後用 uname -r 驗證。
+講完接 Q2：大家的 Docker 跑在 PVE 上的 VM 裡，先讓大家猜 Container 共用的是哪一層的 kernel，再公布答案；Ch2 用 uname -r 驗證。
 -->
 
 ---
 layout: quiz
 chapter: Ch 1 · Intro to Docker
-question: Q2．在 Mac 或 Windows 上以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+question: Q2．在課堂的 VM 中以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 clicks: 1
 answer: 2
 options:
   - Image 內附的 Ubuntu kernel
-  - 主機的 macOS 或 Windows kernel
-  - Docker 工具在背景啟動的 Linux VM
+  - VM 所在的 PVE 主機的 kernel
+  - 執行 Docker 的這台 VM 的 kernel
 ---
 
 
-Image 不含 kernel。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 或 OrbStack 會在背景啟動一台 Linux VM，所有 Container 共用其 kernel。Ch2 將實際驗證。
+Image 不含 kernel。Container 共用執行 Docker 的這台 VM 的 kernel；VM 有自己的 kernel，不會用到 PVE 主機的。Ch2 將實際驗證。
 
 <!--
 先舉手表決，再按一下公布答案。
-剛看完分層圖，多數人會選 B；但 macOS 和 Windows 的 kernel 跑不了 Linux 程式。
-用 Linux 電腦的同學，答案是直接共用主機的 kernel。
+剛看完分層圖，有人會選 A（Image 自帶），也有人會選 B（最底層的主機）。
+Container 共用的是「直接執行 Docker 的那台機器」的 kernel，在這裡就是 VM。
 Ch2 用 uname -r 驗證。
 -->
