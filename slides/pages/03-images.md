@@ -313,7 +313,7 @@ const cmds = [
   { p: root, c: `echo 'console.log("Hello from an app")' > app.js`, o: '' },
   { p: root, c: 'node app.js', o: 'Hello from an app' },
   { p: root, c: 'exit', o: '', after: '$ ' },
-  { c: 'docker container commit -c "CMD node app.js" -m "Add app" app-container sample-app', o: 'sha256:d7f9fd6abcf2...' },
+  { c: 'docker container commit -c "CMD node app.js" -m "Add app" app-container sample-app', o: 'sha256:10d3013d540b...' },
   { c: 'docker run --rm sample-app', o: 'Hello from an app' },
 ]
 </script>
@@ -495,7 +495,7 @@ clicks: 2
 
 <script setup>
 const cmds = [
-  { c: 'docker image history node-base', o: 'CREATED BY                                      SIZE      COMMENT\n/bin/sh                                         68.4MB\nCMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB    buildkit.dockerfile.v0' },
+  { c: 'docker image history sample-app', o: 'CREATED BY                                      SIZE      COMMENT\n/bin/sh                                         2.26kB    Add app\n/bin/sh                                         68.4MB    Add node\nCMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0\nADD alpine-minirootfs-3.24.3-aarch64.tar.gz …   8.66MB    buildkit.dockerfile.v0' },
   { c: 'docker image history my-username/my-image', o: 'CREATED BY                                      SIZE      COMMENT\nCMD ["node" "./src/index.js"]                   0B        buildkit.dockerfile.v0\nRUN /bin/sh -c yarn install --production # b…   89.8MB    buildkit.dockerfile.v0\nCOPY . . # buildkit                             4.59MB    buildkit.dockerfile.v0\nWORKDIR /app                                    0B        buildkit.dockerfile.v0\n...' },
 ]
 </script>
@@ -508,15 +508,15 @@ const cmds = [
 
 <Note :notes="[
   '比較兩個 Image 的 history；輸出省略 IMAGE 與 CREATED 欄，保留 CREATED BY、SIZE 與 COMMENT。',
-  'commit 做出的 node-base：最上層只記錄 /bin/sh，COMMENT 也是空的，看不出在 Container 中做了什麼。',
+  'commit 做出的 sample-app：兩層的 CREATED BY 都只有 /bin/sh，COMMENT 只是 -m 寫的一句說明，看不出在 Container 中做了什麼。',
   'Dockerfile 做出的 my-username/my-image：每一層都記錄對應的那一行指令，COMMENT 標示由 Dockerfile 建立，任何人都能照著重建。',
 ]" />
 
 <!--
 回扣「commit 無法記錄建立過程」那張：同樣是一層層的 Image，差別在 CREATED BY 這一欄。
-node-base 最上層 68.4MB 是 apk add nodejs 裝進去的，但 history 只寫 /bin/sh，因為 commit 只拍下結果。
+sample-app 是兩次 commit 疊起來的：68.4MB 那層是 apk add nodejs（Add node），2.26kB 那層是寫進去的 app.js（Add app）。兩層的 CREATED BY 都只寫 /bin/sh，因為 commit 只拍下結果；能看出做了什麼的只有 -m 那句話。
 my-username/my-image 的每一層都寫著 Dockerfile 的那一行；最下面的 ... 是 node:22-alpine 本身的 9 層，共約 164MB。
-畫面上的輸出省略 IMAGE 與 CREATED 兩欄。COMMENT 欄：BuildKit 依 Dockerfile 建立的層會標 buildkit.dockerfile.v0；commit 產生的層只會有 -m 寫的那句說明；前面重複 commit 時沒有加 -m，所以這裡是空的，就算有也只是一句話，不是建立步驟。
+畫面上的輸出省略 IMAGE 與 CREATED 兩欄。COMMENT 欄：BuildKit 依 Dockerfile 建立的層會標 buildkit.dockerfile.v0；commit 產生的層只有 -m 寫的說明，沒加 -m 就是空的。sample-app 與 my-username/my-image 是同一個 app 的兩種做法，正好可以並排比較。
 -->
 
 ---
