@@ -148,12 +148,12 @@ clicks: 2
 ---
 layout: figure
 chapter: Ch 5 · Docker Compose
-takeaway: Ch4 新增的 3 筆資料仍存在，因為 Compose 掛載的是同一個 todo-data Volume。
+takeaway: 掛載 Volume 後新增的待辦事項仍存在，因為 Compose 掛載的是同一個 todo-data Volume。
 ---
 
 # 檢查點：Compose 啟動完成
 
-<BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
+<BrowserMock :items="['繳電話費', '複習 Volume', '準備報告']" />
 
 <!--
 要停的時候用 docker compose down，它會刪掉 Container，但 todo-data 是 external 的 Volume，不會被刪。

@@ -35,7 +35,7 @@ Sep 28, 2026 · @seanyeh
 | --- | --- | --- | --- | --- |
 | 0:00 | 10 | 暖場 | 破冰、點出「環境是別人幫你裝的」 | Q1 舉手表決 |
 | 0:10 | 30 | Ch1 Intro to Docker | 三個痛點、git 不存環境、Image / Container / Registry、VM vs Docker | 梗圖 |
-| 0:40 | 5 | Q2 | VM 中的 Container 使用誰的 kernel | 表決後立即公布答案 |
+| 0:40 | 5 | Q2 | Container 使用誰的 kernel | 表決後立即公布答案 |
 | 0:45 | 10 | Ch2 Set up Docker | `docker run hello-world` 驗證、TA 救援 | TA 巡場 |
 | 0:55 | 45 | Ch3 Building Images | commit 做法 → 驗證 Q1 → Dockerfile → build → tag | 實作 |
 | 1:40 | 10 | 休息 |  | `docker stop audience` |
@@ -71,7 +71,7 @@ Sep 28, 2026 · @seanyeh
 
 ### Ch2 Set up Docker（10 分，2 張）
 
-1. 以 `ssh -p <port> -L 3000:localhost:3000 <user>@<host>` 連線至 VM，執行 `docker -v` 與 `docker run --rm hello-world`
+1. 以 `ssh -p <port> -L 3000:localhost:3000 <user>@<host>` 連線至課程主機，執行 `docker -v` 與 `docker run --rm hello-world`
    檢查點寫在同一頁最後一則 NOTE：看到 Hello from Docker! 就成功；沒看到的舉手，TA 到場處理。講師在這段先把下一章的指令貼到共用連結
 
 ### Ch3 Building Images（45 分）
@@ -260,13 +260,13 @@ Sep 28, 2026 · @seanyeh
 
 ### Q2：Container 使用誰的 kernel（Ch1 結尾，Ch2 驗證）
 
-題目：在課堂的 VM 中以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+題目：以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 
 - Image 內附的 Ubuntu kernel
-- VM 所在實體主機的 kernel
-- 執行 Docker 的這台 VM 的 kernel
+- Docker 另外啟動的 kernel
+- 執行 Docker 的主機的 kernel
 
-答案：執行 Docker 的這台 VM 的 kernel。表決後立即公布；Ch2 先在 VM 上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`，不是 Ubuntu 的 kernel，也不是 VM 所在實體主機的。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
+答案：執行 Docker 的主機的 kernel。表決後立即公布；Ch2 先在主機上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`。學員端一律稱「主機」，不提及 VM。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 

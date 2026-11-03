@@ -170,27 +170,26 @@ clicks: 3
 3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
 4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
 類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-講完接 Q2：大家的 Docker 跑在 VM 裡，先讓大家猜 Container 共用的是哪一層的 kernel，再公布答案；Ch2 用 uname -r 驗證。
+講完接 Q2：先讓大家猜 Container 使用的 kernel 從哪裡來，再公布答案；Ch2 用 uname -r 驗證。
 -->
 
 ---
 layout: quiz
 chapter: Ch 1 · Intro to Docker
-question: Q2．在課堂的 VM 中以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
+question: Q2．以 ubuntu Image 啟動 Container，Container 使用的 kernel 來自何處？
 clicks: 1
 answer: 2
 options:
   - Image 內附的 Ubuntu kernel
-  - VM 所在實體主機的 kernel
-  - 執行 Docker 的這台 VM 的 kernel
+  - Docker 另外啟動的 kernel
+  - 執行 Docker 的主機的 kernel
 ---
 
 
-Image 不含 kernel。Container 共用執行 Docker 的這台 VM 的 kernel；VM 有自己的 kernel，不會用到實體主機的。Ch2 將實際驗證。
+Image 不含 kernel，Docker 也不會另外啟動 kernel；所有 Container 共用執行 Docker 的主機的 kernel。Ch2 將實際驗證。
 
 <!--
 先舉手表決，再按一下公布答案。
-剛看完分層圖，有人會選 A（Image 自帶），也有人會選 B（最底層的主機）。
-Container 共用的是「直接執行 Docker 的那台機器」的 kernel，在這裡就是 VM。
+A 是以為 Image 像完整的作業系統；B 是把 Container 想成小型 VM。
 Ch2 用 uname -r 驗證。
 -->

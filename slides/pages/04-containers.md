@@ -263,9 +263,9 @@ clicks: 2
 ]" />
 
 ---
-layout: textbook
+layout: figure
 chapter: Ch 4 · Running Containers
-near: true
+takeaway: 在瀏覽器中新增 3 筆待辦事項，內容不拘。
 ---
 
 # 實作：新增 3 筆待辦事項
@@ -376,12 +376,12 @@ clicks: 3
 ---
 layout: figure
 chapter: Ch 4 · Running Containers
-takeaway: 新增數筆待辦事項，執行 rm -f 後以相同的 -v 指令重新啟動，資料仍存在即代表成功。
+takeaway: 重新新增數筆待辦事項，執行 rm -f 後以相同的 -v 指令重新啟動，資料仍存在即代表成功。
 ---
 
 # 檢查點：資料在重建後保留
 
-<BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
+<BrowserMock :items="['繳電話費', '複習 Volume', '準備報告']" />
 
 <!--
 加分題：同時開兩個 todo app，分別綁 3000 和 3001，兩個分頁各自有獨立的待辦事項。
