@@ -63,6 +63,11 @@ volumes:
   '將相同內容寫成 compose.yaml，之後僅需執行 docker compose up。',
 ]" />
 
+<!--
+services 下的每一項是一個 Container；最下方 volumes 宣告使用的 Volume，external: true 代表沿用 Ch4 建立的 todo-data。
+YAML 用空格縮排，不能用 Tab。這是最常見的錯。
+-->
+
 ---
 layout: compare
 chapter: Ch 5 · Docker Compose
@@ -83,44 +88,6 @@ rows:
 <!--
 Compose 就像點套餐：不用每次一樣一樣點，寫好一份菜單，說「一號餐」就好。
 每個 docker run 參數在 compose.yaml 裡都有對應的欄位。
--->
-
----
-layout: textbook
-chapter: Ch 5 · Docker Compose
-ltag: compose.yaml
----
-
-# compose.yaml 逐段說明
-
-```yaml {all|1-2|3-4|5-6|7-8|10-12}
-services:
-  my-image:
-    image: my-username/my-image
-    container_name: my-image
-    ports:
-      - "3000:3000"
-    volumes:
-      - todo-data:/etc/todos
-
-volumes:
-  todo-data:
-    external: true
-```
-
-::note::
-
-<Note :notes="[
-  '一份 compose.yaml 可以描述多個 Container。',
-  'services 下的每一項代表一個 Container，my-image 為自訂名稱。',
-  '指定使用的 Image 與 Container 名稱。',
-  'ports 為清單，可指定多個 Port。',
-  'volumes 亦為清單，格式與 -v 相同。',
-  '最下方宣告使用的 Volume；external: true 代表使用先前建立的 todo-data。',
-]" />
-
-<!--
-YAML 用空格縮排，不能用 Tab。這是最常見的錯。
 -->
 
 ---

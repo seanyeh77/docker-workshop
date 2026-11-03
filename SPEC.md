@@ -120,7 +120,7 @@ Sep 28, 2026 · @seanyeh
 
 1. 把 Ch4 最後那條超長的 `docker run` 用很小的字塞滿整頁：「每次都要打這個？」
 2. 點套餐梗：Compose 是「一號餐」，不用一樣一樣點；`docker run` 參數與 Compose 欄位的對照表
-   接著逐段說明 compose.yaml。Volume 已在 Magic Move 與逐段說明中出現，不另做 Before / After 頁
+   compose.yaml 只在 Magic Move 最後一步完整出現一次，欄位說明放在講稿；Volume 已在 Magic Move 中出現，不另做 Before / After 頁
 3. 實作：在 `app` 資料夾寫 `compose.yaml`
 4. 先執行 `docker rm -f my-image`（Compose 會用同一個名稱和 port）→ `docker compose up -d`
 5. 檢查點與回收：打開 `localhost:3000`，Ch4 加的待辦事項還在，因為 Compose 掛的是同一個 `todo-data` Volume；結束時 `docker compose down`
