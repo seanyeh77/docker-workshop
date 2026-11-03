@@ -64,8 +64,8 @@ const cmds = [
 
 <Note :notes="[
   'uname -r 顯示 kernel 版本。分別以 ubuntu 與 alpine 兩個 Image 啟動 Container。',
-  'Ubuntu 的 Container 印出 linuxkit 的 kernel。',
-  'Alpine 的 Container 印出相同的 kernel：Image 不含 kernel，所有 Container 共用 Docker Desktop 背後那台 Linux VM 的 kernel。',
+  'Ubuntu 的 Container 印出 Linux VM 的 kernel 版本。',
+  'Alpine 的 Container 印出相同的 kernel：Image 不含 kernel，所有 Container 共用背後那台 Linux VM 的 kernel。',
 ]" />
 
 <!--
@@ -73,7 +73,7 @@ const cmds = [
 ubuntu 和 alpine 是兩套不同的 Linux 發行版，若 Image 自帶 kernel，版本應該不同。
 Alpine 是很輕量的 Linux 發行版，整個 Image 不到 10MB，Ch3 會用它來做 node-base。
 --rm 前面 hello-world 已經用過：Container 執行完就自動刪除，不會留下來。
-Mac 和 Windows 上印出來的是 Linux kernel（結尾 linuxkit），因為 Docker Desktop 在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
+Mac 和 Windows 上印出來的是 Linux kernel：Docker Desktop 的版本結尾是 linuxkit，OrbStack 則會出現 orbstack 字樣（例如 7.2.12-orbstack-...）。兩者都是在背後開了一台小型 Linux VM，所有 Container 都跑在裡面。這也回答了「Windows 怎麼能跑 Linux Container」。
 Linux 電腦上直接跑 uname -r，會和 Container 裡印出的一樣。
 版本號每台電腦不同，重點是兩行相同。
 -->

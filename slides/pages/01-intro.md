@@ -182,11 +182,11 @@ answer: 2
 options:
   - Image 內附的 Ubuntu kernel
   - 主機的 macOS 或 Windows kernel
-  - Docker Desktop 在背景啟動的 Linux VM
+  - Docker 工具在背景啟動的 Linux VM
 ---
 
 
-Image 不含 kernel。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 在背景啟動一台 Linux VM，所有 Container 共用其 kernel。Ch2 將實際驗證。
+Image 不含 kernel。macOS 與 Windows 的 kernel 無法執行 Linux 程式，因此 Docker Desktop 或 OrbStack 會在背景啟動一台 Linux VM，所有 Container 共用其 kernel。Ch2 將實際驗證。
 
 <!--
 先舉手表決，再按一下公布答案。
