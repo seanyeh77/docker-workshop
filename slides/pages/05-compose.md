@@ -15,7 +15,7 @@ layout: textbook
 chapter: Ch 5 · Docker Compose
 ---
 
-# 從 docker run 到 compose.yaml
+# docker run 指令的限制
 
 ````md magic-move {lines: false}
 ```bash
@@ -36,21 +36,6 @@ docker run -d -p 3000:3000 \
   -v todo-data:/etc/todos \
   --name=my-image my-username/my-image
 ```
-
-```yaml
-services:
-  my-image:
-    image: my-username/my-image
-    container_name: my-image
-    ports:
-      - "3000:3000"
-    volumes:
-      - todo-data:/etc/todos
-
-volumes:
-  todo-data:
-    external: true
-```
 ````
 
 ::note::
@@ -59,8 +44,7 @@ volumes:
   '最初僅指定 Image 名稱。',
   '加入 Container 名稱。',
   '加入背景執行與 Port。',
-  '再加入 Volume，指令已過於冗長。',
-  '將相同內容寫成 compose.yaml，之後僅需執行 docker compose up。',
+  '再加入 Volume，指令已過於冗長，每次啟動都要完整輸入。接下來將這些參數改寫成 compose.yaml。',
 ]" />
 
 ---
