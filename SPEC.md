@@ -74,28 +74,30 @@ Sep 28, 2026 · @seanyeh
 1. 課前作業回顧：開啟 Docker Desktop，執行 `docker run hello-world`，順便看一次 `docker -v`
    檢查點寫在同一頁最後一則 NOTE：看到 Hello from Docker! 就成功；沒看到的舉手，TA 到場處理。講師在這段先把下一章的指令貼到共用連結
 
-### Ch3 Building Images（35 分，12 張）
+### Ch3 Building Images（45 分）
 
 在 Ch3 的三個時間點放同一張「目前的 Image 與 Container」關係圖（node-base 完成後、sample-app 完成後、章節整理前），每次新增的方塊以 teal 框標出，讓學員知道自己手上有哪些 Image 與 Container、誰從誰衍生。驗證用、用完即丟的 `docker run` 一律加 `--rm`，避免留下隨機命名的 Container。
 
 1. 兩種做 Image 的方式：現場手做後拍照存檔（commit）vs 照食譜做（Dockerfile）
-   接著講 commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
-2. 實作：`docker run --name=base-container -it alpine` → `apk add nodejs` 安裝 Node → `node -e` 驗證 → `exit`。用 alpine 而非 ubuntu：不必先 `apt update` 下載數十 MB 的套件清單，全班同時安裝也快得多，而且 alpine 在 Ch2 已經拉過
-   接著兩張常見錯誤：重打 `docker run --name=base-container` 會名稱衝突；兩種處理各一張：用 `docker start -ai base-container` 重新進入接續，或 `docker rm -f base-container` 刪除後重新建立
-3. `docker container commit -m "Add node"`：左右並排 `git commit -m`；補一句差別：Docker 會存整個 Container 的檔案狀態，不需要先 add
-4. `docker image history`：左右並排 `git log` 的輸出，兩者排版很像
-   接著對照表，再示範重複 commit：舊的 Image 失去名稱成為未命名（dangling），`docker image ls -a` 才看得到；用 `docker image prune` 清除。並說明 docker commit 不會像 git 一樣串成歷史
-5. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run sample-app` 看到 `Hello from an app`
-6. 驗證 Q3：`docker run alpine which node` 沒有輸出、`docker run node-base which node` 輸出 `/usr/bin/node`
-7. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
-8. Dockerfile 常見指令表（講義的 8 個指令，今天只用 FROM、WORKDIR、COPY、RUN、CMD 五個，其他標灰）
-9. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的
-10. 故意失敗：講師在錯的資料夾執行 `docker build .`，讓大家看找不到 Dockerfile 的錯誤，再 `cd` 回正確位置
-11. sha256 長名字梗：「你會背自己的身分證字號嗎？」→ `docker build -t`，對照 `git tag`
-    檢查點寫在 build -t 那頁最後一則 NOTE：`docker image ls` 看到 `my-username/my-image` 就成功
-    接著 Docker 與 git 的對應表：commit、history、tag 都教完後才整理對照
+2. commit 的四個步驟，講完立刻問 Q3（題目見「課堂提問設計」），表決後公布答案
+3. 實作：`docker run --name=base-container -it alpine` → `apk add nodejs` 安裝 Node → `node -e` 驗證 → `exit` → commit 成 `node-base`。用 alpine 而非 ubuntu：不必先 `apt update` 下載數十 MB 的套件清單，全班同時安裝也快得多，而且 alpine 在 Ch2 已經拉過
+4. 兩張常見錯誤：重打 `docker run --name=base-container` 會名稱衝突；一張用 `docker start -ai base-container` 重新進入接續，一張用 `docker rm -f base-container` 刪除後重新建立
+5. 驗證 Q3：`docker run --rm alpine which node` 沒有輸出、`docker run --rm node-base which node` 輸出 `/usr/bin/node`
+6. 同一 Image 的獨立 Container：A 裡建立 hello.txt，B 看不到（Ch4 的 Volume 圖接著這張往下演）
+7. 盤點圖 ①
+8. `docker image history`：左右並排 `git log` 的輸出
+9. 重複 commit：舊的 Image 失去名稱成為未命名（dangling），`docker image ls -a` 才看得到；用 `docker image prune` 清除。並說明 docker commit 不會像 git 一樣串成歷史
+10. 實作：用 `node-base` 開 `app-container`，寫 `app.js`，commit 成 `sample-app`，`docker run --rm sample-app` 看到 `Hello from an app`
+11. commit 指令的參數（`-c`、`-m`），接著盤點圖 ②
+12. commit 做法的問題：像「煮到一半拍照」，沒人知道中間加了什麼 → 需要寫下來的食譜 = Dockerfile
+13. 實作：`git clone` 範例專案、切到 `build-image-from-scratch` branch、刪掉舊 Dockerfile、逐行寫出新的（每一行出現時就講解該行指令）
+14. Dockerfile 與 Image Layer：一次顯示全部，說明每一行各自產生一層
+15. 故意失敗：講師退回上一層執行 `docker build .`，讓大家看找不到 Dockerfile 的錯誤，再 `cd` 回正確位置
+16. sha256 長名字梗：「你會背自己的身分證字號嗎？」→ `docker build -t`，對照 `git tag`；檢查點寫在這頁最後一則 NOTE：`docker image ls` 看到 `my-username/my-image` 就成功
+17. Docker 與 git 的對應表：commit、history、tag 都教完後才整理對照
+18. 盤點圖 ③，接 Ch3 重點整理
 
-### Ch4 Running Containers（35 分，12 張）
+### Ch4 Running Containers（35 分）
 
 1. 痛點：關掉 Terminal 服務就停了 → `-d` 背景執行、`docker ps` 查看
 2. `docker stop`、`docker restart`、`docker rm`：一張圖畫出 Container 的狀態變化
@@ -111,11 +113,13 @@ Sep 28, 2026 · @seanyeh
 10. 現場驗證 Q4：`docker rm -f my-image` → 重開 → 3 筆全部消失
 11. Volume 梗：Container 像飯店房間，退房（rm）東西會被清掉，Volume 是寄放在櫃檯的行李 → `docker volume create todo-data` 加 `-v`
 12. 檢查點：加待辦事項 → `rm -f` → 用同一條 `-v` 指令重開 → 資料還在
+13. docker run 參數總覽：Ch4 學到的 `-d`、`-p`、`-v`、`--name` 一次整理，直接接 Ch5
 
 ### Ch5 Docker Compose（20 分，5 張）
 
 1. 把 Ch4 最後那條超長的 `docker run` 用很小的字塞滿整頁：「每次都要打這個？」
-2. 點套餐梗：Compose 是「一號餐」，不用一樣一樣點；講義的 `docker run` 參數與 Compose 欄位對照表做成 before / after 動畫
+2. 點套餐梗：Compose 是「一號餐」，不用一樣一樣點；`docker run` 參數與 Compose 欄位的對照表
+   接著逐段說明 compose.yaml。Volume 已在 Magic Move 與逐段說明中出現，不另做 Before / After 頁
 3. 實作：在 `app` 資料夾寫 `compose.yaml`
 4. 先執行 `docker rm -f my-image`（Compose 會用同一個名稱和 port）→ `docker compose up -d`
 5. 檢查點與回收：打開 `localhost:3000`，Ch4 加的待辦事項還在，因為 Compose 掛的是同一個 `todo-data` Volume；結束時 `docker compose down`

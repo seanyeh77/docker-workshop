@@ -173,6 +173,53 @@ clicks: 3
 -->
 
 ---
+layout: textbook
+chapter: Ch 3 · Building Images
+ltag: Terminal
+clicks: 2
+---
+
+# 驗證 Q3：commit 不會修改原本的 Image
+
+<TerminalTyping :keep="2" :cmds="[
+  { c: 'docker run --rm alpine which node', o: '' },
+  { c: 'docker run --rm node-base which node', o: '/usr/bin/node' },
+]" />
+
+::note::
+
+<Note :notes="[
+  'which node 會輸出 node 的位置；找不到時不輸出任何內容。這裡比較兩個 Image：原本的 alpine 與 commit 出的 node-base。',
+  '以原本的 alpine 啟動：找不到 node。',
+  '以 node-base 啟動：Node 位於 /usr/bin/node。',
+]" />
+
+<!--
+剛做完 node-base，馬上驗證 Q3 的答案：commit 產生新的 Image，原本的 alpine 不受影響。
+下一張換個角度：從同一個 Image 開出的 Container 之間也互不影響。
+-->
+
+---
+layout: figure
+chapter: Ch 3 · Building Images
+clicks: 2
+---
+
+# 同一 Image 的獨立 Container
+
+<ContainerStory :from="0" :to="2" :captions="[
+  '一個 Image，尚未啟動任何 Container。',
+  '以同一個 Image 啟動 A 與 B 兩個 Container。',
+  '在 A 中建立 hello.txt，B 仍為空：每個 Container 各自獨立。',
+]" />
+
+<!--
+接續驗證 Q3：Image 不會被 Container 修改，Container 之間也各自獨立。在 A 裡建立的檔案，B 看不到。
+這張圖 Ch4 會再出現，接著往下演。
+下一張盤點目前手上的 Image 與 Container。
+-->
+
+---
 layout: figure
 chapter: Ch 3 · Building Images
 takeaway: Image 經 run 產生 Container，Container 經 commit 產生新的 Image；原本的 alpine 不會改變。
@@ -290,22 +337,6 @@ const cmds = [
 -->
 
 ---
-layout: figure
-chapter: Ch 3 · Building Images
-takeaway: sample-app 由 node-base 衍生而來；每個 Container 都來自一個 Image。
----
-
-# 目前的 Image 與 Container
-
-<ImageMap :stage="2" />
-
-<!--
-再盤點一次：從 node-base 開出 app-container，寫好 app.js 後 commit 成 sample-app。
-同樣的 run、commit 循環又走了一次，只是起點換成 node-base。
-docker run --rm 開的 Container 用完就刪，所以不會出現在圖上。
--->
-
----
 layout: textbook
 chapter: Ch 3 · Building Images
 clicks: 4
@@ -326,43 +357,19 @@ clicks: 4
 ]" />
 
 ---
-layout: textbook
-chapter: Ch 3 · Building Images
-ltag: Terminal
-clicks: 2
----
-
-# 驗證 Q3：commit 不會修改原本的 Image
-
-<TerminalTyping :keep="2" :cmds="[
-  { c: 'docker run --rm alpine which node', o: '' },
-  { c: 'docker run --rm node-base which node', o: '/usr/bin/node' },
-]" />
-
-::note::
-
-<Note :notes="[
-  'which node 會輸出 node 的位置；找不到時不輸出任何內容。這裡比較兩個 Image：原本的 alpine 與 commit 出的 node-base。',
-  '以原本的 alpine 啟動：找不到 node。',
-  '以 node-base 啟動：Node 位於 /usr/bin/node。',
-]" />
-
----
 layout: figure
 chapter: Ch 3 · Building Images
-clicks: 2
+takeaway: sample-app 由 node-base 衍生而來；每個 Container 都來自一個 Image。
 ---
 
-# 同一 Image 的獨立 Container
+# 目前的 Image 與 Container
 
-<ContainerStory :from="0" :to="2" :captions="[
-  '一個 Image，尚未啟動任何 Container。',
-  '以同一個 Image 啟動 A 與 B 兩個 Container。',
-  '在 A 中建立 hello.txt，B 仍為空：每個 Container 各自獨立。',
-]" />
+<ImageMap :stage="2" />
 
 <!--
-這張圖 Ch4 會再出現，接著往下演。
+再盤點一次：從 node-base 開出 app-container，寫好 app.js 後 commit 成 sample-app。
+同樣的 run、commit 循環又走了一次，只是起點換成 node-base。
+docker run --rm 開的 Container 用完就刪，所以不會出現在圖上。
 -->
 
 ---

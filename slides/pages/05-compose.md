@@ -126,38 +126,6 @@ YAML 用空格縮排，不能用 Tab。這是最常見的錯。
 ---
 layout: textbook
 chapter: Ch 5 · Docker Compose
-ltag: compose.yaml
-clicks: 2
----
-
-# 在 compose.yaml 加入 Volume
-
-<ConfigDiff file="compose.yaml" :rows="[
-  ['', 'services:'],
-  ['', '  my-image:'],
-  ['', '    image: my-username/my-image'],
-  ['', '    container_name: my-image'],
-  ['', '    ports:'],
-  ['', '      - &quot;3000:3000&quot;'],
-  ['add', '    volumes:'],
-  ['add', '      - todo-data:/etc/todos'],
-  ['add', ''],
-  ['add', 'volumes:'],
-  ['add', '  todo-data:'],
-  ['add', '    external: true'],
-]" />
-
-::note::
-
-<Note :notes="[
-  '僅設定 Port 的版本可以啟動 app，但資料仍會消失。',
-  '綠色為新增內容：在 service 中掛載 Volume，並於最下方宣告。',
-  '此為完整的 compose.yaml，存放於 app 目錄中。',
-]" />
-
----
-layout: textbook
-chapter: Ch 5 · Docker Compose
 ltag: Terminal
 clicks: 2
 ---

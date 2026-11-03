@@ -350,24 +350,6 @@ Container 類似飯店房間，退房（rm）時房內物品會被清除；Volum
 ---
 layout: textbook
 chapter: Ch 4 · Running Containers
-clicks: 5
----
-
-# docker run 參數總覽
-
-<AnnotatedCommand :size="28" :parts="[
-  { t: 'docker' },
-  { t: 'run' },
-  { t: '-d', label: '背景執行', h: 40 },
-  { t: '-p 3000:3000', label: '主機 Port : Container Port', h: 120 },
-  { t: '-v todo-data:/etc/todos', label: 'Volume : Container 內的目錄', h: 40 },
-  { t: '--name=my-image', label: 'Container 名稱', h: 120 },
-  { t: 'my-username/my-image', label: '使用的 Image', h: 40 },
-]" />
-
----
-layout: textbook
-chapter: Ch 4 · Running Containers
 ltag: Terminal
 clicks: 3
 ---
@@ -401,4 +383,27 @@ takeaway: 新增數筆待辦事項，執行 rm -f 後以相同的 -v 指令重�
 
 <!--
 加分題：同時開兩個 todo app，分別綁 3000 和 3001，兩個分頁各自有獨立的待辦事項。
+-->
+
+---
+layout: textbook
+chapter: Ch 4 · Running Containers
+clicks: 5
+---
+
+# docker run 參數總覽
+
+<AnnotatedCommand :size="28" :parts="[
+  { t: 'docker' },
+  { t: 'run' },
+  { t: '-d', label: '背景執行', h: 40 },
+  { t: '-p 3000:3000', label: '主機 Port : Container Port', h: 120 },
+  { t: '-v todo-data:/etc/todos', label: 'Volume : Container 內的目錄', h: 40 },
+  { t: '--name=my-image', label: 'Container 名稱', h: 120 },
+  { t: 'my-username/my-image', label: '使用的 Image', h: 40 },
+]" />
+
+<!--
+Ch4 學到的參數一次整理：-d、-p、-v、--name。
+每次都要打這麼長，下一章用 Compose 把它們寫進檔案。
 -->
