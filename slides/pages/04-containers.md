@@ -144,7 +144,7 @@ clicks: 4
 <script setup>
 const cmds = [
   { c: 'docker run --rm -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=default postgres env', o: '...\nPOSTGRES_PASSWORD=secret\nPOSTGRES_DB=default\n...\nPG_MAJOR=18\n...' },
-  { c: "printf 'POSTGRES_DB=default\\nPOSTGRES_PASSWORD=secret\\n' > .env", o: '' },
+  { p: '~/getting-started-todo-app/app$ ', c: "printf 'POSTGRES_DB=default\\nPOSTGRES_PASSWORD=secret\\n' > .env", o: '' },
   { c: 'cat .env', o: 'POSTGRES_DB=default\nPOSTGRES_PASSWORD=secret' },
   { c: 'docker run --rm --env-file .env postgres env', o: '...\nPOSTGRES_DB=default\nPOSTGRES_PASSWORD=secret\n...' },
 ]
@@ -152,7 +152,7 @@ const cmds = [
 
 # 環境變數
 
-<TerminalTyping :cmds="cmds" :keep="3" prompt="~/getting-started-todo-app/app$ " />
+<TerminalTyping :cmds="cmds" :keep="3" />
 
 ::note::
 

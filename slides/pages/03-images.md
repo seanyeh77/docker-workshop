@@ -392,10 +392,10 @@ clicks: 3
 
 # 實作：下載範例專案
 
-<TerminalTyping :keep="3" prompt="~$ " :cmds="[
-  { c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
-  { c: 'cd getting-started-todo-app/app', o: '', after: '~/getting-started-todo-app/app$ ' },
-  { p: '~/getting-started-todo-app/app$ ', c: 'rm Dockerfile', o: '' },
+<TerminalTyping :keep="3" :cmds="[
+  { p: '~$ ', c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
+  { c: 'cd getting-started-todo-app/app', o: '' },
+  { p: '~/getting-started-todo-app/app$ ', c: 'rm Dockerfile', o: '', after: '$ ' },
 ]" />
 
 <!--
@@ -530,16 +530,16 @@ clicks: 4
 const up = '~/getting-started-todo-app$ '
 const inApp = '~/getting-started-todo-app/app$ '
 const cmds = [
-  { p: inApp, c: 'cd ..', o: '', after: up },
+  { p: inApp, c: 'cd ..', o: '' },
   { p: up, c: 'docker build .', o: 'ERROR: failed to solve: failed to read dockerfile:\nopen Dockerfile: no such file or directory' },
-  { p: up, c: 'cd app', o: '', after: inApp },
-  { p: inApp, c: 'docker build .', o: ' => [4/4] RUN yarn install --production    9.7s\n => => writing image sha256:4c27aec27050...' },
+  { c: 'cd app', o: '' },
+  { p: inApp, c: 'docker build .', after: '$ ', o: ' => [4/4] RUN yarn install --production    9.7s\n => => writing image sha256:4c27aec27050...' },
 ]
 </script>
 
 # 常見錯誤：找不到 Dockerfile
 
-<TerminalTyping :cmds="cmds" :keep="3" prompt="" />
+<TerminalTyping :cmds="cmds" :keep="3" />
 
 ::note::
 
@@ -565,8 +565,8 @@ clicks: 2
 
 # 以 Tag 命名 Image
 
-<TerminalTyping :keep="2" prompt="~/getting-started-todo-app/app$ " :cmds="[
-  { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
+<TerminalTyping :keep="2" :cmds="[
+  { p: '~/getting-started-todo-app/app$ ', c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
   { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE\nmy-username/my-image:latest   314f68b864b1        258MB' },
 ]" />
 
