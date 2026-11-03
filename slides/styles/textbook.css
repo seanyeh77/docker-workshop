@@ -93,6 +93,7 @@
 .slidev-code .slidev-code-dishonored{opacity:.28}
 .term{border:1.5px solid var(--tb-rule);font-family:var(--tb-mono);background:#fbfcfc}
 .term-bar{border-bottom:1.5px solid var(--tb-rule);background:#f1f4f4;gap:10px;padding:14px 18px;display:flex}
+.term-bar{position:relative;align-items:center}.term-dir{position:absolute;left:0;right:0;text-align:center;font-family:var(--tb-mono);font-size:24px;color:var(--tb-mut);pointer-events:none}
 .term-bar i{background:#d3d9dc;border-radius:50%;width:14px;height:14px}
 .term-body{white-space:pre;min-height:360px;margin:0;padding:22px 28px;font-size:24px;line-height:1.6}
 .term .pr{color:var(--tb-teal)}

@@ -6,6 +6,8 @@ import { esc, hlShell } from '../utils/hl.js'
 // cmds: [{ c: 'command', o: 'output html' }]. Each click types the next command.
 // keep: how many finished commands stay above the one being typed.
 // all: show every command at once, no typing (for checkpoint slides).
+// dir: working directory shown in the title bar. A command may set its own
+// dir (where it runs) and to (where it leaves you, for cd).
 const props = defineProps({
   cmds: { type: Array, required: true },
   keep: { type: Number, default: 2 },
@@ -13,10 +15,22 @@ const props = defineProps({
   start: { type: Number, default: 0 },
   all: Boolean,
   big: Boolean,
+  dir: { type: String, default: '' },
 })
 const { $clicks } = useSlideContext()
 const active = useIsSlideActive()
 const html = ref('')
+const title = ref('')
+// Directory at step i: the latest dir or to set at or before command i.
+function dirAt(i, done) {
+  let d = props.dir
+  for (let k = 0; k <= i && k < props.cmds.length; k++) {
+    const x = props.cmds[k]
+    if (x.dir) d = x.dir
+    if (x.to && (k < i || done)) d = x.to
+  }
+  return d
+}
 let run = 0
 const reduced = typeof window !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced ? 0 : ms))
@@ -29,6 +43,8 @@ const line = (x, i) => `${pr(pOf(i))}${hlShell(x.c)[0]}\n${x.o ? `<span class="o
 
 async function show(step, animate) {
   const id = ++run
+  const nn = step + props.start
+  title.value = props.all ? dirAt(props.cmds.length - 1, true) : nn === 0 ? dirAt(0, false) : dirAt(Math.min(nn, props.cmds.length) - 1, !animate)
   if (props.all) {
     html.value = props.cmds.map(line).join('') + pr(pAfter(props.cmds.length - 1)) + caret
     return
@@ -49,7 +65,9 @@ async function show(step, animate) {
     await wait(15)
   }
   await wait(150)
-  if (id === run) html.value = before + line(cur, i) + pr(pAfter(i)) + caret
+  if (id !== run) return
+  html.value = before + line(cur, i) + pr(pAfter(i)) + caret
+  title.value = dirAt(i, true)
 }
 
 // Fit the longest line of any step into the box: shrink the font instead of
@@ -81,7 +99,7 @@ watch($clicks, (n, o) => show(n, active.value && n === o + 1))
 
 <template>
   <div ref="root" class="term" :class="{ big }">
-    <div class="term-bar"><i /><i /><i /></div>
+    <div class="term-bar"><i /><i /><i /><span v-if="title" class="term-dir">{{ title }}</span></div>
     <pre class="term-body" :style="{ fontSize: size + 'px' }" v-html="html" />
   </div>
 </template>

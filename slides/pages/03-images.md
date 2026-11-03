@@ -392,10 +392,10 @@ clicks: 3
 
 # 實作：下載範例專案
 
-<TerminalTyping :keep="3" :cmds="[
-  { p: '~$ ', c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
-  { c: 'cd getting-started-todo-app/app', o: '' },
-  { p: '~/getting-started-todo-app/app$ ', c: 'rm Dockerfile', o: '', after: '$ ' },
+<TerminalTyping :keep="3" dir="~" :cmds="[
+  { c: 'git clone -b build-image-from-scratch https://github.com/docker/getting-started-todo-app', o: 'Cloning into \'getting-started-todo-app\'...' },
+  { c: 'cd getting-started-todo-app/app', o: '', to: '~/getting-started-todo-app/app' },
+  { c: 'rm Dockerfile', o: '' },
 ]" />
 
 <!--
@@ -527,13 +527,11 @@ clicks: 4
 ---
 
 <script setup>
-const up = '~/getting-started-todo-app$ '
-const inApp = '~/getting-started-todo-app/app$ '
 const cmds = [
-  { p: inApp, c: 'cd ..', o: '' },
-  { p: up, c: 'docker build .', o: 'ERROR: failed to solve: failed to read dockerfile:\nopen Dockerfile: no such file or directory' },
-  { c: 'cd app', o: '' },
-  { p: inApp, c: 'docker build .', after: '$ ', o: ' => [4/4] RUN yarn install --production    9.7s\n => => writing image sha256:4c27aec27050...' },
+  { dir: '~/getting-started-todo-app/app', c: 'cd ..', o: '', to: '~/getting-started-todo-app' },
+  { c: 'docker build .', o: 'ERROR: failed to solve: failed to read dockerfile:\nopen Dockerfile: no such file or directory' },
+  { c: 'cd app', o: '', to: '~/getting-started-todo-app/app' },
+  { c: 'docker build .', o: ' => [4/4] RUN yarn install --production    9.7s\n => => writing image sha256:4c27aec27050...' },
 ]
 </script>
 
@@ -547,7 +545,7 @@ const cmds = [
   '這是初學者最常遇到的錯誤，由講師示範，學生不必跟著做。',
   '先刻意回到上一層的 getting-started-todo-app。',
   'docker build . 的點代表目前目錄，此目錄中沒有 Dockerfile。',
-  '從提示字元確認目前位置，再 cd 至 app。',
+  '從終端機上方的標題列確認目前位置，再 cd 至 app。',
   '於正確的目錄中執行即可 build 成功。',
 ]" />
 
@@ -565,8 +563,8 @@ clicks: 2
 
 # 以 Tag 命名 Image
 
-<TerminalTyping :keep="2" :cmds="[
-  { p: '~/getting-started-todo-app/app$ ', c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
+<TerminalTyping :keep="2" dir="~/getting-started-todo-app/app" :cmds="[
+  { c: 'docker build -t my-username/my-image .', o: ' => => naming to docker.io/my-username/my-image' },
   { c: 'docker image ls', o: 'IMAGE                         ID             DISK USAGE\nmy-username/my-image:latest   314f68b864b1        258MB' },
 ]" />
 

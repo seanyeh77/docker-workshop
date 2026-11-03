@@ -132,9 +132,9 @@ clicks: 2
 
 # 實作：docker compose up
 
-<TerminalTyping :keep="2" :cmds="[
+<TerminalTyping :keep="2" dir="~/getting-started-todo-app/app" :cmds="[
   { c: 'docker rm -f my-image', o: 'my-image' },
-  { p: '~/getting-started-todo-app/app$ ', c: 'docker compose up -d', after: '$ ', o: '[+] Running 2/2\n ✔ Network app_default  Created\n ✔ Container my-image   Started' },
+  { c: 'docker compose up -d', o: '[+] Running 2/2\n ✔ Network app_default  Created\n ✔ Container my-image   Started' },
 ]" />
 
 ::note::
