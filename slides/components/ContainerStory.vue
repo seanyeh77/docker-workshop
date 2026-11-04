@@ -25,7 +25,7 @@ const h = 190
 
 <template>
   <div class="story">
-    <svg class="motion" viewBox="0 0 1360 440" role="img" aria-label="Containers from one image" style="width:1360px">
+    <svg class="motion" viewBox="-6 -6 1372 452" role="img" aria-label="Containers from one image" style="width:1372px">
       <!-- image -->
       <rect x="640" y="20" width="400" height="64" fill="#6eea9e" stroke="#1a1a1a" stroke-width="2" />
       <text x="840" y="52" text-anchor="middle" dominant-baseline="central" style="font-size:26px">Image {{ image }}</text>
@@ -81,7 +81,7 @@ const h = 190
 </template>
 
 <style scoped>
-.story { width: 1360px; max-width: 100%; }
+.story { width: 1372px; max-width: 100%; }
 .fade { transition: opacity 0.45s; }
 .fade.off { opacity: 0; }
 .pop { animation: story-pop 0.6s ease; }

@@ -366,3 +366,5 @@
 .tb-title>h1,.slidev-layout.tb-obj.near .tb-group>ol,.slidev-layout.tb-obj.near .tb-group>h1{margin:0!important}
 .tb-quiz.near .qz-body{gap:26px}
 .slidev-layout.tb-2col,.slidev-layout.tb-compare,.slidev-layout.tb-cols,.slidev-layout.tb-steps,.slidev-layout.tb-obj,.slidev-layout.tb-quiz{justify-content:safe center}
+
+svg.motion{overflow:visible}

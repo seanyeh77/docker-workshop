@@ -9,7 +9,7 @@ const mapped = computed(() => $clicks.value >= 1)
 </script>
 
 <template>
-  <svg class="motion" viewBox="0 0 900 560" role="img" aria-label="Port mapping" style="width:900px">
+  <svg class="motion" viewBox="-6 -6 912 572" role="img" aria-label="Port mapping" style="width:912px">
     <rect x="300" y="10" width="300" height="60" fill="#adf0c7" stroke="#1a1a1a" stroke-width="2" />
     <text x="450" y="40" text-anchor="middle" dominant-baseline="central" style="font-size:24px">Browser</text>
     <line x1="450" y1="70" x2="450" y2="138" stroke="#333333" stroke-width="2" />

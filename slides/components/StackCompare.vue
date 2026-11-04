@@ -24,7 +24,7 @@ const accent = '#0f766e'
 
 <template>
   <div class="stack">
-    <svg class="motion" viewBox="0 0 1440 484" role="img" aria-label="Virtual machine and container layer stacks" style="width:1440px">
+    <svg class="motion" viewBox="-6 -6 1452 496" role="img" aria-label="Virtual machine and container layer stacks" style="width:1452px">
       <text :x="L + PW / 2" y="40" text-anchor="middle" dominant-baseline="central" style="font-size:30px;font-weight:600">Virtual Machine</text>
       <text :x="R + PW / 2" y="40" text-anchor="middle" dominant-baseline="central" style="font-size:30px;font-weight:600">Container</text>
 
@@ -67,7 +67,7 @@ const accent = '#0f766e'
 </template>
 
 <style scoped>
-.stack { width: 1440px; max-width: 100%; }
+.stack { width: 1452px; max-width: 100%; }
 .fade { transition: opacity 0.45s; }
 .fade.off { opacity: 0; }
 .hl { transition: stroke-width 0.3s; }

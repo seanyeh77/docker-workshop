@@ -19,7 +19,7 @@ const x = (i) => i * (W + G)
 </script>
 
 <template>
-  <svg class="motion" viewBox="0 0 1690 200" role="img" aria-label="Container lifecycle" style="width:1600px">
+  <svg class="motion" viewBox="-6 -6 1702 212" role="img" aria-label="Container lifecycle" style="width:1611px">
     <g v-for="(n, i) in nodes" :key="i" class="fade" :class="{ off: s < i }">
       <rect :x="x(i)" y="60" :width="W" height="120" :fill="n.fill" stroke="#1a1a1a" stroke-width="2" :stroke-dasharray="n.dash ? '8 6' : null" />
       <text :x="x(i) + W / 2" y="108" text-anchor="middle" dominant-baseline="central" style="font-size:28px">{{ n.t }}</text>

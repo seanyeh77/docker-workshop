@@ -59,7 +59,7 @@ const width = computed(() => (props.stage >= 2 ? 1560 : byId.nb.x + W + 4))
 </script>
 
 <template>
-  <svg class="motion" :viewBox="`0 0 ${width} ${height}`" role="img" aria-label="Images and containers built so far" :style="{ width: width + 'px' }">
+  <svg class="motion" :viewBox="`-6 -6 ${width + 12} ${height + 12}`" role="img" aria-label="Images and containers built so far" :style="{ width: width + 12 + 'px' }">
     <g v-for="(e, i) in edges" :key="'e' + i" v-show="shown(e.s)">
       <polyline :points="e.pts" fill="none" stroke="#333333" stroke-width="2" />
       <polygon :points="e.head" fill="#333333" />
