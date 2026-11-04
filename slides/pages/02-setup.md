@@ -28,10 +28,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '所有指令可從以下網址複製：seanyeh77.github.io/<wbr>docker-workshop/<wbr>commands.html',
-  '以 ssh 連線至課程提供的 Linux 主機；-L 3000:localhost:3000 讓瀏覽器能開啟 localhost:3000，Ch4 會用到。',
-  'docker -v 確認 Docker 已安裝。',
-  '出現 Hello from Docker! 即代表可以使用；若未出現，請舉手由 TA 協助。',
+  '指令清單：seanyeh77.github.io/<wbr>docker-workshop/<wbr>commands.html',
+  '-L 3000:localhost:3000：讓瀏覽器能開啟 localhost:3000。',
+  '',
+  '出現 Hello from Docker! 即可使用。',
 ]" />
 
 <!--
@@ -69,10 +69,10 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  'uname -r 顯示 kernel 版本。',
-  '先在主機上執行，再分別以 ubuntu 與 alpine 啟動 Container 執行。',
-  'Ubuntu 的 Container 印出相同的版本，而不是 Ubuntu 的 kernel。',
-  'Alpine 也相同：Image 不含 kernel，所有 Container 共用主機的 kernel。',
+  '',
+  '',
+  'Ubuntu 的 Container 印出相同的版本。',
+  'Image 不含 kernel，Container 共用主機的 kernel。',
 ]" />
 
 <!--

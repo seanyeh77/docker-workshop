@@ -100,12 +100,12 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '指令皆已放在共用連結，可直接複製使用。',
-  '-it 用於進入 Container 操作。提示字元變為 / #，代表已位於 Container 內。',
-  '此 Container 僅包含基本的 Alpine，以 apk 安裝 Node。',
-  '輸出 Hello world! 代表 Node 安裝完成。',
-  'exit 返回主機，提示字元恢復原狀。',
-  'commit 將此 Container 的狀態儲存為新的 Image，名稱為 node-base。',
+  '',
+  '-it：進入 Container 操作，提示字元變為 / #。',
+  '',
+  '',
+  'exit：返回主機。',
+  'commit：將 Container 存成 Image node-base。',
 ]" />
 
 <!--
@@ -132,11 +132,11 @@ clicks: 4
 ::note::
 
 <Note :notes="[
-  '已建立過 base-container 時，再次執行 docker run 會發生錯誤。',
-  '先前的 base-container 仍存在，名稱不能重複使用。',
-  'docker start -ai 重新啟動並進入該 Container：-a 顯示輸出，-i 接受輸入。',
-  '先前安裝的 Node 仍在，可直接接續。',
-  '以 exit 離開 Container，回到主機；Container 會停止，但不會被刪除，之後可再以 docker start -ai 進入。',
+  '',
+  'Container 名稱不能重複使用。',
+  'docker start -ai：重新啟動並進入原本的 Container。',
+  '先前安裝的 Node 仍在。',
+  'exit 只會停止 Container，不會刪除。',
 ]" />
 
 <!--
@@ -162,10 +162,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '同樣的名稱衝突。',
-  '若想從頭開始，以 docker rm -f 刪除舊的 base-container；-f 會先停止再刪除。',
-  '名稱已釋出，重新建立一個乾淨的 base-container。',
-  '舊 Container 中的變更會一併消失，需重新安裝 Node。',
+  '',
+  'docker rm -f：刪除舊的 Container。',
+  '',
+  '舊 Container 中的變更一併消失。',
 ]" />
 
 <!--
@@ -189,9 +189,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'which node 會輸出 node 的位置；找不到時不輸出任何內容。這裡比較兩個 Image：原本的 alpine 與 commit 出的 node-base。',
-  '以原本的 alpine 啟動：找不到 node。',
-  '以 node-base 啟動：Node 位於 /usr/bin/node。',
+  'which node：輸出 node 的位置，找不到則沒有輸出。',
+  'alpine 沒有 Node。',
+  'node-base 有 Node。',
 ]" />
 
 <!--
@@ -256,8 +256,8 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '盤點圖中 node-base 由 alpine 而來。docker image history 列出一個 Image 由哪些 Layer 組成，最上面是最新的。',
-  '最上層 68.4MB 是 commit 時新增的 Add node；下面兩層是 alpine 原有的設定（0B）與檔案（8.66MB）。',
+  'docker image history：列出 Image 的 Layer，最上面是最新的。',
+  '最上層 68.4MB 由 commit 新增；下面兩層來自 alpine。',
 ]" />
 
 <!--
@@ -285,10 +285,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '對同一個 base-container 再 commit 一次，並沿用名稱 node-base。',
-  '產生新的 Image，node-base 這個名稱移到新的 Image 上。',
-  '舊的 Image 失去名稱，成為未命名（dangling）的 Image。docker image ls 需加 -a 才會顯示，但仍佔用硬碟空間。',
-  'docker image prune 刪除所有未命名、且未被任何 Container 使用的 Image。',
+  '',
+  'node-base 這個名稱移到新的 Image 上。',
+  '舊 Image 失去名稱但仍佔用空間；ls 需加 -a 才會顯示。',
+  'prune：刪除未命名且未被使用的 Image。',
 ]" />
 
 <!--
@@ -325,13 +325,13 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '以剛建立的 node-base 啟動 Container，其中已包含 Node。',
-  '進入 Container。',
-  '將一行程式寫入 app.js。',
-  '先在 Container 內執行一次確認結果。',
-  '離開 Container。',
-  '儲存為 sample-app，並以 -c 指定啟動時執行的指令。',
-  '無須進入 Container，執行後即直接輸出結果；--rm 讓這個 Container 用完即刪除。',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '-c：指定 Container 啟動時執行的指令。',
+  '',
 ]" />
 
 <!--
@@ -447,11 +447,11 @@ CMD ["node", "./src/index.js"]
 ::note::
 
 <Note :notes="[
-  'FROM：基底 Image。node:22-alpine 為官方提供的 Node 22，取代先前手動建立的 node-base。',
-  'WORKDIR：後續指令皆在 /app 中執行，相當於 cd 至該目錄。',
-  'COPY . .：第一個點為主機上的目前目錄，第二個點為 Image 中的 /app。',
-  'RUN：僅在 build 時執行一次，此處以 yarn 安裝套件。',
-  'CMD：每次 Container 啟動時執行，以中括號分隔指令與參數。',
+  'FROM：基底 Image。',
+  'WORKDIR：之後的指令在 /app 中執行。',
+  'COPY . .：將主機的目前目錄複製到 Image 的 /app。',
+  'RUN：build 時執行。',
+  'CMD：Container 啟動時執行。',
 ]" />
 
 ---
@@ -507,9 +507,9 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '比較兩個 Image 的 history；輸出省略 IMAGE 與 CREATED 欄，保留 CREATED BY、SIZE 與 COMMENT。',
-  'commit 做出的 sample-app：兩層的 CREATED BY 都只有 /bin/sh，COMMENT 只是 -m 寫的一句說明，看不出在 Container 中做了什麼。',
-  'Dockerfile 做出的 my-username/my-image：每一層都記錄對應的那一行指令，COMMENT 標示由 Dockerfile 建立，任何人都能照著重建。',
+  '輸出只保留 CREATED BY、SIZE 與 COMMENT。',
+  'commit：只記錄 /bin/sh，看不出做了什麼。',
+  'Dockerfile：每一層記錄對應的指令。',
 ]" />
 
 <!--
@@ -542,11 +542,11 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '這是初學者最常遇到的錯誤，由講師示範，學生不必跟著做。',
-  '先刻意回到上一層的 getting-started-todo-app。',
-  'docker build . 的點代表目前目錄，此目錄中沒有 Dockerfile。',
-  '從終端機上方的標題列確認目前位置，再 cd 至 app。',
-  '於正確的目錄中執行即可 build 成功。',
+  '由講師示範，不必跟著做。',
+  '',
+  'docker build . 的點代表目前目錄，此處沒有 Dockerfile。',
+  '',
+  '',
 ]" />
 
 <!--
@@ -571,9 +571,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'build 完成後僅產生一串 sha256，難以辨識。',
-  '-t 在 build 時同時指定名稱，作用如同 git tag。',
-  'docker image ls 列出所有 Image。列表中出現剛建立的 Image 即代表完成；未指定版本時預設為 latest。',
+  '',
+  '-t：build 時指定名稱。',
+  '未指定版本時預設為 latest。',
 ]" />
 
 <!--

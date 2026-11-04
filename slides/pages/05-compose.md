@@ -56,11 +56,11 @@ volumes:
 ::note::
 
 <Note :notes="[
-  '最初僅指定 Image 名稱。',
-  '加入 Container 名稱。',
-  '加入背景執行與 Port。',
-  '再加入 Volume，指令已過於冗長。',
-  '將相同內容寫成 compose.yaml，之後僅需執行 docker compose up。',
+  '',
+  '',
+  '',
+  '指令已過於冗長。',
+  '改寫成 compose.yaml。',
 ]" />
 
 <!--
@@ -107,9 +107,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  'Compose 會使用相同的名稱與 Port，因此需先刪除 Ch4 的 Container。',
-  '刪除舊的 my-image。',
-  '於 compose.yaml 所在目錄執行；-d 同樣代表背景執行。',
+  '',
+  '需先刪除 Ch4 的 Container，避免名稱與 Port 衝突。',
+  '於 compose.yaml 所在目錄執行。',
 ]" />
 
 ---

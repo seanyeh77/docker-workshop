@@ -80,7 +80,7 @@
 .tb-body li::marker{color:var(--tb-teal)}
 .tb-note{border-left:4px solid var(--tb-teal);color:var(--tb-mut);grid-area:3/2/span 30;align-self:start;padding-left:22px;font-size:22px;line-height:1.65}
 .tb-note-label{color:var(--tb-teal);letter-spacing:.12em;margin-bottom:8px;font-size:16px;font-weight:600}
-.tb-note p,.tb-note-text{margin:0}
+.tb-note p,.tb-note-text{margin:0}.tb-note{transition:opacity .2s}.tb-note:has(.tb-note-text:empty){opacity:0}
 .tb-fade-enter-active,.tb-fade-leave-active{transition:opacity .2s}
 .tb-fade-enter-from,.tb-fade-leave-to{opacity:0}
 .deflist{gap:14px;display:grid}

@@ -88,10 +88,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '這三個名詞會貫穿整堂課，先以類比理解即可。',
+  '',
   'Image 是靜態的材料，本身不會執行。',
-  '同一個 Image 可以啟動多個 Container，彼此獨立。',
-  'Docker Hub 與 Image 的關係，相當於 GitHub 與程式碼的關係。',
+  '同一個 Image 可啟動多個 Container，彼此獨立。',
+  'Docker Hub 之於 Image，如同 GitHub 之於程式碼。',
 ]" />
 
 ---

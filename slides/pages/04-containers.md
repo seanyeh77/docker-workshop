@@ -46,9 +46,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '先前執行 Container 時必須保持 Terminal 開啟，關閉後服務即停止。',
-  '-d 使 Container 在背景執行，Terminal 可立即繼續使用。',
-  'docker ps 列出執行中的 Container，STATUS 為 Up 代表正在執行。',
+  '',
+  '-d：在背景執行。',
+  'docker ps：列出執行中的 Container。',
 ]" />
 
 ---
@@ -96,10 +96,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '同一名稱不能同時指定給兩個 Container。',
-  '先前的 my-image 仍存在，因此發生名稱衝突。',
-  'rm -f 會先停止再刪除 Container。',
-  '之後重新啟動同名 Container 前，請先執行 rm -f。',
+  '',
+  '同名的 Container 仍存在。',
+  'rm -f：先停止再刪除。',
+  '',
 ]" />
 
 ---
@@ -120,10 +120,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  'exit 與 docker stop 只會停止 Container，不會刪除；用過的 Container 會持續累積並佔用空間。',
-  'docker ps 只列出執行中的 Container，加 -a 才會列出已停止的。',
-  'docker container prune 一次刪除所有已停止的 Container；執行中的 my-image 不受影響。',
-  '只剩執行中的 Container。刪除前請確認不再需要其中的資料。',
+  '',
+  'ps -a：連同已停止的 Container 一起列出。',
+  'container prune：刪除所有已停止的 Container。',
+  '',
 ]" />
 
 <!--
@@ -157,11 +157,11 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  'Dockerfile 中的 ENV 為預設值，實際使用時常需調整，例如資料庫的密碼與名稱。',
-  '-e 設定一個環境變數，並覆蓋 Image 中的預設值。最後的 env 會輸出所有變數。',
-  '變數較多時，改寫在 .env 檔中，每行一個變數。此處以 printf 在目前的資料夾建立該檔，\\n 表示換行；也可以用編輯器建立。',
-  '以 cat 確認 .env 的內容。',
-  '--env-file 一次讀取整個檔案；--rm 使 Container 結束後自動刪除。',
+  '',
+  '-e：設定環境變數，覆蓋 Image 中的預設值。',
+  '.env：每行一個變數。',
+  '',
+  '--env-file：一次讀取整個檔案。',
 ]" />
 
 ---
@@ -195,8 +195,8 @@ clicks: 1
 ::note::
 
 <Note :notes="[
-  'Container 類似大樓中的房間，外部無法直接連入。',
-  '-p 3000:3000：連到主機 3000 的請求會轉送到 Container 的 3000。左側為主機，右側為 Container。',
+  '',
+  '-p 主機 Port:Container Port。',
 ]" />
 
 ---
@@ -223,11 +223,11 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '先刪除未設定 Port 的 Container。',
-  '僅指定 -p 3000 時，Container 的 3000 會對應到主機上隨機的 Port。',
-  '此次為 32768，每次可能不同，不利於開發。',
-  '再次刪除，並明確指定兩側的 Port。',
-  '主機的 3000 固定對應到 Container 的 3000。',
+  '',
+  '-p 3000：對應到主機上隨機的 Port。',
+  '',
+  '',
+  '-p 3000:3000：固定對應到主機的 3000。',
 ]" />
 
 ---
@@ -257,9 +257,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '同一個 Port 僅能對應一個 Container。',
-  '3000 已對應到 my-image，第二個 Container 無法使用。主機上其他程式占用 3000 時也會出現相同錯誤，可用 docker ps 查看是誰占用。',
-  '啟動失敗的 Container 仍會保留，需先刪除。若要同時執行兩個，可將第二個改為 -p 3001:3000。',
+  '',
+  '同一個 Port 只能對應一個 Container。',
+  '啟動失敗的 Container 仍會保留，需先刪除。',
 ]" />
 
 ---
@@ -314,9 +314,9 @@ clicks: 2
 ::note::
 
 <Note :notes="[
-  '待辦事項儲存於 Container 中的 /etc/todos。',
-  '刪除 Container。',
-  '以同一個 Image 重新啟動並重新整理瀏覽器，3 筆資料皆已消失。',
+  '待辦事項存於 Container 中的 /etc/todos。',
+  '',
+  '重新啟動後資料已消失。',
 ]" />
 
 ---
@@ -367,10 +367,10 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '先建立一個 Volume，用於存放 todo app 的資料。',
-  'Volume 建立完成。',
-  '刪除舊的 Container。',
-  '以 -v 將 todo-data 掛載至 /etc/todos，todo app 的資料會寫入此處。',
+  '',
+  'Volume：存放資料的空間，獨立於 Container。',
+  '',
+  '-v todo-data:/etc/todos：資料改寫入 Volume。',
 ]" />
 
 ---
