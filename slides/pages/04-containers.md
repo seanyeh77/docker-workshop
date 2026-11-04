@@ -5,7 +5,7 @@ near: true
 clicks: 1
 ---
 
-# 休息 10 分鐘
+# 休息
 
 <TerminalTyping big :start="1" :keep="2" :cmds="[
   { c: 'docker stop audience', o: 'audience' },

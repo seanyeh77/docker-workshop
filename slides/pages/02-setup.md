@@ -35,16 +35,16 @@ clicks: 3
 ]" />
 
 <!--
-主機已預先裝好 Docker，Image 也已預先下載。這裡只做驗證，TA 下去巡。
+主機已預先裝好 Docker，Image 也已預先下載。這裡只做驗證。
+若改在自己的電腦上用 Docker Desktop，略過 ssh 這一行，Ch4 直接開 localhost:3000 即可。
 --rm 讓 Container 執行完就自動刪除。
 port、user、host 依每人分配到的連線資訊填入。忘了加 -L 的話，Ch4 開不了網頁，之後斷線重連時補上即可。
 版本號每個人不一樣，沒關係。
-最後一步就是檢查點：看到 Hello from Docker! 就成功，沒看到的舉手。
+最後一步就是檢查點：看到 Hello from Docker! 就成功。
 常見狀況：
 - permission denied ... docker.sock：帳號不在 docker 群組。
 - ssh 連不上：port、user 或 host 打錯。
 - bind [127.0.0.1]:3000: Address already in use：筆電上已有程式占用 3000，ssh 仍會連上，但轉送失敗。
-講師這段時間把 Ch3 的指令貼到共用連結。
 -->
 
 ---

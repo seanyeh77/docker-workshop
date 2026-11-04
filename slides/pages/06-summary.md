@@ -4,7 +4,7 @@ chapter: Summary
 big: true
 ---
 
-# 課程重點整理
+# 重點整理
 
 <Tile variant="hero" label="核心概念" value="將環境與程式一併封裝">程式、套件與設定皆包含於 Image，在任何電腦上的執行結果一致</Tile>
 <Tile label="食材" value="Image">由多個 Layer 堆疊而成，建立後不可修改</Tile>

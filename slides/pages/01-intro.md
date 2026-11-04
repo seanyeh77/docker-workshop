@@ -48,7 +48,7 @@ items:
     text: 接手既有專案時，需要先安裝資料庫與語言環境，並設定環境變數，才能讓程式正常執行。
   - label: 痛點 3
     title: 版本衝突
-    text: 甲課程需要 PostgreSQL 12，乙課程需要 PostgreSQL 16，兩個版本難以在同一台電腦上共存。
+    text: 甲專案需要 PostgreSQL 12，乙專案需要 PostgreSQL 16，兩個版本難以在同一台電腦上共存。
 ---
 
 # Docker 要解決的三個問題
@@ -133,7 +133,7 @@ kind: 名詞
 layout: figure
 chapter: Ch 1 · Intro to Docker
 clicks: 4
-takeaway: 本課程將依序實作 pull、run、stop、rm 四個階段。
+takeaway: 接下來將依序實作 pull、run、stop、rm 四個階段。
 ---
 
 # Container 的生命週期

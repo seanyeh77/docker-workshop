@@ -542,7 +542,7 @@ const cmds = [
 ::note::
 
 <Note :notes="[
-  '由講師示範，不必跟著做。',
+  '示範常見錯誤，不必跟著做。',
   '',
   'docker build . 的點代表目前目錄，此處沒有 Dockerfile。',
   '',
@@ -550,7 +550,7 @@ const cmds = [
 ]" />
 
 <!--
-講師示範即可。學生前面已經 cd 到 app 並在那裡寫好 Dockerfile，直接 docker build . 就會成功。
+示範即可。聽眾前面已經 cd 到 app 並在那裡寫好 Dockerfile，直接 docker build . 就會成功。
 真正會踩到的情境：開新的 Terminal、或 clone 完忘了 cd，停在上一層就執行 build。
 -->
 
@@ -577,7 +577,7 @@ clicks: 2
 ]" />
 
 <!--
-最後一步就是檢查點：列表中出現 my-username/my-image 就成功，沒看到的舉手。
+最後一步就是檢查點：列表中出現 my-username/my-image 就成功。
 做得快的人：改一下 src/index.js 再 build 一次，看哪幾層顯示 CACHED。
 -->
 
