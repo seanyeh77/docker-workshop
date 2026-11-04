@@ -45,7 +45,7 @@ const pr = (p) => `<span class="pr">${esc(p)}</span>`
 const { isPresenter, isPrintMode } = useNav()
 const ICON_COPY = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V3h12"/></svg>'
 const ICON_DONE = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg>'
-const copyBtn = (i) => `<button type="button" class="tcp" data-i="${i}" aria-label="Copy">${ICON_COPY}</button>`
+const copyBtn = (i) => `<button type="button" tabindex="-1" class="tcp" data-i="${i}" aria-label="Copy">${ICON_COPY}</button>`
 const line = (x, i) => `<span class="cl">${pr(pOf(i))}${hlShell(x.c)[0]}${copyBtn(i)}</span>${x.o ? `<span class="out">${x.o}</span>\n` : ''}`
 
 async function show(step, animate) {
@@ -105,10 +105,14 @@ async function copy(e) {
   const b = e.target.closest?.('.tcp')
   if (!b) return
   e.stopPropagation()
+  // Hand focus back to the slide so arrow keys and space keep navigating.
+  b.blur()
   const text = props.cmds[Number(b.dataset.i)]?.c ?? ''
   try { await navigator.clipboard.writeText(text) } catch {
     const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove()
   }
+  document.activeElement?.blur?.()
+  window.getSelection()?.removeAllRanges()
   b.innerHTML = ICON_DONE
   b.classList.add('done')
   setTimeout(() => { b.innerHTML = ICON_COPY; b.classList.remove('done') }, 1200)
@@ -119,6 +123,6 @@ watch($clicks, (n, o) => show(n, active.value && n === o + 1))
 <template>
   <div ref="root" class="term" :class="{ big, 'no-copy': isPresenter || isPrintMode }">
     <div class="term-bar"><i /><i /><i /><span v-if="title" class="term-dir">{{ title }}</span></div>
-    <pre class="term-body" :style="{ fontSize: size + 'px' }" @click="copy" v-html="html" />
+    <pre class="term-body" :style="{ fontSize: size + 'px' }" @mousedown="(e) => e.target.closest?.('.tcp') && e.preventDefault()" @click="copy" v-html="html" />
   </div>
 </template>
