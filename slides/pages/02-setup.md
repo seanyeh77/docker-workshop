@@ -28,8 +28,8 @@ clicks: 3
 ::note::
 
 <Note :notes="[
-  '以 ssh 連線至課程提供的 Linux 主機。',
-  '-L 3000:localhost:3000 讓瀏覽器能開啟 localhost:3000，Ch4 會用到。',
+  '所有指令可從以下網址複製：seanyeh77.github.io/<wbr>docker-workshop/<wbr>commands.html',
+  '以 ssh 連線至課程提供的 Linux 主機；-L 3000:localhost:3000 讓瀏覽器能開啟 localhost:3000，Ch4 會用到。',
   'docker -v 確認 Docker 已安裝。',
   '出現 Hello from Docker! 即代表可以使用；若未出現，請舉手由 TA 協助。',
 ]" />

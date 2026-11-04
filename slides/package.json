@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "slidev --open",
-    "build": "slidev build",
-    "export": "slidev export"
+    "dev": "node scripts/gen-commands.mjs && slidev --open",
+    "build": "node scripts/gen-commands.mjs && slidev build",
+    "export": "slidev export",
+    "commands": "node scripts/gen-commands.mjs"
   },
   "devDependencies": {
     "@slidev/cli": "^53.0.0",

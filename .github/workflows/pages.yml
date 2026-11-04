@@ -31,6 +31,7 @@ jobs:
           cache: npm
           cache-dependency-path: slides/package-lock.json
       - run: npm ci
+      - run: node scripts/gen-commands.mjs
       - run: npx slidev build --base /docker-workshop/ --out dist
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -373,7 +373,7 @@ Sep 28, 2026 · @seanyeh
 ### 講師與 TA 課前準備
 
 - [ ] 修完講義裡的錯誤（見下一章節）
-- [ ] 準備指令共用連結，每個實作段落一區，學員直接複製
+- [x] 指令清單頁：`commands.html` 由 `slides/scripts/gen-commands.mjs` 從投影片的 Terminal 指令自動產生（略過「常見錯誤」與休息頁），build 時一併發布；投影片上的 Terminal 也可在滑鼠移過時按「複製」
 - [ ] 回饋表單與 QR code
 
 ## 講義修正與現場會踩的坑

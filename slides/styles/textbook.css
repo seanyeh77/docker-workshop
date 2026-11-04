@@ -96,6 +96,7 @@
 .term-bar{position:relative;align-items:center}.term-dir{position:absolute;left:0;right:0;text-align:center;font-family:var(--tb-mono);font-size:24px;color:var(--tb-mut);pointer-events:none}
 .term-bar i{background:#d3d9dc;border-radius:50%;width:14px;height:14px}
 .term-body{white-space:pre;min-height:360px;margin:0;padding:22px 28px;font-size:24px;line-height:1.6}
+.term{position:relative}.term .tcp{opacity:0;position:absolute;right:20px;margin-top:2px;font:600 18px var(--tb-sans);color:var(--tb-teal);background:#fff;border:1.5px solid var(--tb-teal);padding:0 12px;line-height:1.5;cursor:pointer;transition:opacity .15s}.term-body:hover .tcp{opacity:.85}.term .tcp:hover{opacity:1;background:var(--tb-teal);color:#fff}@media (hover:none){.term .tcp{opacity:.85}}
 .term .pr{color:var(--tb-teal)}
 .term .out{color:#4a545e}
 .term .st-pd{color:#9a4d00}

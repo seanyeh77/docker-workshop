@@ -39,7 +39,10 @@ const caret = '<span class="caret"></span>'
 const pOf = (i) => props.cmds[i]?.p ?? props.prompt
 const pAfter = (i) => props.cmds[i]?.after ?? (props.cmds[i + 1] ? pOf(i + 1) : pOf(i))
 const pr = (p) => `<span class="pr">${esc(p)}</span>`
-const line = (x, i) => `${pr(pOf(i))}${hlShell(x.c)[0]}\n${x.o ? `<span class="out">${x.o}</span>\n` : ''}`
+// Finished command lines carry a copy button (shown on hover) for students
+// following along on their own screen.
+const copyBtn = (i) => `<button type="button" class="tcp" data-i="${i}">複製</button>`
+const line = (x, i) => `${pr(pOf(i))}${hlShell(x.c)[0]}${copyBtn(i)}\n${x.o ? `<span class="out">${x.o}</span>\n` : ''}`
 
 async function show(step, animate) {
   const id = ++run
@@ -94,12 +97,23 @@ onMounted(() => {
   ro.observe(root.value)
 })
 onUnmounted(() => ro?.disconnect())
+async function copy(e) {
+  const b = e.target.closest?.('.tcp')
+  if (!b) return
+  e.stopPropagation()
+  const text = props.cmds[Number(b.dataset.i)]?.c ?? ''
+  try { await navigator.clipboard.writeText(text) } catch {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove()
+  }
+  b.textContent = '已複製'
+  setTimeout(() => { b.textContent = '複製' }, 1200)
+}
 watch($clicks, (n, o) => show(n, active.value && n === o + 1))
 </script>
 
 <template>
   <div ref="root" class="term" :class="{ big }">
     <div class="term-bar"><i /><i /><i /><span v-if="title" class="term-dir">{{ title }}</span></div>
-    <pre class="term-body" :style="{ fontSize: size + 'px' }" v-html="html" />
+    <pre class="term-body" :style="{ fontSize: size + 'px' }" @click="copy" v-html="html" />
   </div>
 </template>
