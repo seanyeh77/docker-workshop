@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { useIsSlideActive, useSlideContext } from '@slidev/client'
+import { useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
 import { esc, hlShell } from '../utils/hl.js'
 
 // cmds: [{ c: 'command', o: 'output html' }]. Each click types the next command.
@@ -39,10 +39,14 @@ const caret = '<span class="caret"></span>'
 const pOf = (i) => props.cmds[i]?.p ?? props.prompt
 const pAfter = (i) => props.cmds[i]?.after ?? (props.cmds[i + 1] ? pOf(i + 1) : pOf(i))
 const pr = (p) => `<span class="pr">${esc(p)}</span>`
-// Finished command lines carry a copy button (shown on hover) for students
-// following along on their own screen.
-const copyBtn = (i) => `<button type="button" class="tcp" data-i="${i}">複製</button>`
-const line = (x, i) => `${pr(pOf(i))}${hlShell(x.c)[0]}${copyBtn(i)}\n${x.o ? `<span class="out">${x.o}</span>\n` : ''}`
+// Finished command lines show a copy icon while the pointer is over that line,
+// for students following along on their own screen. Never in presenter or
+// print mode.
+const { isPresenter, isPrintMode } = useNav()
+const ICON_COPY = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V3h12"/></svg>'
+const ICON_DONE = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg>'
+const copyBtn = (i) => `<button type="button" class="tcp" data-i="${i}" aria-label="Copy">${ICON_COPY}</button>`
+const line = (x, i) => `<span class="cl">${pr(pOf(i))}${hlShell(x.c)[0]}${copyBtn(i)}</span>${x.o ? `<span class="out">${x.o}</span>\n` : ''}`
 
 async function show(step, animate) {
   const id = ++run
@@ -105,14 +109,15 @@ async function copy(e) {
   try { await navigator.clipboard.writeText(text) } catch {
     const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove()
   }
-  b.textContent = '已複製'
-  setTimeout(() => { b.textContent = '複製' }, 1200)
+  b.innerHTML = ICON_DONE
+  b.classList.add('done')
+  setTimeout(() => { b.innerHTML = ICON_COPY; b.classList.remove('done') }, 1200)
 }
 watch($clicks, (n, o) => show(n, active.value && n === o + 1))
 </script>
 
 <template>
-  <div ref="root" class="term" :class="{ big }">
+  <div ref="root" class="term" :class="{ big, 'no-copy': isPresenter || isPrintMode }">
     <div class="term-bar"><i /><i /><i /><span v-if="title" class="term-dir">{{ title }}</span></div>
     <pre class="term-body" :style="{ fontSize: size + 'px' }" @click="copy" v-html="html" />
   </div>

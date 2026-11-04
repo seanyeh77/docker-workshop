@@ -47,11 +47,15 @@ for (const file of order) {
   }
 }
 
+const ICON_COPY = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V3h12"/></svg>'
+const ICON_DONE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg>'
+const btn = (c) => `<button type="button" aria-label="Copy" data-copy="${esc(c)}">${ICON_COPY}</button>`
+
 const row = (c, inner) => `
       <div class="cmd${inner ? ' inner' : ''}">
         <code>${esc(c)}</code>
         ${inner ? '<span class="tag">Container 內</span>' : ''}
-        <button type="button" data-copy="${esc(c)}">複製</button>
+        ${btn(c)}
       </div>`
 
 const fileBlock = (name, content) => `
@@ -59,7 +63,7 @@ const fileBlock = (name, content) => `
       <h3>${name}</h3>
       <div class="file">
         <pre>${esc(content)}</pre>
-        <button type="button" data-copy="${esc(content)}">複製</button>
+        ${btn(content)}
       </div>
     </section>`
 
@@ -89,8 +93,8 @@ const html = `<!DOCTYPE html>
   .cmd code { flex: 1; min-width: 0; white-space: pre-wrap; word-break: break-all; }
   .cmd.inner { border-left: 4px solid var(--teal); }
   .tag { flex: none; font-size: 12px; color: var(--teal); border: 1px solid var(--teal); padding: 0 6px; }
-  button { flex: none; font: 600 13px "Source Sans 3", "Noto Sans TC", sans-serif; color: var(--teal); background: #fff; border: 1.5px solid var(--teal); padding: 4px 12px; cursor: pointer; }
-  button:hover { background: var(--teal); color: #fff; }
+  button { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; color: var(--teal); background: #fff; border: 1.5px solid var(--rule); cursor: pointer; }
+  button:hover { border-color: var(--teal); }
   button.done { background: var(--teal); color: #fff; }
   .file { position: relative; background: var(--code); border: 1.5px solid var(--rule); }
   .file pre { margin: 0; padding: 14px 16px; overflow-x: auto; }
@@ -101,7 +105,7 @@ const html = `<!DOCTYPE html>
 <div class="bar"></div>
 <main>
   <h1>Docker Workshop 指令</h1>
-  <p class="lead">依投影片順序列出所有指令，按「複製」後貼到 Terminal 執行。標示「Container 內」的指令需在進入 Container 後執行。</p>
+  <p class="lead">依投影片順序列出所有指令，按右側的複製圖示後貼到 Terminal 執行。標示「Container 內」的指令需在進入 Container 後執行。</p>
   <nav>${chapters.filter((c) => c.slides.length).map((c, i) => `<a href="#ch${i}">${esc(c.name)}</a>`).join('')}<a href="#files">檔案</a></nav>
 ${chapters.filter((c) => c.slides.length).map((c, i) => `
   <h2 id="ch${i}">${esc(c.name)}</h2>
@@ -121,8 +125,8 @@ ${fileBlock('compose.yaml', compose)}
     try { await navigator.clipboard.writeText(text) } catch {
       const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove()
     }
-    b.textContent = '已複製'; b.classList.add('done')
-    setTimeout(() => { b.textContent = '複製'; b.classList.remove('done') }, 1200)
+    b.innerHTML = ${JSON.stringify(ICON_DONE)}; b.classList.add('done')
+    setTimeout(() => { b.innerHTML = ${JSON.stringify(ICON_COPY)}; b.classList.remove('done') }, 1200)
   })
 </script>
 </body>
