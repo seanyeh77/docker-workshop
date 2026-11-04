@@ -26,15 +26,6 @@ takeaway: Docker 將程式所需的執行環境一併封裝，使程式在任何
   { who: 'right', name: '組員', text: '那我把你的電腦搬回家？' },
 ]" />
 
-<!--
-分組作業情境，一句一句點出來。
-1. 程式碼一模一樣，組員也有 clone 到。
-2. 但組員電腦沒裝 flask，版本也可能不同，所以跑不起來。
-3.「在我電腦上可以跑」是全世界工程師都講過的一句話。
-4. 搬電腦是玩笑，但 Docker 做的真的就是這件事：把能跑的那台電腦的環境一起打包帶走。
-最後帶到下方的重點句，接下一張的三個痛點。
--->
-
 ---
 layout: focus
 chapter: Ch 1 · Intro to Docker
@@ -53,10 +44,6 @@ items:
 
 # Docker 要解決的三個問題
 
-<!--
-一張一張翻。每一張都問一句「有人遇過嗎？」讓大家舉手。
--->
-
 ---
 layout: statement
 chapter: Ch 1 · Intro to Docker
@@ -65,11 +52,6 @@ chapter: Ch 1 · Intro to Docker
 # git 管理程式碼，不管理執行環境
 
 組員以 `git clone` 取得程式碼後，仍缺少對應的 Python 版本、資料庫與環境變數。Docker 負責的正是這個部分。
-
-<!--
-你們上次學過 git，會想說「我不是已經用 git 分享程式了嗎？」
-git 只管程式碼。程式要跑起來需要的語言版本、套件、資料庫，git 都不管。
--->
 
 ---
 layout: textbook
@@ -107,10 +89,6 @@ kind: 名詞
 
 最底層為 Ubuntu，中間為 Node，最上層為應用程式。此結構與 git commit 相同：新的版本疊加在舊的版本之上，既有版本不會被修改。
 
-<!--
-Immutable 用 git commit 解釋：commit 之後不能改，只能再開一個新的 commit。
--->
-
 ---
 layout: definition
 chapter: Ch 1 · Intro to Docker
@@ -124,11 +102,6 @@ kind: 名詞
 
 以同一個 `node-base` Image 同時啟動 3 個 Container，在其中一個安裝套件，其餘 2 個不受影響。
 
-<!--
-四個特性：Self-contained、Isolated、Independent、Portable。
-「不會影響另外兩個」這句先埋著，Ch3 會實際看到。
--->
-
 ---
 layout: figure
 chapter: Ch 1 · Intro to Docker
@@ -139,14 +112,6 @@ takeaway: 接下來將依序實作 pull、run、stop、rm 四個階段。
 # Container 的生命週期
 
 <Lifecycle />
-
-<!--
-逐步點出：
-1. pull：從 Registry 把 Image 抓到自己電腦。
-2. run：用 Image 開一個 Container，開始跑。
-3. stop：停下來，但還在，可以 restart。
-4. rm：刪掉，Container 裡的東西跟著不見。記住這一點，Ch4 會用到。
--->
 
 ---
 layout: figure
@@ -163,16 +128,6 @@ clicks: 3
   '差異在於 Guest OS：Container 共用主機的 kernel，因此啟動較快、體積較小。',
 ]" />
 
-<!--
-由下往上一層一層疊，每按一下講一層。
-1. 底下兩層一樣：硬體和電腦本身的作業系統。
-2. VM 先裝 Hypervisor（例如 VirtualBox、VMware），在上面模擬出好幾台電腦。每台都要裝一套完整的作業系統，開機要等，一台動輒數 GB。
-3. Container 只需要 Docker Engine，App 直接跑在主機的作業系統上，彼此隔離但不另外開機。
-4. 重點：Container 少了 Guest OS 這一層。作業系統最核心、負責管理硬體的部分叫 kernel，Container 共用主機的 kernel，所以啟動像開一個程式，大小常見幾十到幾百 MB。
-類比：VM 像獨棟住宅，水電廚房自己一套；Container 像公寓套房，各自上鎖，共用大樓水電。
-講完接 Q2：先讓大家猜 Container 使用的 kernel 從哪裡來，再公布答案；Ch2 用 uname -r 驗證。
--->
-
 ---
 layout: quiz
 chapter: Ch 1 · Intro to Docker
@@ -185,11 +140,5 @@ options:
   - 執行 Docker 的主機的 kernel
 ---
 
-
 Image 不含 kernel，Docker 也不會另外啟動 kernel；所有 Container 共用執行 Docker 的主機的 kernel。Ch2 將實際驗證。
 
-<!--
-先舉手表決，再按一下公布答案。
-A 是以為 Image 像完整的作業系統；B 是把 Container 想成小型 VM。
-Ch2 用 uname -r 驗證。
--->

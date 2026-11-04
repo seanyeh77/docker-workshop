@@ -63,7 +63,3 @@ nextNumber: Q&A
 - `Volume`
 - `compose.yaml`
 
-<!--
-開放提問，最後放回饋表單的 QR code。
-延伸學習：Docker 官方文件的 Get started 教學。
--->

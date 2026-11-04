@@ -63,11 +63,6 @@ volumes:
   '改寫成 compose.yaml。',
 ]" />
 
-<!--
-services 下的每一項是一個 Container；最下方 volumes 宣告使用的 Volume，external: true 代表沿用 Ch4 建立的 todo-data。
-YAML 用空格縮排，不能用 Tab。這是最常見的錯。
--->
-
 ---
 layout: compare
 chapter: Ch 5 · Docker Compose
@@ -84,11 +79,6 @@ rows:
 ---
 
 # docker run 參數與 Compose 欄位
-
-<!--
-Compose 就像點套餐：不用每次一樣一樣點，寫好一份菜單，說「一號餐」就好。
-每個 docker run 參數在 compose.yaml 裡都有對應的欄位。
--->
 
 ---
 layout: textbook
@@ -122,7 +112,3 @@ takeaway: 掛載 Volume 後新增的待辦事項仍存在，因為 Compose 掛�
 
 <BrowserMock :items="['繳電話費', '複習 Volume', '準備報告']" />
 
-<!--
-要停的時候用 docker compose down，它會刪掉 Container，但 todo-data 是 external 的 Volume，不會被刪。
-加分題：在 compose.yaml 加一個 postgres service，up 之後 docker ps 看到 2 個 Container。
--->

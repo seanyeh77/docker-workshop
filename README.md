@@ -4,6 +4,7 @@
 
 - [SPEC.md](SPEC.md)：簡報規格，包含時間表、逐段投影片大綱、課堂提問、梗與類比、投影片做法與 Textbook 風格、課前準備與講義修正清單。
 - [slides/](slides/)：依 SPEC 做的 Slidev 簡報，共 70 張。線上版：https://seanyeh77.github.io/docker-workshop/
+- [SCRIPT.md](SCRIPT.md)：逐張投影片的筆記與講稿。投影片本身不含講者備註。
 - 指令清單：https://seanyeh77.github.io/docker-workshop/commands.html ，由 `slides/scripts/gen-commands.mjs` 在 build 時從投影片自動產生，不需手動維護。
 
 ## 簡報

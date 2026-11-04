@@ -12,10 +12,6 @@ clicks: 1
   { c: 'docker restart audience', o: 'audience' },
 ]" />
 
-<!--
-回來時按一下，打出 docker restart audience。等一下講到 stop 和 restart，可以說「你們剛剛就被 restart 過了」。
--->
-
 ---
 layout: section
 number: 4
@@ -73,11 +69,6 @@ items:
 
 # 停止、重啟與刪除 Container
 
-<!--
-「離開」不等於「關掉」。背景執行的 Container 要用 docker stop 停。
-剛剛休息時你們就被 stop 又 restart 過一次。
--->
-
 ---
 layout: textbook
 chapter: Ch 4 · Running Containers
@@ -126,14 +117,6 @@ clicks: 3
   '',
 ]" />
 
-<!--
-銜接上一張：rm 一次刪一個指定的 Container；prune 一次刪掉所有已停止的。
-原理：Container 停止後，裡面的檔案（可寫層）仍保留在硬碟上，所以才能 restart 或 start -ai 回去。不再需要時要自己刪。
-Ch3 留下的 base-container、app-container 都是已停止的，正好一次清掉。
-image prune 刪的是沒有名字的 Image；container prune 刪的是已停止的 Container。被 Container 使用中的 Image 不會被 image prune 刪除，所以通常先 container prune 再 image prune。
-prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
--->
-
 ---
 layout: textbook
 chapter: Ch 4 · Running Containers
@@ -177,10 +160,6 @@ clicks: 2
   { who: 'right', name: 'Container', text: '（已讀）' },
   { who: 'left', name: '瀏覽器', text: '……' },
 ]" />
-
-<!--
-docker ps 看得到它活著，但沒開 Port，外面的請求進不去，Container「已讀不回」。
--->
 
 ---
 layout: textbook
@@ -272,10 +251,6 @@ takeaway: 在瀏覽器中新增 3 筆待辦事項，內容不拘。
 
 <BrowserMock :items="['買牛奶', '寫作業', '練習 Docker']" />
 
-<!--
-請大家真的加 3 筆，等一下要用。
--->
-
 ---
 layout: quiz
 chapter: Ch 4 · Running Containers
@@ -288,14 +263,7 @@ options:
   - 只要先 docker stop 再刪除就會保留
 ---
 
-
 資料寫在 Container 中，刪除 Container 時一併移除；Image 不會保存執行時產生的資料。下一張實際操作。
-
-<!--
-先舉手表決，再按一下公布答案。
-A 是把 Image 當成存檔的人會選的；C 是以為「正常關機」就會存檔。
-下一張實際刪掉重開，接著問：「那資料要放在哪裡？」→ Volume。
--->
 
 ---
 layout: textbook
@@ -383,10 +351,6 @@ takeaway: 重新新增數筆待辦事項，執行 rm -f 後以相同的 -v 指�
 
 <BrowserMock :items="['繳電話費', '複習 Volume', '準備報告']" />
 
-<!--
-加分題：同時開兩個 todo app，分別綁 3000 和 3001，兩個分頁各自有獨立的待辦事項。
--->
-
 ---
 layout: textbook
 chapter: Ch 4 · Running Containers
@@ -405,7 +369,3 @@ clicks: 5
   { t: 'my-username/my-image', label: '使用的 Image', h: 40 },
 ]" />
 
-<!--
-Ch4 學到的參數一次整理：-d、-p、-v、--name。
-每次都要打這麼長，下一章用 Compose 把它們寫進檔案。
--->

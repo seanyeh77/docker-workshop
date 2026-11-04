@@ -26,10 +26,6 @@ items:
 
 # 建立 Image 的兩種方式
 
-<!--
-先用手做，體會 Image 是怎麼一層層長出來的；再換成 Dockerfile，看為什麼大家都用食譜。
--->
-
 ---
 layout: focus
 chapter: Ch 3 · Building Images
@@ -52,10 +48,6 @@ items:
 
 # 以 commit 建立 Image 的流程
 
-<!--
-這是等一下實作的四個步驟，先看全貌。
--->
-
 ---
 layout: quiz
 chapter: Ch 3 · Building Images
@@ -69,11 +61,6 @@ options:
 ---
 
 commit 產生一個新的 Image，原本的 alpine Image 不會被修改。接下來實際建立 node-base 並驗證。
-
-<!--
-剛講完 commit 的流程，先舉手表決，再按一下公布答案。
-做完 node-base 後用 which node 驗證。
--->
 
 ---
 layout: textbook
@@ -108,11 +95,6 @@ const cmds = [
   'commit：將 Container 存成 Image node-base。',
 ]" />
 
-<!--
-最常見的錯：還在 Container 裡就打 docker 指令，會出現 command not found。先看提示字元。
-若有人遇到名稱衝突，下一張說明處理方式。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -139,11 +121,6 @@ clicks: 4
   'exit 只會停止 Container，不會刪除。',
 ]" />
 
-<!--
-離開 Container 不會刪掉它，所以重打一次 docker run 就會撞名。
-第一種處理：docker start -ai 回到原本那個 Container，裝過的東西都還在。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -168,10 +145,6 @@ clicks: 3
   '舊 Container 中的變更一併消失。',
 ]" />
 
-<!--
-第二種處理：刪掉重來。Ch4 會再正式講名稱衝突與 rm。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -194,11 +167,6 @@ clicks: 2
   'node-base 有 Node。',
 ]" />
 
-<!--
-剛做完 node-base，馬上驗證 Q3 的答案：commit 產生新的 Image，原本的 alpine 不受影響。
-下一張換個角度：從同一個 Image 開出的 Container 之間也互不影響。
--->
-
 ---
 layout: figure
 chapter: Ch 3 · Building Images
@@ -213,12 +181,6 @@ clicks: 2
   '在 A 中建立 hello.txt，B 仍為空：每個 Container 各自獨立。',
 ]" />
 
-<!--
-接續驗證 Q3：Image 不會被 Container 修改，Container 之間也各自獨立。在 A 裡建立的檔案，B 看不到。
-這張圖 Ch4 會再出現，接著往下演。
-下一張盤點目前手上的 Image 與 Container。
--->
-
 ---
 layout: figure
 chapter: Ch 3 · Building Images
@@ -228,13 +190,6 @@ takeaway: Image 經 run 產生 Container，Container 經 commit 產生新的 Ima
 # 目前的 Image 與 Container
 
 <ImageMap :stage="1" />
-
-<!--
-盤點一下目前手上有什麼。綠色是 Image，灰色是 Container，teal 框是這一段新增的。
-alpine 經 run 變成 base-container，裝了 Node 之後 commit 成 node-base。
-請大家打 docker image ls 與 docker ps -a 對照：Image 會看到 alpine、node-base（以及 Ch2 的 hello-world、ubuntu）；Container 會看到已停止的 base-container。
-這張圖之後還會出現兩次，每次多幾個方塊。
--->
 
 ---
 layout: textbook
@@ -260,13 +215,6 @@ const cmds = [
   '最上層 68.4MB 由 commit 新增；下面兩層來自 alpine。',
 ]" />
 
-<!--
-接續盤點圖：圖上說 node-base 是從 alpine commit 出來的，這裡用指令親眼確認。
-最上面那一層就是剛剛 commit 的 Add node，68.4MB，是裝 Node 多出來的；下面兩層是 alpine 本來就有的，整個 alpine 不到 10MB。
-Image 就是這樣一層層疊起來的。git 也有類似的指令 git log，Ch3 最後的對照表會整理。
-下一張：如果對同一個 Container 再 commit 一次，這個歷史會變成什麼樣子？
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -290,14 +238,6 @@ clicks: 3
   '舊 Image 失去名稱但仍佔用空間；ls 需加 -a 才會顯示。',
   'prune：刪除未命名且未被使用的 Image。',
 ]" />
-
-<!--
-原理：Image 的名稱（tag）只是一張標籤，同一時間只能貼在一個 Image 上。commit 到同一個名稱，標籤就移到新的 Image，舊的不會被刪除，只是沒有名字。
-和 git 不同：第二次 commit 不會疊在第一次上面，docker image history node-base 只會看到這一次的 commit 直接接在 alpine 上。
-prune 前會詢問確認，輸入 y 才會刪除；加 -f 可略過確認。
-刪除的 sha256 會列出好幾行，那是這個 Image 的設定與各個 Layer，一起被刪掉。
-大小依 alpine 與 nodejs 的版本而異。
--->
 
 ---
 layout: textbook
@@ -334,10 +274,6 @@ const cmds = [
   '',
 ]" />
 
-<!--
-重做時若出現 The container name "/app-container" is already in use，先執行 docker rm -f app-container 再重來。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -368,12 +304,6 @@ takeaway: sample-app 由 node-base 衍生而來；每個 Container 都來自一�
 
 <ImageMap :stage="2" />
 
-<!--
-再盤點一次：從 node-base 開出 app-container，寫好 app.js 後 commit 成 sample-app。
-同樣的 run、commit 循環又走了一次，只是起點換成 node-base。
-docker run --rm 開的 Container 用完就刪，所以不會出現在圖上。
--->
-
 ---
 layout: statement
 chapter: Ch 3 · Building Images
@@ -397,12 +327,6 @@ clicks: 3
   { c: 'cd getting-started-todo-app/app', o: '', to: '~/getting-started-todo-app/app' },
   { c: 'rm Dockerfile', o: '' },
 ]" />
-
-<!--
-用上次學的 git clone，-b 直接切到 build-image-from-scratch 這個 branch。
-app 資料夾裡原本有一份 Dockerfile，先刪掉，我們自己從頭寫。
-刪掉後用任何文字編輯器新增一個叫 Dockerfile 的檔案，沒有副檔名。
--->
 
 ---
 layout: textbook
@@ -477,15 +401,6 @@ CMD [&quot;node&quot;, &quot;./src/index.js&quot;]"
   ]"
 />
 
-<!--
-和手做時一樣，Image 是一層層疊起來的。
-RUN yarn install 那層最大，因為套件都裝在這層。
-每一行都會在 history 留下一筆紀錄，但只有改到檔案的 RUN、COPY、ADD 會產生有內容的 Layer。
-CMD、ENV、EXPOSE 只改設定，所以是 0 B。
-WORKDIR 會建立 /app 目錄，但目錄本身幾乎不佔空間，所以通常顯示 0B；某些環境會顯示幾 kB。
-數字來自實際 build：node:22-alpine 本身 164MB，加上 COPY 4.59MB、yarn install 89.8MB，整個 Image 約 258MB，和 docker image ls 看到的一致。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -511,13 +426,6 @@ const cmds = [
   'commit：只記錄 /bin/sh，看不出做了什麼。',
   'Dockerfile：每一層記錄對應的指令。',
 ]" />
-
-<!--
-回扣「commit 無法記錄建立過程」那張：同樣是一層層的 Image，差別在 CREATED BY 這一欄。
-sample-app 是兩次 commit 疊起來的：68.4MB 那層是 apk add nodejs（Add node），2.26kB 那層是寫進去的 app.js（Add app）。兩層的 CREATED BY 都只寫 /bin/sh，因為 commit 只拍下結果；能看出做了什麼的只有 -m 那句話。
-my-username/my-image 的每一層都寫著 Dockerfile 的那一行；最下面的 ... 是 node:22-alpine 本身的 9 層，共約 164MB。
-畫面上的輸出省略 IMAGE 與 CREATED 兩欄。COMMENT 欄：BuildKit 依 Dockerfile 建立的層會標 buildkit.dockerfile.v0；commit 產生的層只有 -m 寫的說明，沒加 -m 就是空的。sample-app 與 my-username/my-image 是同一個 app 的兩種做法，正好可以並排比較。
--->
 
 ---
 layout: textbook
@@ -549,11 +457,6 @@ const cmds = [
   '',
 ]" />
 
-<!--
-示範即可。聽眾前面已經 cd 到 app 並在那裡寫好 Dockerfile，直接 docker build . 就會成功。
-真正會踩到的情境：開新的 Terminal、或 clone 完忘了 cd，停在上一層就執行 build。
--->
-
 ---
 layout: textbook
 chapter: Ch 3 · Building Images
@@ -576,11 +479,6 @@ clicks: 2
   '未指定版本時預設為 latest。',
 ]" />
 
-<!--
-最後一步就是檢查點：列表中出現 my-username/my-image 就成功。
-做得快的人：改一下 src/index.js 再 build 一次，看哪幾層顯示 CACHED。
--->
-
 ---
 layout: compare
 chapter: Ch 3 · Building Images
@@ -597,12 +495,6 @@ rows:
 
 # Docker 與 git 的對應
 
-<!--
-Ch3 的指令都學完了，用這張和 git 對照整理。一列一列翻。最後一列要講清楚：docker commit 不用先 add，它會把整個 Container 的檔案狀態存起來。
-命名那列：docker tag 是 docker image tag 的簡寫，要給兩個參數：原本的 Image 與新名稱。它不會複製 Image，只是多貼一張標籤，指向同一個 Image ID，就像 git tag v1 指向某個 commit。
-另一個差異：git commit 會一個接一個串成歷史；docker commit 每次都是把 Container 當下的狀態直接疊在基底 Image 上，前面重複 commit 時已經看過。
--->
-
 ---
 layout: figure
 chapter: Ch 3 · Building Images
@@ -612,12 +504,6 @@ takeaway: Dockerfile 以 build 直接產生 Image，不需手動 run 與 commit�
 # 目前的 Image 與 Container
 
 <ImageMap :stage="3" />
-
-<!--
-最後一次盤點。上面兩排是手動 run、commit 做出來的；最下面一排是 Dockerfile 用 docker build 一步做出來的。
-build 的過程中 Docker 也會開暫時的環境執行每一行，但做完就清掉，所以只留下 Image。
-Ch4 會從 my-username/my-image 開始跑 Container。
--->
 
 ---
 layout: bento

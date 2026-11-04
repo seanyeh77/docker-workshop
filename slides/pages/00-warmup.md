@@ -10,10 +10,6 @@ chapter: Warm-up
 3. 以 `-d`、`-p`、`-v` 將 todo app 部署為網站
 4. 以 `docker compose up` 取代冗長的 `docker run` 指令
 
-<!--
-最後一項就是今天的終點：一個真的能在瀏覽器打開的 todo app，而且資料刪掉 Container 也不會不見。
--->
-
 ---
 layout: quiz
 chapter: Warm-up
@@ -27,11 +23,5 @@ options:
   - 僅有已 commit 的程式碼與檔案
 ---
 
-
 git 只記錄 commit 過的檔案。套件、語言版本與資料庫屬於執行環境，不在 repository 中，這正是今天 Docker 要處理的問題。
 
-<!--
-先舉手表決，再按一下公布答案。
-問大家：「你上次接手別人的專案，clone 下來就能跑嗎？」
-Ch1 的對話情境與「git 管理程式碼，不管理執行環境」會再呼應這題。
--->

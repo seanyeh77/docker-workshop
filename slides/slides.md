@@ -16,10 +16,6 @@ subtitle: 將執行環境與程式一併封裝
 
 # Docker Workshop
 
-<!--
-開場。先不講 Docker 是什麼，只說結束時大家會自己把一個網站跑起來。
--->
-
 ---
 src: ./pages/00-warmup.md
 ---

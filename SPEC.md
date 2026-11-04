@@ -133,7 +133,7 @@ Sep 28, 2026 · @seanyeh
 
 ## 投影片做法
 
-每張投影片只講一個概念。投影片上只放標題與元件，解說全部寫進 speaker notes，每一步 click 對應一句 note。
+每張投影片只講一個概念。投影片上只放標題與元件，每一步 click 的重點放在右側 NOTE 欄；完整講稿寫在 [SCRIPT.md](SCRIPT.md)，投影片不使用 Slidev 的 speaker notes。
 
 ### 每章的節奏
 
@@ -179,7 +179,7 @@ Sep 28, 2026 · @seanyeh
 
 ### 對投影片大綱的影響
 
-「逐段內容與投影片大綱」裡每張投影片的說明文字，都放進 speaker notes；投影片上只留標題與元件。
+「逐段內容與投影片大綱」裡每張投影片的說明文字，都放進 SCRIPT.md；投影片上只留標題與元件。
 
 ## 投影片風格（Textbook）
 
@@ -266,7 +266,7 @@ Sep 28, 2026 · @seanyeh
 - Docker 另外啟動的 kernel
 - 執行 Docker 的主機的 kernel
 
-答案：執行 Docker 的主機的 kernel。表決後立即公布；Ch2 先在主機上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`。學員端一律稱「主機」，不提及 VM。講稿延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
+答案：執行 Docker 的主機的 kernel。表決後立即公布；Ch2 先在主機上執行 `uname -r`，再以 ubuntu 與 alpine 各執行一次，三行都是 `6.12.107+deb13-cloud-amd64`。學員端一律稱「主機」，不提及 VM。SCRIPT.md 延伸說明 Mac 與 Windows 上 Docker Desktop（linuxkit）與 OrbStack 背後的 Linux VM。
 
 ### Q3：commit 會不會修改原本的 Image（Ch3 講完 commit 流程後，實作後驗證）
 
